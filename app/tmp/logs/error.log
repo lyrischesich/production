@@ -2995,3 +2995,23 @@ Request URL: /id_rsa.pub
 Stack Trace:
 #0 /var/www/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2014-01-27 11:05:06 Error: Fatal Error (4): syntax error, unexpected T_CONSTANT_ENCAPSED_STRING, expecting ')' in [/var/www/Cafeteria/app/Config/database.php, line 72]
+2014-01-27 11:05:06 Error: [FatalErrorException] syntax error, unexpected T_CONSTANT_ENCAPSED_STRING, expecting ')'
+Request URL: /Cafeteria/
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 72)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 72, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 72, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-27 11:05:08 Error: Fatal Error (4): syntax error, unexpected T_CONSTANT_ENCAPSED_STRING, expecting ')' in [/var/www/Cafeteria/app/Config/database.php, line 72]
+2014-01-27 11:05:08 Error: [FatalErrorException] syntax error, unexpected T_CONSTANT_ENCAPSED_STRING, expecting ')'
+Request URL: /Cafeteria/
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 72)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 72, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 72, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
