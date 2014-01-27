@@ -64,7 +64,7 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
+		'host' => 'nations.no-ip.org',
 		'login' => 'cafeteria',
 		'password' => 'apfelkuchen1',
 		'database' => 'cafeteria_dev',
