@@ -30,4 +30,34 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+
+	/**
+	*Returns the possible Values of an enum, used in MySQL
+	*@author Johannes Graeger/arch0n
+	*/
+	function getEnumValues($columnName=null) {
+		if ($columnName== null) {
+			return array();
+		}
+
+		$tableName = Inflector::tableize($this->name);
+
+		//Get the values for a specific column
+		$result = $this->query("SHOW COLUMNS FROM {$tableName} LIKE '{$columnName}'");
+		
+		// Get the Values from the TypeColumn
+		$type = null;
+		if (isset($result[0]['COLUMNS']['Type'])) {$type = $result[0]['COLUMNS']['Type'];}
+		else { return array(); }
+
+		//AND NOW: GET THE VALUES :-)
+		$values = explode("','", preg_replace("/(enum)\('(.+?)'\)/","\\2", $type) );
+
+		//Convert the array from explode into an assoc array
+		$assoc_values = array();
+		foreach ($values as $value) {
+			$assoc_values[$value] = Inflector::humanize($value);
+		}
+		return $assoc_values;
+	}
 }

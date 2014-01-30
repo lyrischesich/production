@@ -25,6 +25,10 @@ class UsersController extends AppController {
 		$this->set('users', $this->Paginator->paginate());
 	}
 
+	public function beforeRender() {
+		debug($this->User->getEnumValues('mo'));
+	}
+
 /**
  * view method
  *
