@@ -88,13 +88,13 @@ p {
 }
 #header h1 a {
 	color: #000;
-	background: #003d4c;
+	background: #f6bf1f;
 	font-weight: normal;
 	text-decoration: none;
 }
 #header h1 a:hover {
 	color: #fff;
-	background: #003d4c;
+	background: #f6bf1f;
 	text-decoration: underline;
 }
 #content{
