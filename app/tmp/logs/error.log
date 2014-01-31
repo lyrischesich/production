@@ -3015,3 +3015,684 @@ Stack Trace:
 #3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
 #4 [internal function]: App::shutdown()
 #5 {main}
+2014-01-31 13:51:05 Error: [NotFoundException] Invalid user
+Request URL: /Cafeteria/users/edit
+Stack Trace:
+#0 [internal function]: UsersController->edit()
+#1 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersController), Array)
+#2 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#3 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-01-31 13:54:34 Error: [NotFoundException] Invalid user
+Request URL: /Cafeteria/users/edit
+Stack Trace:
+#0 [internal function]: UsersController->edit()
+#1 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersController), Array)
+#2 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#3 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-01-31 13:54:49 Error: Fatal Error (1): Call to a member function setFlash() on a non-object in [/var/www/Cafeteria/app/Controller/SpecialdatesController.php, line 55]
+2014-01-31 13:54:49 Error: [FatalErrorException] Call to a member function setFlash() on a non-object
+Request URL: /Cafeteria/specialdates/add
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/var/www/Cafete...', 55)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/var/www/Cafete...', 55, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/var/www/Cafete...', 55, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 15:28:12 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 15:28:29 Error: [MissingActionException] Action LoginController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'LoginController',
+  'action' => 'index',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 15:30:37 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 15:31:27 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 15:31:33 Error: [MissingViewException] View file "/var/www/Cafeteria/app/View/Login/index.ctp" is missing.
+Exception Attributes: array (
+  'file' => '/var/www/Cafeteria/app/View/Login/index.ctp',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/View/View.php(457): View->_getViewFileName(NULL)
+#1 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#2 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#3 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-01-31 15:41:16 Error: [MissingViewException] View file "/var/www/Cafeteria/app/View/Login/index.ctp" is missing.
+Exception Attributes: array (
+  'file' => '/var/www/Cafeteria/app/View/Login/index.ctp',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/View/View.php(457): View->_getViewFileName(NULL)
+#1 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#2 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#3 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-01-31 15:48:19 Error: Fatal Error (4): syntax error, unexpected T_VARIABLE, expecting T_FUNCTION in [/var/www/Cafeteria/app/Controller/LoginController.php, line 10]
+2014-01-31 15:48:19 Error: [FatalErrorException] syntax error, unexpected T_VARIABLE, expecting T_FUNCTION
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 10)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 10, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 10, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 16:03:37 Error: Fatal Error (1): Call to a member function setFlash() on a non-object in [/var/www/Cafeteria/app/Controller/LoginController.php, line 15]
+2014-01-31 16:03:37 Error: [FatalErrorException] Call to a member function setFlash() on a non-object
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/var/www/Cafete...', 15)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/var/www/Cafete...', 15, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/var/www/Cafete...', 15, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 16:04:55 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:05:07 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:09:31 Error: Fatal Error (1): Call to a member function setFlash() on a non-object in [/var/www/Cafeteria/app/Controller/LoginController.php, line 15]
+2014-01-31 16:09:31 Error: [FatalErrorException] Call to a member function setFlash() on a non-object
+Request URL: /Cafeteria/login/
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/var/www/Cafete...', 15)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/var/www/Cafete...', 15, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/var/www/Cafete...', 15, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 16:10:17 Error: [MissingTableException] Table sessions for model Session was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'sessions',
+  'class' => 'Session',
+  'ds' => 'default',
+)
+Request URL: /Cafeteria/login/
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('sessions')
+#1 /var/www/Cafeteria/lib/Cake/Model/Model.php(800): Model->getDataSource()
+#2 /var/www/Cafeteria/app/Controller/LoginController.php(17): Model->__call('setFlash', Array)
+#3 /var/www/Cafeteria/app/Controller/LoginController.php(17): AppModel->setFlash('Invalid usernam...')
+#4 [internal function]: LoginController->index()
+#5 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(490): ReflectionMethod->invokeArgs(Object(LoginController), Array)
+#6 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#7 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#8 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2014-01-31 16:12:28 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:12:50 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:13:13 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:13:28 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:13:34 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:16:29 Error: [MissingActionException] Action LoginController::add() could not be found.
+Exception Attributes: array (
+  'controller' => 'LoginController',
+  'action' => 'add',
+)
+Request URL: /Cafeteria/login/add
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:16:37 Error: [MissingActionException] Action UsersController::abc() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'abc',
+)
+Request URL: /Cafeteria/users/abc
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:16:43 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:18:56 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:31:22 Error: [MissingControllerException] Controller class LogiController could not be found.
+Exception Attributes: array (
+  'class' => 'LogiController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/logi
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-01-31 16:40:47 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 16:54:04 Error: [MissingTableException] Table logins for model Login was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'logins',
+  'class' => 'Login',
+  'ds' => 'default',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('logins')
+#1 /var/www/Cafeteria/lib/Cake/Model/Model.php(1355): Model->getDataSource()
+#2 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(199): Model->schema()
+#3 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(451): FormHelper->_introspectModel('Login', 'fields')
+#4 /var/www/Cafeteria/app/View/Login/index.ctp(5): FormHelper->create()
+#5 /var/www/Cafeteria/lib/Cake/View/View.php(929): include('/var/www/Cafete...')
+#6 /var/www/Cafeteria/lib/Cake/View/View.php(891): View->_evaluate('/var/www/Cafete...', Array)
+#7 /var/www/Cafeteria/lib/Cake/View/View.php(460): View->_render('/var/www/Cafete...')
+#8 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#9 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#10 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#11 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2014-01-31 16:54:25 Error: [MissingTableException] Table logins for model Login was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'logins',
+  'class' => 'Login',
+  'ds' => 'default',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('logins')
+#1 /var/www/Cafeteria/lib/Cake/Model/Model.php(1355): Model->getDataSource()
+#2 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(199): Model->schema()
+#3 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(451): FormHelper->_introspectModel('Login', 'fields')
+#4 /var/www/Cafeteria/app/View/Login/index.ctp(5): FormHelper->create()
+#5 /var/www/Cafeteria/lib/Cake/View/View.php(929): include('/var/www/Cafete...')
+#6 /var/www/Cafeteria/lib/Cake/View/View.php(891): View->_evaluate('/var/www/Cafete...', Array)
+#7 /var/www/Cafeteria/lib/Cake/View/View.php(460): View->_render('/var/www/Cafete...')
+#8 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#9 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#10 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#11 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2014-01-31 16:54:28 Error: [MissingTableException] Table logins for model Login was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'logins',
+  'class' => 'Login',
+  'ds' => 'default',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('logins')
+#1 /var/www/Cafeteria/lib/Cake/Model/Model.php(1355): Model->getDataSource()
+#2 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(199): Model->schema()
+#3 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(451): FormHelper->_introspectModel('Login', 'fields')
+#4 /var/www/Cafeteria/app/View/Login/index.ctp(5): FormHelper->create()
+#5 /var/www/Cafeteria/lib/Cake/View/View.php(929): include('/var/www/Cafete...')
+#6 /var/www/Cafeteria/lib/Cake/View/View.php(891): View->_evaluate('/var/www/Cafete...', Array)
+#7 /var/www/Cafeteria/lib/Cake/View/View.php(460): View->_render('/var/www/Cafete...')
+#8 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#9 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#10 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#11 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2014-01-31 17:01:41 Error: [MissingTableException] Table logins for model Login was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'logins',
+  'class' => 'Login',
+  'ds' => 'default',
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('logins')
+#1 /var/www/Cafeteria/lib/Cake/Model/Model.php(1355): Model->getDataSource()
+#2 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(199): Model->schema()
+#3 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(451): FormHelper->_introspectModel('Login', 'fields')
+#4 /var/www/Cafeteria/app/View/Login/index.ctp(5): FormHelper->create(NULL)
+#5 /var/www/Cafeteria/lib/Cake/View/View.php(929): include('/var/www/Cafete...')
+#6 /var/www/Cafeteria/lib/Cake/View/View.php(891): View->_evaluate('/var/www/Cafete...', Array)
+#7 /var/www/Cafeteria/lib/Cake/View/View.php(460): View->_render('/var/www/Cafete...')
+#8 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#9 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#10 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#11 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2014-01-31 17:17:44 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 17:17:54 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 17:24:57 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:24:57 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:25:22 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:25:22 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:25:24 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:25:24 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:27:41 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:27:41 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:27:43 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:27:43 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:27:43 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:27:43 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:27:43 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:27:43 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:27:43 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:27:43 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:27:48 Error: Fatal Error (1): Call to undefined method LoginController::constructAuthenticate() in [/var/www/Cafeteria/app/Controller/LoginController.php, line 13]
+2014-01-31 17:27:48 Error: [FatalErrorException] Call to undefined method LoginController::constructAuthenticate()
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Call to undefin...', '/var/www/Cafete...', 13)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Call to undefin...', '/var/www/Cafete...', 13, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 17:32:56 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 17:35:26 Error: [MissingActionException] Action UsersController::login() could not be found.
+Exception Attributes: array (
+  'controller' => 'UsersController',
+  'action' => 'login',
+)
+Request URL: /Cafeteria/users/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-01-31 17:51:48 Error: [MissingHelperException] Helper class eingelogtHelper could not be found.
+Exception Attributes: array (
+  'class' => 'eingelogtHelper',
+  'plugin' => false,
+)
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/View/HelperCollection.php(63): HelperCollection->load('eingelogt')
+#1 /var/www/Cafeteria/lib/Cake/View/View.php(818): HelperCollection->__isset('eingelogt')
+#2 /var/www/Cafeteria/app/View/Login/index.ctp(4): View->__get('eingelogt')
+#3 /var/www/Cafeteria/lib/Cake/View/View.php(929): include('/var/www/Cafete...')
+#4 /var/www/Cafeteria/lib/Cake/View/View.php(891): View->_evaluate('/var/www/Cafete...', Array)
+#5 /var/www/Cafeteria/lib/Cake/View/View.php(460): View->_render('/var/www/Cafete...')
+#6 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#7 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#8 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(LoginController), Object(CakeRequest), Object(CakeResponse))
+#9 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2014-01-31 18:18:36 Error: Fatal Error (4): syntax error, unexpected '}', expecting ')' in [/var/www/Cafeteria/app/Controller/AppController.php, line 47]
+2014-01-31 18:18:36 Error: [FatalErrorException] syntax error, unexpected '}', expecting ')'
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 47)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 47, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 47, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:24:07 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:24:07 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:24:29 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:24:29 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:24:56 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:24:56 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:25:04 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:25:04 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:25:07 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:25:07 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:10 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:10 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:13 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:13 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:14 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:14 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:14 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:14 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:14 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:14 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:15 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:15 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:15 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:15 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:15 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:15 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:26:15 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:26:15 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-01-31 18:27:07 Error: Fatal Error (4): syntax error, unexpected T_OBJECT_OPERATOR in [/var/www/Cafeteria/app/Controller/LoginController.php, line 14]
+2014-01-31 18:27:07 Error: [FatalErrorException] syntax error, unexpected T_OBJECT_OPERATOR
+Request URL: /Cafeteria/login
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 14)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 14, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
