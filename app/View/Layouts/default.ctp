@@ -16,12 +16,12 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = __d('cake_dev', 'KuchenPHP - Mit <3 gebacken');
+$cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriaplaner');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<?php echo $this->Html->charset(); ?>
+	<?php echo $this->Html->charset(); ?>	
 	<title>
 		<?php echo $cakeDescription ?>:
 		<?php echo $title_for_layout; ?>
@@ -43,9 +43,9 @@ $cakeDescription = __d('cake_dev', 'KuchenPHP - Mit <3 gebacken');
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+			<h1><?php echo $this->Html->link($cakeDescription, 'http://www.humboldtschule-berlin.de/'); ?></h1>
 		</div>
-		<div id="content">
+		<div id="content">	
 
 			<?php echo $this->Session->flash(); ?>
 

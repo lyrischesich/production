@@ -82,12 +82,12 @@ p {
 }
 #header h1 {
 	line-height:20px;
-	background: #003d4c url('../img/cake.icon.png') no-repeat left;
-	color: #fff;
+	background: #f6bf1f url('../img/humboldt.icon.png') no-repeat left;
+	color: #000;
 	padding: 0px 30px;
 }
 #header h1 a {
-	color: #fff;
+	color: #000;
 	background: #003d4c;
 	font-weight: normal;
 	text-decoration: none;
@@ -110,7 +110,7 @@ p {
 	text-align: right;
 }
 #header a, #footer a {
-	color: #fff;
+	color: #003d4c;
 }
 
 /** containers **/
@@ -454,6 +454,14 @@ p.error,
 	background-image: linear-gradient(top, #ee5f5b, #c43c35);
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
 }
+
+.sidebar {
+	border: dotted;
+	float: left;
+	margin-right: -100px;
+	width: 100px;
+}
+
 .success {
 	clear: both;
 	color: #fff;
