@@ -26,7 +26,7 @@ class UsersController extends AppController {
 	}
 
 	public function beforeRender() {
-		debug($this->User->getEnumValues('mo'));
+		$this->set('enumValues',$this->User->getEnumValues('mo'));
 	}
 
 /**
