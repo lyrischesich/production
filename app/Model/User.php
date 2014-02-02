@@ -12,7 +12,7 @@ class User extends AppModel {
  *
  * @var string
  */
-	public $primaryKey = 'id';
+	public $primaryKey = 'username';
 
 /**
  * Validation rules

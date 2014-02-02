@@ -69,7 +69,7 @@ class AppController extends Controller {
 	}
 	
 	public function isAuthorized($user) {
-		//Administrator darf alles-
+		//Administrator darf alles
 		if (isset($user['admin']) && $user['admin'] == 1) {
 			return true;
 		}

@@ -16,7 +16,6 @@ class LoginController extends AppController {
 		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Auth->login()) {
-				
 				return $this->redirect($this->Auth->redirectUrl());
 			}
 			$this->Session->setFlash(__('Login fehlgeschlagen!'));
@@ -27,13 +26,18 @@ class LoginController extends AppController {
 		return $this->redirect($this->Auth->logout());
 	}
 	
+	public function question() {
+		
+	}
+	
+	
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow('index', 'logout');
 	}	
 	
 	public function isAuthorized($user) {
-		if (in_array($this->request->action, array ('index', 'logout'))) {
+		if (in_array($this->request->action, array ('index', 'logout', 'question'))) {
 			return true;
 		}
 		

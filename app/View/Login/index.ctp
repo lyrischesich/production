@@ -6,7 +6,7 @@
             <?php echo __('Bitte Benutzername und Passwort eingeben'); ?>
         </legend>
     	<?php 
-	        echo $this->Form->input('username', array('label' => 'Benutzername'));
+	        echo $this->Form->input('username', array('label' => 'Benutzername', 'type' => 'text'));
         	echo $this->Form->input('password', array('label' => 'Passwort'));
     	?>
     </fieldset>
