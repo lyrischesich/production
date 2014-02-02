@@ -1,18 +1,14 @@
 <div class="users form">
-<?php 
-echo $this->Session->flash('auth');
-echo $abc;
-echo ('bla'.$eingelogt); 
-?>
+<?php echo $this->Session->flash('auth'); ?>
 <?php echo $this->Form->create('User'); ?>
     <fieldset>
         <legend>
-            <?php echo __('Bitte Benutzernamen und Passwort eingeben'); ?>
+            <?php echo __('Bitte Benutzername und Passwort eingeben'); ?>
         </legend>
-    <?php 
-        echo $this->Form->input('username', array('type' => 'text', "label" => "Benutzername", 'required' => true));
-        echo $this->Form->input('passwd', array("label" => "Passwort", 'required' => true));
-    ?>
+    	<?php 
+	        echo $this->Form->input('username', array('label' => 'Benutzername'));
+        	echo $this->Form->input('password', array('label' => 'Passwort'));
+    	?>
     </fieldset>
-<?php echo $this->Form->end(__('Anmelden')); ?>
+<?php echo $this->Form->end(__('Login')); ?>
 </div>

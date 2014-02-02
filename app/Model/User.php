@@ -12,14 +12,24 @@ class User extends AppModel {
  *
  * @var string
  */
-	public $primaryKey = 'username';
+	public $primaryKey = 'id';
 
 /**
  * Validation rules
  *
  * @var array
  */
-	public $validate = array(
+	public $validate = array(//*
+		'username' => array( //---------------------ab hier einfügt
+				'notEmpty' => array(
+						'rule' => array('notEmpty'),
+						//'message' => 'Your custom message here',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),//-----------------------------------Ende eingefügt*/
 		'fname' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -40,7 +50,7 @@ class User extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'passwd' => array(
+		'password' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -165,4 +175,12 @@ class User extends AppModel {
 		)
 	);
 
+	
+	public function beforeSave($options = array()) {
+	    if (isset($this->data[$this->alias]['passwd'])) {
+	        $passwordHasher = new SimplePasswordHasher();
+	        $this->data[$this->alias]['passwd'] = AuthComponent::password($this->data[$this->alias]['passwd']);
+	    }
+	    return true;
+	}
 }

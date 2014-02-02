@@ -32,16 +32,48 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	public $components = array('DebugKit.Toolbar',
-		'Auth'// => array('loginAction' => array('controller' => 'login')) 
-		
-		=> array(
+		'Auth' => array(
         'authenticate' => array(
             'Form' => array(
+            	//Wie der Passworthash gebildet werden soll
                 'passwordHasher' => array(
                     'className' => 'Simple',
                     'hashType' => 'sha1'
                 )
             )
-        )
-    )); //Insertion of DebugKit Toolbar and Auth
+        ),
+				
+		//Wenn eine Anmeldung erforderlich, aber noch nicht erfolgt ist, wird auf diese Seite umgeleitet
+		'loginAction' => array('controller' => 'login', 'action' => 'index'),
+				
+		//Automatische Umleitung nach dem Login, falls direkt auf die Loginseite zugegriffen wurde
+		//Wurde zuvor auf eine Seite zugegriffen, die einen Login erfordert, so wird die folgende Zeile ignoriert
+		//und stattdessen auf diese weitergeleitet 
+		'loginRedirect' => array('controller' => 'specialdates', 'action' => 'index'),
+				
+		//Automatische Umleitung nach dem Logout
+		'logoutRedirect' => array('controller' => 'login', 'action' => 'index'),
+
+		//Die angezeigte Fehlermeldung, wenn man eine Seite ohne Login aufruft 
+        'authError' => 'F&uuml;r diese Funktion ist ein Login notwendig',
+        
+		//Legt fest, wo grundlegende Autorisierung stattfindet
+		'authorize' => array('Controller')
+    ));
+	
+	//TODO Security::setHash() irgendwo anders machen
+   	public function beforeFilter() {
+		parent::beforeFilter();
+		Security::setHash('sha1');
+		
+	}
+	
+	public function isAuthorized($user) {
+		//Administrator darf alles-
+		if (isset($user['admin']) && $user['admin'] == 1) {
+			return true;
+		}
+		
+		return false;
+	}
 }

@@ -1,8 +1,6 @@
 <?php
 
 App::uses('Controller', 'Controller');
-App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
-
 
 /**
  * Login Controller
@@ -12,28 +10,33 @@ class LoginController extends AppController {
 	public $components = array('Session');
 	
 	public function index() {		
-		$pwh = new SimplePasswordHasher();
-		$this->set('abc', $pwh->hash("kuchen"));
-		debug($this->Auth->login());
-// 		$this->set('eingelogt', $this->Auth->loggedIn());
-		if ($this->request->is('post')) {
-			if ($this->Auth->login()) { 
-// 				$this->set('eingelogt', $this->Auth->loggedIn());
-				return $this->redirect(array('controller' => 'users', 'action' => 'abc'));				
+		
+		//Wenn bereits eingeloggt, dann Umleitung
+		if ($this->Auth->loggedIn()) return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
+		
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if ($this->Auth->login()) {
+				
+				return $this->redirect($this->Auth->redirectUrl());
 			}
-			$this->set('eingelogt', $this->Auth->loggedIn());
-			$this->Session->setFlash(__('Invalid username or password, try again'));
-		} else {
-			$this->set('eingelogt', $this->request->method());
+			$this->Session->setFlash(__('Login fehlgeschlagen!'));
 		}
 	}
-	
-	public function beforeFilter() {
-		$this->Auth->allow('index');
-	}	
 	
 	public function logout() {
 		return $this->redirect($this->Auth->logout());
 	}
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('index', 'logout');
+	}	
+	
+	public function isAuthorized($user) {
+		if (in_array($this->request->action, array ('index', 'logout'))) {
+			return true;
+		}
+		
+		return parent::isAuthorized($user);
+	}
 }
-
