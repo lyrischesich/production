@@ -13,7 +13,7 @@ class ColumnsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'Session');
 
 /**
  * index method
@@ -26,37 +26,25 @@ class ColumnsController extends AppController {
 	}
 
 /**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->Column->exists($id)) {
-			throw new NotFoundException(__('Invalid column'));
-		}
-		$options = array('conditions' => array('Column.' . $this->Column->primaryKey => $id));
-		$this->set('column', $this->Column->find('first', $options));
-	}
-
-/**
  * add method
  *
  * @return void
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			$maxOrder = $this->Column->find('count');
+			$this->request->data['Column']['order'] = ($maxOrder+1);
 			$this->Column->create();
 			if ($this->Column->save($this->request->data)) {
-				$this->Session->setFlash(__('The column has been saved.'));
+				$this->Session->setFlash(__('Die Spalte wurde angelegt.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The column could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Die Spalte konnte nicht gespeichert werden.'));
 			}
+			
+			return $this->redirect(array('action' => 'index'));
 		}
-		$users = $this->Column->User->find('list');
-		$this->set(compact('users'));
+		
 	}
 
 /**
@@ -68,21 +56,19 @@ class ColumnsController extends AppController {
  */
 	public function edit($id = null) {
 		if (!$this->Column->exists($id)) {
-			throw new NotFoundException(__('Invalid column'));
+			throw new NotFoundException(__('Unbekannte Spalte'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Column->save($this->request->data)) {
-				$this->Session->setFlash(__('The column has been saved.'));
+				$this->Session->setFlash(__('Die Spalte wurde gespeichert.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The column could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Die Spalte konnte nicht gespeichert werden.'));
 			}
 		} else {
 			$options = array('conditions' => array('Column.' . $this->Column->primaryKey => $id));
 			$this->request->data = $this->Column->find('first', $options);
 		}
-		$users = $this->Column->User->find('list');
-		$this->set(compact('users'));
 	}
 
 /**
@@ -99,9 +85,9 @@ class ColumnsController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Column->delete()) {
-			$this->Session->setFlash(__('The column has been deleted.'));
+			$this->Session->setFlash(__('Die Spalte wurde gelöscht.'));
 		} else {
-			$this->Session->setFlash(__('The column could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('Die Spalte konnte nicht gelöscht werden.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

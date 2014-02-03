@@ -20,6 +20,16 @@ class Column extends AppModel {
  * @var array
  */
 	public $validate = array(
+		'name' => array(
+				'notEmpty' => array(
+						'rule' => array('notEmpty'),
+						//'message' => 'Your custom message here',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
 		'type' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -73,8 +83,8 @@ class Column extends AppModel {
 		'User' => array(
 			'className' => 'User',
 			'joinTable' => 'columns_users',
-			'foreignKey' => 'column_id',
-			'associationForeignKey' => 'user_id',
+			'foreignKey' => 'username',
+			'associationForeignKey' => 'username',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
