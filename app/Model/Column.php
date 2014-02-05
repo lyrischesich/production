@@ -12,7 +12,7 @@ class Column extends AppModel {
  *
  * @var string
  */
-	public $primaryKey = 'name';
+	public $primaryKey = 'id';
 
 /**
  * Validation rules
@@ -23,12 +23,20 @@ class Column extends AppModel {
 		'name' => array(
 				'notEmpty' => array(
 						'rule' => array('notEmpty'),
-						//'message' => 'Your custom message here',
+						'message' => 'Bitte geben Sie den Spaltennamen ein.',
 						//'allowEmpty' => false,
 						//'required' => false,
 						//'last' => false, // Stop validation after this rule
 						//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				),
+				'unique' => array(
+						'rule' => array('isUnique'),
+						'message' => 'Die Spalte existiert bereits und kann nicht noch einmal angelegt werden.',
+						//'allowEmpty' => false,
+						//'required' => true,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				)
 		),
 		'type' => array(
 			'numeric' => array(
@@ -74,17 +82,20 @@ class Column extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
+	
+	
 /**
  * hasAndBelongsToMany associations
  *
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'User' => array(
+		'User' //* 
+			=> array(
 			'className' => 'User',
 			'joinTable' => 'columns_users',
-			'foreignKey' => 'username',
-			'associationForeignKey' => 'username',
+			'foreignKey' => 'column_id',
+			'associationForeignKey' => 'user_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -93,6 +104,7 @@ class Column extends AppModel {
 			'offset' => '',
 			'finderQuery' => '',
 		)
+		//*/
 	);
 
 }

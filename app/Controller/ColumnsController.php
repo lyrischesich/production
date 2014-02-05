@@ -32,8 +32,10 @@ class ColumnsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$maxOrder = $this->Column->find('count');
-			$this->request->data['Column']['order'] = ($maxOrder+1);
+			
+			$options = array('fields' => 'MAX(`order`) AS max');
+			$maxOrder = $this->Column->find('first', $options);
+			$this->request->data['Column']['order'] = $maxOrder[0]['max']+1;
 			$this->Column->create();
 			if ($this->Column->save($this->request->data)) {
 				$this->Session->setFlash(__('Die Spalte wurde angelegt.'));
@@ -41,8 +43,6 @@ class ColumnsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('Die Spalte konnte nicht gespeichert werden.'));
 			}
-			
-			return $this->redirect(array('action' => 'index'));
 		}
 		
 	}
@@ -85,9 +85,9 @@ class ColumnsController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Column->delete()) {
-			$this->Session->setFlash(__('Die Spalte wurde gelöscht.'));
+			$this->Session->setFlash(__('Die Spalte wurde gel&ouml;scht.'));
 		} else {
-			$this->Session->setFlash(__('Die Spalte konnte nicht gelöscht werden.'));
+			$this->Session->setFlash(__('Die Spalte konnte nicht gel&ouml;scht werden.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

@@ -1,5 +1,5 @@
 <div class="columns index">
-	<h2><?php echo __('Spalten'); ?></h2>
+	<h2><?php echo __('Spalten im Plan'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('name', 'Name'); ?></th>
@@ -23,8 +23,8 @@
 		<td><?php echo h($column['Column']['order']); ?>&nbsp;</td> 
 
 		<td class="actions">
-			<?php echo $this->Html->link(__('Bearbeiten'), array('action' => 'edit', $column['Column']['name'])); ?>
-			<?php echo $this->Form->postLink(__('Löschen'), array('action' => 'delete', $column['Column']['name']), null, __('Are you sure you want to delete # %s?', $column['Column']['name'])); ?>
+			<?php echo $this->Html->link(__('Bearbeiten'), array('action' => 'edit', $column['Column']['id'])); ?>
+			<?php echo $this->Form->postLink(__('L&ouml;schen'), array('action' => 'delete', $column['Column']['id']), null, __('Wollen sie wirklich die Spalte "%s" l&ouml;schen?', $column['Column']['name'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -32,12 +32,12 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Seite {:page} von {:pages}, zeige {:current} Einträge von {:count} insgesamt, von Eintrag {:start} bis Eintrag {:end}')
+	'format' => __('Seite {:page} von {:pages}, zeige {:current} Eintr&auml;ge von {:count} insgesamt, von Eintrag {:start} bis Eintrag {:end}')
 	));
 	?>	</p>
 	<div class="paging">
 	<?php
-		echo $this->Paginator->prev('< ' . __('Zurück'), array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->prev('< ' . __('Zur&uuml;ck'), array(), null, array('class' => 'prev disabled'));
 		echo $this->Paginator->numbers(array('separator' => ''));
 		echo $this->Paginator->next(__('Weiter') . ' >', array(), null, array('class' => 'next disabled'));
 	?>

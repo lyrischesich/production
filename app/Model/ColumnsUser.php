@@ -11,7 +11,7 @@ class ColumnsUser extends AppModel {
  *
  * @var string
  */
-	public $primaryKey = 'date';
+	public $primaryKey = array('id');
 
 /**
  * Validation rules
@@ -19,6 +19,16 @@ class ColumnsUser extends AppModel {
  * @var array
  */
 	public $validate = array(
+		'date' => array(
+				'date' => array(
+						'rule' => array('date'),
+						//'message' => 'Your custom message here',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
 		'half_shift' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -29,9 +39,9 @@ class ColumnsUser extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'username' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+		'user_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -39,9 +49,9 @@ class ColumnsUser extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'shift_name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+		'column_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

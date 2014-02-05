@@ -12,7 +12,7 @@ class User extends AppModel {
  *
  * @var string
  */
-	public $primaryKey = 'username';
+	public $primaryKey = 'id';
 
 /**
  * Validation rules
@@ -89,6 +89,10 @@ class User extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			'email' => array(
+				'rule' => 'email',
+				'message' => 'Bitte geben sie eine gültige E-Mailadresse an.'
+			)
 		),
 		'mo' => array(
 			'notEmpty' => array(
