@@ -16,7 +16,7 @@
 				if ($controller != "AppController" && $controller != "LoginController") {
 					$controllerName = str_replace("Controller", "", $controller);
 					$name = strtolower($controllerName);
-					if ($active == $name) echo "<li class='active'>";  else  echo "<li>";						
+					if ($active == $name) echo "<li class='active'>";  else  echo "<li>";				
 					echo $this->Html->link($controllerName,array(
 							'controller' => $name,
 							'action' => 'index'
@@ -24,8 +24,7 @@
 					echo "</li>";
 				}
 			}
-		}
-		
+		}		
 		?>
 		</ul>
 		</div>
