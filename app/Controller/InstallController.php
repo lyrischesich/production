@@ -16,9 +16,8 @@ class InstallController extends AppController {
 	public function create() {
 		
 		if ($this->request->is('post')) {
-			$this->request->data['User']['lname'] = $this->request->data('username');
+			$this->request->data['User']['lname'] = $this->request->data['User']['username'];
 			$this->request->data['User']['admin'] = 1;
-			
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('Benutzer wurde angelegt.'));
@@ -27,8 +26,7 @@ class InstallController extends AppController {
 			}
 			
 		}
-		
-		return $this->redirect(array('action' => 'fehla'));
+
 	}
 	
 	public function beforeFilter() {

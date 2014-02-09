@@ -13,7 +13,7 @@ class User extends AppModel {
  * @var string
  */
 	public $primaryKey = 'id';
-
+	
 /**
  * Validation rules
  *
@@ -181,9 +181,8 @@ class User extends AppModel {
 
 	
 	public function beforeSave($options = array()) {
-	    if (isset($this->data[$this->alias]['passwd'])) {
-	        $passwordHasher = new SimplePasswordHasher();
-	        $this->data[$this->alias]['passwd'] = AuthComponent::password($this->data[$this->alias]['passwd']);
+	    if (isset($this->data[$this->alias]['password'])) {
+	        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 	    }
 	    return true;
 	}

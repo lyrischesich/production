@@ -64,7 +64,6 @@ class AppController extends Controller {
 	//TODO Security::setHash() irgendwo anders machen
    	public function beforeFilter() {
 		parent::beforeFilter();
-		Security::setHash('sha1');
 		
 // 		//Wenn keine Benutzer eingetragen sind, alles umleiten auf /install
 // 		//TODO Nicht hier machen?
