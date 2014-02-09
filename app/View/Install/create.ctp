@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	function check(input) {
-		if (input.value != $('password').value) {
+		if (input.value != document.getElementById('password').value) {
 			input.setCustomValidity(unescape("Die Passw%F6rter m%FCssen %FCbereinstimmen."));
 		} else {
 			input.setCustomValidity('');
