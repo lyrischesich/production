@@ -10,18 +10,10 @@
 				</li>
 			";
 		} else {
-			/*$active = $this->params['controller'];
-			if ($active == "users")  echo "<li class='active'>";  else  echo "<li>";
-			echo $this->Html->link('Users',array(
-					'controller' => 'users',
-					'action' => 'index'
-					));
-			echo "</li>";
-			*/
 			$active = $this->params['controller'];
 			$aCtrlClasses = App::objects('controller');
 			foreach ($aCtrlClasses as $controller) {
-				if ($controller != "AppController") {
+				if ($controller != "AppController" && $controller != "LoginController") {
 					$controllerName = str_replace("Controller", "", $controller);
 					$name = strtolower($controllerName);
 					if ($active == $name) echo "<li class='active'>";  else  echo "<li>";						
@@ -33,6 +25,7 @@
 				}
 			}
 		}
+		
 		?>
 		</ul>
 		</div>

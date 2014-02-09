@@ -41,19 +41,15 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		echo $this->fetch('script');
 	?>
 </head>
-<body>
+<body style="padding-top: 60px; padding-bottom: 40px;">
 	<?php echo $this->element('navbar'); ?>
 	<div class="container-fluid">
 		<div class="row-fluid">	
-			<div class="span3">
-			
-			</div>
-			<div class="span9">
 				<?php echo $this->Session->flash(); ?>
 				<?php echo $this->fetch('content'); ?>
-			</div>
 
 		</div>
+		<hr>
 		<footer>
 			<p> (c) 2014 by Die Neuinstallisierer </p>
 		</footer>
