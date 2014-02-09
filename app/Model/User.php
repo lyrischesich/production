@@ -158,11 +158,17 @@ class User extends AppModel {
 			'notEmpty' => array(
 				'rule' => 'notEmpty'
 			),
-			'equalTo' => array(
-					rule => array('equalTo', );
+			'equalToField' => array(
+				'rule' => array('equalToField', 'password'),
+				'message' => 'Die Passw&ouml;rter stimmen nicht &uuml;berein.'
 			)
 		),
 	);
+	
+	function equalToField($array, $field) { 
+		return strcmp($this->data[$this->alias][key($array)], 
+					$this->data[$this->alias][$field]) == 0; 
+	}
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
