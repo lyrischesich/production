@@ -4789,3 +4789,435 @@ Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
 Stack Trace:
 #0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2014-02-09 18:31:48 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:32:00 Error: [MissingActionException] Action InstallController::wtf() could not be found.
+Exception Attributes: array (
+  'controller' => 'InstallController',
+  'action' => 'wtf',
+)
+Request URL: /Cafeteria/install/wtf
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#1 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(InstallController), Object(CakeRequest), Object(CakeResponse))
+#2 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2014-02-09 18:32:00 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:32:50 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:33:24 Error: [MissingViewException] View file "/var/www/Cafeteria/app/View/Install/create.ctp" is missing.
+Exception Attributes: array (
+  'file' => '/var/www/Cafeteria/app/View/Install/create.ctp',
+)
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/View/View.php(457): View->_getViewFileName(NULL)
+#1 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#2 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#3 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(InstallController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-02-09 18:33:24 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:34:57 Error: [MissingViewException] View file "/var/www/Cafeteria/app/View/Install/create.ctp" is missing.
+Exception Attributes: array (
+  'file' => '/var/www/Cafeteria/app/View/Install/create.ctp',
+)
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/View/View.php(457): View->_getViewFileName(NULL)
+#1 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#2 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#3 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(InstallController), Object(CakeRequest), Object(CakeResponse))
+#4 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-02-09 18:34:58 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:37:45 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:39:09 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:39:56 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:44:11 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:44:20 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:48:14 Error: [MissingConnectionException] Database connection "Mysql" is missing, or could not be created.
+Exception Attributes: array (
+  'class' => 'Mysql',
+  'message' => 'SQLSTATE[42000] [1049] Unknown database \'cafeteria_geschlossen\'',
+  'enabled' => true,
+)
+Request URL: /Cafeteria/install/
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Datasource/DboSource.php(260): Mysql->connect()
+#1 /var/www/Cafeteria/lib/Cake/Model/ConnectionManager.php(105): DboSource->__construct(Array)
+#2 /var/www/Cafeteria/lib/Cake/Model/Model.php(3474): ConnectionManager::getDataSource('default')
+#3 /var/www/Cafeteria/lib/Cake/Model/Model.php(1126): Model->setDataSource('default')
+#4 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('users')
+#5 /var/www/Cafeteria/lib/Cake/Model/Model.php(1355): Model->getDataSource()
+#6 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(199): Model->schema()
+#7 /var/www/Cafeteria/lib/Cake/View/Helper/FormHelper.php(451): FormHelper->_introspectModel('User', 'fields')
+#8 /var/www/Cafeteria/app/View/Install/index.ctp(38): FormHelper->create('User', Array)
+#9 /var/www/Cafeteria/lib/Cake/View/View.php(929): include('/var/www/Cafete...')
+#10 /var/www/Cafeteria/lib/Cake/View/View.php(891): View->_evaluate('/var/www/Cafete...', Array)
+#11 /var/www/Cafeteria/lib/Cake/View/View.php(460): View->_render('/var/www/Cafete...')
+#12 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(952): View->render(NULL, NULL)
+#13 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#14 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(InstallController), Object(CakeRequest), Object(CakeResponse))
+#15 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#16 {main}
+2014-02-09 18:48:16 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:48:20 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 18:48:45 Error: Fatal Error (1): Class 'SimplePasswordHasher' not found in [/var/www/Cafeteria/app/Model/User.php, line 185]
+2014-02-09 18:48:45 Error: [FatalErrorException] Class 'SimplePasswordHasher' not found
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 185)
+#1 [internal function]: ErrorHandler::handleError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 185, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Class 'SimplePa...', '/var/www/Cafete...', 185, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-02-09 18:48:45 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:09:58 Error: Fatal Error (4): syntax error, unexpected ')' in [/var/www/Cafeteria/app/Model/User.php, line 3]
+2014-02-09 19:09:58 Error: [FatalErrorException] syntax error, unexpected ')'
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(4, 'syntax error, u...', '/var/www/Cafete...', 3)
+#1 [internal function]: ErrorHandler::handleError(4, 'syntax error, u...', '/var/www/Cafete...', 3, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 4, 'syntax error, u...', '/var/www/Cafete...', 3, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-02-09 19:09:59 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:17:20 Error: Fatal Error (1): Class 'SimplePasswordHasher' not found in [/var/www/Cafeteria/app/Model/User.php, line 186]
+2014-02-09 19:17:20 Error: [FatalErrorException] Class 'SimplePasswordHasher' not found
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 186)
+#1 [internal function]: ErrorHandler::handleError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 186, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Class 'SimplePa...', '/var/www/Cafete...', 186, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-02-09 19:17:21 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:17:54 Error: Fatal Error (1): Class 'SimplePasswordHasher' not found in [/var/www/Cafeteria/app/Model/User.php, line 186]
+2014-02-09 19:17:54 Error: [FatalErrorException] Class 'SimplePasswordHasher' not found
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 186)
+#1 [internal function]: ErrorHandler::handleError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 186, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Class 'SimplePa...', '/var/www/Cafete...', 186, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-02-09 19:17:55 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:18:05 Error: Fatal Error (1): Class 'SimplePasswordHasher' not found in [/var/www/Cafeteria/app/Model/User.php, line 186]
+2014-02-09 19:18:05 Error: [FatalErrorException] Class 'SimplePasswordHasher' not found
+Request URL: /Cafeteria/install/create
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Error/ErrorHandler.php(203): ErrorHandler::handleFatalError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 186)
+#1 [internal function]: ErrorHandler::handleError(1, 'Class 'SimplePa...', '/var/www/Cafete...', 186, Array)
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(929): call_user_func('ErrorHandler::h...', 1, 'Class 'SimplePa...', '/var/www/Cafete...', 186, Array)
+#3 /var/www/Cafeteria/lib/Cake/Core/App.php(902): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-02-09 19:18:05 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:19:49 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:20:22 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:20:30 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:20:42 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:23:09 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:23:11 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:09 Error: [MissingConnectionException] Database connection "Mysql" is missing, or could not be created.
+Exception Attributes: array (
+  'class' => 'Mysql',
+  'message' => 'SQLSTATE[42000] [1049] Unknown database \'cafeteria_geschlossen\'',
+  'enabled' => true,
+)
+Request URL: /Cafeteria/users
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Model/Datasource/DboSource.php(260): Mysql->connect()
+#1 /var/www/Cafeteria/lib/Cake/Model/ConnectionManager.php(105): DboSource->__construct(Array)
+#2 /var/www/Cafeteria/lib/Cake/Model/Model.php(3474): ConnectionManager::getDataSource('default')
+#3 /var/www/Cafeteria/lib/Cake/Model/Model.php(1126): Model->setDataSource('default')
+#4 /var/www/Cafeteria/lib/Cake/Model/Model.php(3496): Model->setSource('users')
+#5 /var/www/Cafeteria/lib/Cake/Model/Model.php(2900): Model->getDataSource()
+#6 /var/www/Cafeteria/lib/Cake/Model/Model.php(2872): Model->_readDataSource('all', Array)
+#7 /var/www/Cafeteria/lib/Cake/Controller/Component/PaginatorComponent.php(196): Model->find('all', Array)
+#8 /var/www/Cafeteria/app/Controller/UsersController.php(25): PaginatorComponent->paginate()
+#9 [internal function]: UsersController->index()
+#10 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(490): ReflectionMethod->invokeArgs(Object(UsersController), Array)
+#11 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(185): Controller->invokeAction(Object(CakeRequest))
+#12 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#13 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#14 {main}
+2014-02-09 19:25:11 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:23 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:30 Error: [MissingControllerException] Controller class PlanController could not be found.
+Exception Attributes: array (
+  'class' => 'PlanController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/plan
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:30 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:40 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:40 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:25:52 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:26:00 Error: [MissingControllerException] Controller class CakeBootstrappifierController could not be found.
+Exception Attributes: array (
+  'class' => 'CakeBootstrappifierController',
+  'plugin' => NULL,
+)
+Request URL: /Cafeteria/CakeBootstrappifier/js/cakebootstrap.js
+Stack Trace:
+#0 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-02-09 19:28:45 Error: [MissingPluginException] Plugin BoostCake could not be found.
+Exception Attributes: array (
+  'plugin' => 'BoostCake',
+)
+Request URL: /Cafeteria/users/
+Stack Trace:
+#0 /var/www/Cafeteria/lib/Cake/Core/App.php(365): CakePlugin::path('BoostCake')
+#1 /var/www/Cafeteria/lib/Cake/Core/App.php(226): App::pluginPath('BoostCake')
+#2 /var/www/Cafeteria/lib/Cake/Core/App.php(547): App::path('View/Helper', 'BoostCake')
+#3 [internal function]: App::load('BoostCakeHtmlHe...')
+#4 [internal function]: spl_autoload_call('BoostCakeHtmlHe...')
+#5 /var/www/Cafeteria/lib/Cake/View/HelperCollection.php(130): class_exists('BoostCakeHtmlHe...')
+#6 /var/www/Cafeteria/lib/Cake/View/View.php(867): HelperCollection->load('Html', Array)
+#7 /var/www/Cafeteria/lib/Cake/View/View.php(341): View->loadHelpers()
+#8 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(1240): View->__construct(Object(UsersController))
+#9 /var/www/Cafeteria/lib/Cake/Controller/Controller.php(938): Controller->_getViewObject()
+#10 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(192): Controller->render()
+#11 /var/www/Cafeteria/lib/Cake/Routing/Dispatcher.php(160): Dispatcher->_invoke(Object(UsersController), Object(CakeRequest), Object(CakeResponse))
+#12 /var/www/Cafeteria/app/webroot/index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
