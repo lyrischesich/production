@@ -29,38 +29,30 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		//echo $this->Html->css('cake.generic');
 		echo $this->Html->css('bootstrap');
 		echo $this->Html->css('jquery-ui');
 		echo $this->Html->script('jquery');
 		echo $this->Html->script('jquery-ui');
+		echo $this->Html->script('/CakeBootstrappifier/js/cakebootstrap');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
 </head>
-<body>
-	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://www.humboldtschule-berlin.de/'); ?></h1>
-		</div>
-		<div id="content">	
+<body style="padding-top: 60px; padding-bottom: 40px;">
+	<?php echo $this->element('navbar'); ?>
+	<div class="container-fluid">
+		<div class="row-fluid">	
+				<?php echo $this->Session->flash(); ?>
+				<?php echo $this->fetch('content'); ?>
 
-			<?php echo $this->Session->flash(); ?>
-
-			<?php echo $this->fetch('content'); ?>
 		</div>
-		<div id="footer">
-			<?php echo //$this->Html->link(
-				/*	$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);
-				*/
-				"(c) 2014 by 'Die Neuinstallisierer' #GoodQuality";
-			?>
-		</div>
+		<hr>
+		<footer>
+			<p> (c) 2014 by Die Neuinstallisierer </p>
+		</footer>
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
 </body>

@@ -8,7 +8,6 @@ App::uses('Controller', 'Controller');
 class LoginController extends AppController {
 	
 	public $components = array('Session');
-	public $uses = 'User';
 	
 	public function index() {		
 		
@@ -43,7 +42,7 @@ class LoginController extends AppController {
 	}	
 	
 	public function isAuthorized($user) {
-		if (in_array($this->request->action, array ('index', 'logout', 'question'))) {
+		if (in_array($this->request->action, array ('index', 'logout'))) {
 			return true;
 		}
 		

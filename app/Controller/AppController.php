@@ -66,9 +66,17 @@ class AppController extends Controller {
 		parent::beforeFilter();
 		Security::setHash('sha1');
 		
+// 		//Wenn keine Benutzer eingetragen sind, alles umleiten auf /install
+// 		//TODO Nicht hier machen?
+// 		$this->loadModel("User");
+// 		if ($this->User->find('count') == 0)
+// 			return $this->redirect(array("controller" => "install", "action" => "index"));
+		
 	}
 	
 	public function isAuthorized($user) {
+		
+		
 		//Administrator darf alles
 		if (isset($user['admin']) && $user['admin'] == 1) {
 			return true;
