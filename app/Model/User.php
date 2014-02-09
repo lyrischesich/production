@@ -154,6 +154,14 @@ class User extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'password2' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty'
+			),
+			'equalTo' => array(
+					rule => array('equalTo', );
+			)
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

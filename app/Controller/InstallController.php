@@ -20,7 +20,9 @@ class InstallController extends AppController {
 			$this->request->data['User']['admin'] = 1;
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('Benutzer wurde angelegt.'));
+				$currentUser = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
+				$this->Auth->login($currentUser['User']);
+				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Session->setFlash(__('Benutzer konnte nicht angelegt werden.'));
 			}
