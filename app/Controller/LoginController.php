@@ -8,6 +8,7 @@ App::uses('Controller', 'Controller');
 class LoginController extends AppController {
 	
 	public $components = array('Session');
+	public $uses = 'User';
 	
 	public function index() {		
 		
@@ -32,14 +33,13 @@ class LoginController extends AppController {
 		return $this->redirect($this->Auth->logout());
 	}
 	
-	public function question() {
-		
-	}
-	
 	
 	public function beforeFilter() {
+// 		if ($this->User->)
+		
 		parent::beforeFilter();
 		$this->Auth->allow('index', 'logout');
+		
 	}	
 	
 	public function isAuthorized($user) {

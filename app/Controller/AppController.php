@@ -57,7 +57,7 @@ class AppController extends Controller {
 		//Die angezeigte Fehlermeldung, wenn man eine Seite ohne Login aufruft 
         'authError' => 'F&uuml;r diese Funktion ist ein Login notwendig',
         
-		//Legt fest, wo grundlegende Autorisierung stattfindet
+		//Legt fest, wo grundlegende Autorisierung stattfindet -> im Controller
 		'authorize' => array('Controller')
     ));
 	
