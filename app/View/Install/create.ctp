@@ -2,17 +2,32 @@
 window.onload = function () {
     document.getElementById("UserPassword").onchange = validatePassword;
     document.getElementById("UserPassword2").onchange = validatePassword;
+    document.getElementById("UserFname").onchange = validatePassword;
 }
 
 function validatePassword(){
 	var pass2=document.getElementById("UserPassword2").value;
 	var pass1=document.getElementById("UserPassword").value;
-	if(pass1!=pass2)
+	var fname=document.getElementById("UserFname").value;
+
+	//Bedingung: Die Passwörter müssen übereinstimmen
+	if(pass1!=pass2) {
 	    document.getElementById("UserPassword2").setCustomValidity(unescape("Passw%F6rter stimmen nicht %FCberein"));
-	else
-	    document.getElementById("UserPassword2").setCustomValidity('');  
+	} else {
+	    document.getElementById("UserPassword2").setCustomValidity('');
+	}  
 	//empty string means no validation error
+	
+	
+	//Bedingung: Da ein Adminaccount angelegt wird, muss Vorname != PW gelten
+	if (pass1==fname) {
+		document.getElementById("UserPassword").setCustomValidity('Ein Administrator darf seinen Vornamen nicht als Passwort verwenden');
+	}  else {
+		document.getElementById("UserPassword").setCustomValidity('');
 	}
+	
+	}
+	
 </script>
 <div id="div_newdb">
 	<?php
