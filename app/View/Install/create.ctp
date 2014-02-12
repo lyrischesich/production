@@ -9,28 +9,23 @@ function validatePassword(){
 	var pass2=document.getElementById("UserPassword2").value;
 	var pass1=document.getElementById("UserPassword").value;
 	var fname=document.getElementById("UserFname").value;
-
-	//Bedingung: Die Passwörter müssen übereinstimmen
-	if(pass1!=pass2) {
+	if(pass1!=pass2)
 	    document.getElementById("UserPassword2").setCustomValidity(unescape("Passw%F6rter stimmen nicht %FCberein"));
-	} else {
-	    document.getElementById("UserPassword2").setCustomValidity('');
-	}  
+	else
+	    document.getElementById("UserPassword2").setCustomValidity('');  
 	//empty string means no validation error
-	
-	
-	//Bedingung: Da ein Adminaccount angelegt wird, muss Vorname != PW gelten
+
 	if (pass1==fname) {
 		document.getElementById("UserPassword").setCustomValidity('Ein Administrator darf seinen Vornamen nicht als Passwort verwenden');
-	}  else {
+	} else {
 		document.getElementById("UserPassword").setCustomValidity('');
 	}
-	
-	}
-	
+		
+}
 </script>
 <div id="div_newdb">
 	<?php
+	echo "<legend>Administrator anlegen</legend>";
 	echo $this->Form->create('User', array('url' => array('controller' => 'install', 'action' => 'create')));
 	echo $this->Form->input('username', array('label' => 'Nachname'));
 	echo $this->Form->input('fname', array('label' => 'Vorname'));

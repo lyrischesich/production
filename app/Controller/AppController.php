@@ -49,7 +49,7 @@ class AppController extends Controller {
 		//Automatische Umleitung nach dem Login, falls direkt auf die Loginseite zugegriffen wurde
 		//Wurde zuvor auf eine Seite zugegriffen, die einen Login erfordert, so wird die folgende Zeile ignoriert
 		//und stattdessen auf diese weitergeleitet 
-		'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
+		'loginRedirect' => array('controller' => 'plan', 'action' => 'index'),
 				
 		//Automatische Umleitung nach dem Logout
 		'logoutRedirect' => array('controller' => 'login', 'action' => 'index'),
@@ -72,12 +72,14 @@ class AppController extends Controller {
    	public function beforeFilter() {
 		parent::beforeFilter();
 		
-// 		//Wenn keine Benutzer eingetragen sind, alles umleiten auf /install
-// 		//TODO Nicht hier machen?
-// 		$this->loadModel("User");
-// 		if ($this->User->find('count') == 0)
-// 			return $this->redirect(array("controller" => "install", "action" => "index"));
-		
+		//Wenn keine Benutzer eingetragen sind, alles umleiten auf /install
+		//TODO Nicht hier machen?
+		$this->loadModel("User");
+		if ($this->User->find('count') == 0) {
+			//Falls die DB irgendwann durch Zufall einmal verschwindet, aktive Nutzer ausloggen
+			$this->Auth->logout();
+			return $this->redirect(array("controller" => "install", "action" => "index"));	
+		}
 	}
 	
 	public function isAuthorized($user) {

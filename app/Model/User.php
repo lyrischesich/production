@@ -59,10 +59,6 @@ class User extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'passwordOk' => array(
-				'rule' => array('passwordOk', 'fname'),
-				'message' => 'Administratoren d&uuml;rfen nicht den Vornamen als Passwort benutzen!'
-			)
 		),
 		'tel1' => array(
 			'notEmpty' => array(
@@ -172,12 +168,6 @@ class User extends AppModel {
 	function equalToField($array, $field) { 
 		return strcmp($this->data[$this->alias][key($array)], 
 					$this->data[$this->alias][$field]) == 0; 
-	}
-	
-	function passwordOk($array, $field) {
-		if ($this->data[$this->alias]['admin'] == 0)
-			return true;
-		return !($this->equalToField($array, $field));
 	}
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

@@ -10,6 +10,9 @@ Bitte w&auml;hlen Sie die Installationsmethode:
 <script type="text/javascript">
 $(document).ready(function() {
 
+	$("#div_olddb").hide();
+	$("#div_newdb").hide();
+
 	$("#link_newdb").click( function() {
 		$("#div_olddb").hide();
 		$("#div_newdb").show();
@@ -22,35 +25,5 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="div_olddb" style="display: none;">
-	<form action="/Cafeteria/install/import" method="POST">
-		<div class="input text required" >
-			<label for="uploadfield" >Bitte Datenbank ausw&auml;hlen</label>
-			<input id="uploadfield" type="file" name="db" accept="application/sql" />
-		</div>
-
-		<input type="submit" value="Installieren">
-	</form>
-</div>
+<?php require 'import.ctp'; ?>
 <?php require 'create.ctp'; ?>
-
-
-<!-- 	<form action="/Cafeteria/install/create" method="POST"> -->
-<!-- 		<div class="input text required"> -->
-<!-- 			<label for="lastname">Nachname</label> -->
-<!-- 			<input id="lastname" type="text" name="lastname"> -->
-<!-- 		</div> -->
-<!-- 		<div class="input text required"> -->
-<!-- 			<label for="firstname">Vorname</label> -->
-<!-- 			<input id="firstname" type="text" name="firstname"> -->
-<!-- 		</div> -->
-<!-- 		<div class="input password required"> -->
-<!-- 			<label for="password">Passwort</label> -->
-<!-- 			<input id="password" type="password" name="password"> -->
-<!-- 		</div> -->
-<!-- 		<div class="input password required"> -->
-<!-- 			<label for="passwordRepeat">Passwort wiederholen</label> -->
-<!-- 			<input id="passwordRepeat" type="password" name="passwordRepeat"> -->
-<!-- 		</div> -->
-<!-- 		<input type="submit" value="Installieren" /> -->
-<!-- 	</form> -->

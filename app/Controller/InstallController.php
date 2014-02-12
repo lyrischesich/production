@@ -1,16 +1,50 @@
 <?php
 App::uses("User", "Model");
+App::uses("DatabaseManager", "Model");
 class InstallController extends AppController {
 	
 	public $uses = array('User');
 	public $components = array('Session');
 	
 	public function index() {
-		
+		$maxUploadSize = ini_get('upload_max_filesize');
+		$this->set('maxUploadSizeString', $this->getMaxUploadSizeDisplayFormat($maxUploadSize));
+		$this->set('maxUploadSizeBytes', $this->return_bytes($maxUploadSize));
 	}
 	
-	public function import() {
-		
+	public function import() {		
+		if ($this->request->is('post')) {
+			$maxUploadSize = ini_get('upload_max_filesize');
+			$maxUploadSizeString = $this->getMaxUploadSizeDisplayFormat($maxUploadSize);
+			$this->set('maxUploadSizeString', $maxUploadSizeString);
+			$maxUploadSizeBytes = $this->return_bytes($maxUploadSize);
+			$this->set('maxUploadSizeBytes', $maxUploadSize);
+			
+			//Wurde wirklich eine Datei hochgeladen?
+			if (!isset($this->request->data['User']['File']['tmp_name']) || !is_uploaded_file($this->request->data['User']['File']['tmp_name'])) {
+				$this->Session->setFlash('Fehler beim Hochladen der Datei.<br/>Möglicherweise wurde die maximal erlaubte Dateigröße von '.$maxUploadSizeString.' überschritten.', 'alert-box', array('class' => 'alert-error'));
+				return $this->redirect(array('action' => 'index'));
+			}
+			
+			//Ist die hochgeladene Datei zu groß?
+			if ($this->request->data['User']['File']['size'] > $maxUploadSizeBytes) {
+				$this->Session->setFlash('Die Datei ist zu groß.', 'alert-box', array('class' => 'alert-error'));
+				return $this->redirect(array('action' => 'index'));
+			}
+			
+			$dbManager = new DatabaseManager();
+			$result = $dbManager->import($this->request->data['User']['File']['tmp_name']); 
+			if ($result === true) {
+				//Import erfolgreich
+				$this->Session->setFlash('Installation erfolgreich abgeschlossen.', 'alert-box', array('class' => 'alert-success'));
+				return $this->redirect(array('controller' => 'login', 'action' => 'index'));
+			} else {
+				$this->Session->setFlash($result, 'alert-box', array('class' => 'alert-error'));
+			}
+			
+		}	
+
+		return $this->redirect(array('controller' => 'install', 'action' => 'index'));
 	}
 	
 	public function create() {
@@ -24,19 +58,59 @@ class InstallController extends AppController {
 				$this->Auth->login($currentUser['User']);
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Session->setFlash(__('Benutzer konnte nicht angelegt werden.'));
+				$this->Session->setFlash('Benutzer konnte nicht angelegt werden.', 'alert-box', array('class' => 'alert-error'));
 			}
 			
 		}
-
+		
+		return $this->redirect(array('action' => 'index'));
 	}
 	
 	public function beforeFilter() {
-		$this->Auth->allow("index", "import", "create", "fehla");
+		//Wenn bereits Benutzer in der Datenbank eingetragen sind, keinen Zugriff mehr erlauben
+		//TODO Nicht hier machen?
+		$this->loadModel("User");
+		if ($this->User->find('count') > 0) {
+			return;
+		} else {
+			$this->Auth->allow("index", "import", "create");
+		}
 	}
 	
 	public function isAuthorized($user) {
-		return parent::isAuthorized($user);
+		//Nach der Installation darf diese Seite nicht mehr aufgerufen werden
+		return false; 
+	}
+	
+	//Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
+	//und kann hier exakt so verwendet werden
+	function return_bytes($val) {
+		$val = trim($val);
+		$last = strtolower($val[strlen($val)-1]);
+		switch($last) {
+			// The 'G' modifier is available since PHP 5.1.0
+			case 'g':
+				$val *= 1024;
+			case 'm':
+				$val *= 1024;
+			case 'k':
+				$val *= 1024;
+		}
+	
+		return $val;
+	}
+	
+	
+	function getMaxUploadSizeDisplayFormat($origValue) {
+		$val = trim($origValue);
+		$last = strtolower($val[strlen($val)-1]);
+		switch($last) {
+			case 'g':
+			case 'm':
+			case 'k':
+				$val .= "iB";
+		}
+		return $val;
 	}
 }
 

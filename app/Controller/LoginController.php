@@ -29,13 +29,12 @@ class LoginController extends AppController {
 	}
 	
 	public function logout() {
+		$this->Session->delete('Message');
 		return $this->redirect($this->Auth->logout());
 	}
 	
 	
-	public function beforeFilter() {
-// 		if ($this->User->)
-		
+	public function beforeFilter() {		
 		parent::beforeFilter();
 		$this->Auth->allow('index', 'logout');
 		
