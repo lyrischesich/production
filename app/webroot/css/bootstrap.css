@@ -2015,6 +2015,7 @@ table {
   border-top: 1px solid #dddddd;
 }
 
+
 .table th {
   font-weight: bold;
 }
@@ -2141,6 +2142,22 @@ table {
 .table-striped tbody > tr:nth-child(odd) > td,
 .table-striped tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9;
+}
+
+.table tbody tr > td.success {
+	background-color: #dff0d8 !important;
+}
+
+.table tbody tr > td.warning {
+	background-color: #fcf8e3 !important;
+}
+
+.table tbody tr > td.error {
+	background-color: #f2dede !important;
+}
+
+.table tbody tr > td.info {
+	background-color: #d9edf7 !important;
 }
 
 .table-hover tbody tr:hover > td,
