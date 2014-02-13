@@ -23,17 +23,12 @@
 
 </script>
 
-<div class="span2">
-	<div class="well sidebar-nav">
-		<ul class="nav nav-list">
-		<li class="nav-header">Aktionen</li>
-		<li><?php echo $this->Html->link('Zeige alle Benutzer','#',array('id' => 'switchState')); ?></li>
-		<li><?php echo $this->Html->link('E-Mail verschicken',array('controller' => 'contacts','action' => 'mail'))?> </li>
-		<?php echo $this->element('staticActions'); ?>
-		</ul>
-	</div>
-</div>
-<div class="span9">
+<?php echo $this->element('actions',array(
+		'actions' => array(
+			'showAll' => array('text' => 'Zeige alle Benutzer','params' => array('target' => '#','id' => 'switchState')),
+			'sendMail' => array('text' => 'E-Mail verschicken','params' => array('controller' => 'contacts','action' => 'mail'))
+		)));
+?>
 	<h2>Telefonliste</h2>
 	<i><h6 id="stateHeadline">Nur aktive Benutzer</h6></i>
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered" id="contactlist">

@@ -14,21 +14,11 @@
 	});
 </script>
 
-<div class="span2">
-	<div class="well sidebar-nav">
-		<ul class="nav nav-list">
-			<li class="nav-header">Aktionen</li>
-			<li>
-			<?php echo $this->Html->link('Zur Telefonliste',array(
-					'controller' => 'contacts',
-					'action' => 'index'
-				));?>
-			</li>
-			<?php echo $this->element('staticActions'); ?>
-		</ul>
-	</div>
-</div>
-<div class="span9">
+<?php echo $this->element('actions',array(
+		'actions' => array(
+			'back' => array('text' => 'Zur Telefonliste','params' => array('controller' => 'contacts','action' => 'index'))		
+)));?>
+
 	<h2>Email verschicken</h2>
 	<p> 
 	Hier können sie E-Mails an alle Mitarbeiter der Cafeteria versenden. E-Mail-Adressen, welche nicht einem Mitarbeiter in der Cafeteria zugeordnet werden
