@@ -51,7 +51,7 @@
 			'class' => 'well form-horizontal')
 			)); ?>
 		<?php echo $this->Form->input('mailTo',array(
-				'placeholder' => 'Empfänger',
+				'placeholder' => 'Empfänger eingeben',
 				'div' => 'control-group',
 				'class' => 'input-xxlarge',
 				'label' => array(
@@ -60,6 +60,14 @@
 				'value' => $receiver,
 				'beforeInput' => '<div class="input-prepend"><span class="add-on"><i class="icon-envelope"></i></span>',
 				'afterInput' => '</div>'
+				));?>
+		<?php echo $this->Form->input('subject',array(
+				'placeholder' => 'Betreff eingeben',
+				'div' => 'control-group',
+				'class' => 'input-xxlarge',
+				'label' => array(
+						'text' => 'Betreff:'
+					)
 				));?>
 		<?php echo $this->Form->textarea('content',array(
 				'placeholder' => 'Bitte geben sie den zu versendenden Text ein',

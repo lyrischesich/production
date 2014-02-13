@@ -53,7 +53,7 @@
 		<?php $state = ($user['User']['leave_date'] == null) ? "activeUser" : "inactiveUser"; ?>
 		<tr class="<?php echo $state?>">
 			<td><?php echo h($user['User']['lname']); ?> &nbsp; </td>
-			<td><?php echo h($user['User']['lname']); ?> &nbsp; </td>
+			<td><?php echo h($user['User']['fname']); ?> &nbsp; </td>
 			<td><?php echo h($user['User']['tel1']);  ?> &nbsp; </td>
 			<td><?php echo h($user['User']['tel2']);  ?> &nbsp; </td>
 			<td><i class="icon-envelope"></i>
@@ -68,7 +68,7 @@
 				<?php echo h($user['User']['mo']['value']); ?>
 			</td>
 			<td class="<?php echo $user['User']['di']['class']; ?>">
-				<<?php echo h($user['User']['di']['value']); ?> &nbsp;
+				<?php echo h($user['User']['di']['value']); ?> &nbsp;
 			</td>
 			<td class="<?php echo $user['User']['mi']['class']; ?>">
 				<?php echo h($user['User']['mi']['value']); ?>

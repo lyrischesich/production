@@ -213,12 +213,15 @@ class User extends AppModel {
 	 */
 	public function validateReceivers($receivers = null) {
 		$receivers = explode(";",$receivers['Mail']['mailTo']);
-		debug($receivers);
-		
+		$returnResult = array();		
 		foreach($receivers as $receiver) {
-			debug($this->findAllByMailOrUsername($receiver));
-			debug($this->find('all'));
+			$result = $this->findByMailOrUsername($receiver,$receiver);
+			if ($result == array()) {
+				array_push($returnResult,array('valid' => false,'input' => $receiver));
+			} else {
+				array_push($returnResult, array('valid' => true,'input' => $receiver, 'mail' => $result['User']['mail']));
+			}
 		}
-		return;	
+		return $returnResult;
 	}
 }

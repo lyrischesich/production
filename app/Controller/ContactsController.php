@@ -54,7 +54,49 @@ class ContactsController extends AppController {
 			$this->set('receiver',$data);
 		}
 		if ($this->request->is('post')) {
+			$this->set('receiver',$this->request->data['Mail']['mailTo']);
 			$receivers = $this->User->validateReceivers($this->request->data);
+			
+			//Prüfe ob alle E-Mail-Adresse valide sind:
+			$invalidData = array();
+			$validReceivers = array();
+			foreach ($receivers as $receiver) {
+				if (!$receiver['valid']) array_push($invalidData, $receiver['input']);
+					else array_push($validReceivers, $receiver['mail']);
+			}
+			
+			//Wenn alle EMail-Adressen gültig sind -> Fahre fort
+			if ($invalidData == array()) {
+				//Alle Empfänger sind gültig. Jetzt wird die E-Mail generiert
+				$sender = $this->User->findById($this->Auth->user('id'));
+				$senderName = $sender['User']['username'];
+				$senderMail = $sender['User']['mail'];
+				
+				$EMail = new CakeEmail();
+				$EMail->from(array($senderMail => 'Humboldt Cafeteria ['.$senderName.']'));
+				$EMail->to($validReceivers);
+				$EMail->subject($this->request->data['Mail']['subject']);
+				$EMail->config('web');
+				$EMail->template('default');
+				$EMail->emailFormat('html');
+				$EMail->viewVars(array(
+						'senderName' => $senderName,
+						'senderMail' => $senderMail,
+						'content' => $this->request->data['Mail']['content'],
+						'subject' => $this->request->data['Mail']['subject']
+						));
+				if ($EMail->send()) {
+					$this->Session->setFlash('Die Email wurde erfolgreich abgeschickt','alert-box',array('class' => 'alert alert-success'));
+				} else {
+					$this->Session->setFlash('Es ist ein Fehler aufgetreten','alert-box',array('class' => 'alert-error'));
+				}
+				
+			} else {
+				//Gebe in einer Fehlermeldung aus, welche Adressen/Benutzernamen fehlerhaft sind
+				$invalidData = implode(',', $invalidData);
+				$string =  "Die Nachricht konnte nicht gesendet werden, da folgende Empfänger keine Mitarbeiter der Cafeteria sind:" . $invalidData;
+				$this->Session->setFlash($string, 'alert-box',array('class' => 'alert alert-block alert-error'));
+			}
 		}
 
 	}

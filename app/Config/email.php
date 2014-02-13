@@ -40,9 +40,9 @@
 class EmailConfig {
 
 	public $default = array(
-		'transport' => 'Mail',
+		'transport' => 'Debug',
 		'from' => 'you@localhost',
-		//'charset' => 'utf-8',
+		'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
 
@@ -58,6 +58,15 @@ class EmailConfig {
 		'log' => false,
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
+	);
+	
+	public $web = array(
+		'transport' => 'Smtp',
+		'from' => array('cafeteriaprojekt@web.de' => 'Humboldt Cafeteria'),
+		'host' => 'smtp.web.de',
+		'port' => 587,
+		'username' => 'cafeteriaprojekt@web.de',
+		'password' => 'apfelkuchen0',
 	);
 
 	public $fast = array(

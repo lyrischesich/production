@@ -16,10 +16,23 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<?php
-$content = explode("\n", $content);
-
+<?php $content = explode("\n", $content); ?>
+<h1>Cafeteria der Humboldt-Oberschule</h1>
+<h2><i>Eine Nachricht für sie</i></h2>
+<table>
+  <tr>
+    <td>Von:</td>
+    <td><?php echo $senderName . " (". $senderMail .")";?></td>
+  </tr>
+  <tr>
+  	<td>Betreff:</td>
+  	<td><?php echo $subject;?>
+</table>
+<br>
+<?php 
 foreach ($content as $line):
 	echo '<p> ' . $line . "</p>\n";
 endforeach;
 ?>
+<br>
+<p> Wenn sie auf diese E-Mail antworten, so wird sie ausschließlich dem Absender zugestellt. </p>
