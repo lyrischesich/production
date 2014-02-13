@@ -38,10 +38,10 @@ class ColumnsController extends AppController {
 			$this->request->data['Column']['order'] = $maxOrder[0]['max']+1;
 			$this->Column->create();
 			if ($this->Column->save($this->request->data)) {
-				$this->Session->setFlash(__('Die Spalte wurde angelegt.'));
+				$this->Session->setFlash('Die Spalte wurde angelegt.', 'alert-box', array('class' => 'alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('Die Spalte konnte nicht gespeichert werden.'));
+				$this->Session->setFlash('Die Spalte konnte nicht gespeichert werden.', 'alert-box', array('class' => 'alert-error'));
 			}
 		}
 		
@@ -56,14 +56,14 @@ class ColumnsController extends AppController {
  */
 	public function edit($id = null) {
 		if (!$this->Column->exists($id)) {
-			throw new NotFoundException(__('Unbekannte Spalte'));
+			throw new NotFoundException('Unbekannte Spalte');
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Column->save($this->request->data)) {
-				$this->Session->setFlash(__('Die Spalte wurde gespeichert.'));
+				$this->Session->setFlash('Die Spalte wurde gespeichert.', 'alert-box', array('class' => 'alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('Die Spalte konnte nicht gespeichert werden.'));
+				$this->Session->setFlash('Die Spalte konnte nicht gespeichert werden.', 'alert-box', array('class' => 'alert-error'));
 			}
 		} else {
 			$options = array('conditions' => array('Column.' . $this->Column->primaryKey => $id));
@@ -81,13 +81,13 @@ class ColumnsController extends AppController {
 	public function delete($id = null) {
 		$this->Column->id = $id;
 		if (!$this->Column->exists()) {
-			throw new NotFoundException(__('Invalid column'));
+			throw new NotFoundException('Unbekannte Spalte');
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Column->delete()) {
-			$this->Session->setFlash(__('Die Spalte wurde gel&ouml;scht.'));
+			$this->Session->setFlash('Die Spalte wurde gelöscht.', 'alert-box', array('class' => 'alert-success'));
 		} else {
-			$this->Session->setFlash(__('Die Spalte konnte nicht gel&ouml;scht werden.'));
+			$this->Session->setFlash('Die Spalte konnte nicht gelöscht werden.', 'alert-box', array('class' => 'alert-error'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

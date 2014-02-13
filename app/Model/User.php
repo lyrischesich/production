@@ -203,15 +203,22 @@ class User extends AppModel {
 	
 	/**
 	 * Die E-Mail Funktion der Telefonliste soll mehre Empfänger entgegennehmen können. Diese werden entweder mit 
-	 * ihrem Vor- und Nachnamen, oder ihrer E-Mail Adresse angegeben. Diese Funktionen zerlegt den ankommenden String
+	 * ihrem Benuternamen, oder ihrer E-Mail Adresse angegeben. Diese Funktionen zerlegt den ankommenden String
 	 * in die einzelnen Empfänger uind validiert die E-Mail-Adressen. Zurückgegeben wird ein Array, welches zu jedem Empfänger
 	 * jeweils den eingegeben String, die E-Mail-Adresse aus der Datenbank und ein Feld mit dem Namen valid, welches angibt, ob
 	 * der Empfänger auch das tatsächlich in der Datenbank vorhanden ist, enthält.
+	 *
 	 * @param Array $receivers Erwartet ein Array von E-Mail Adressen oder Vor- und Nachnamenkombinationen
 	 * @return Ein Array mit ausschließlich gültigen E-Mail Adressen von Mitarbeitern der Cafeteria
 	 */
 	public function validateReceivers($receivers = null) {
 		$receivers = explode(";",$receivers['Mail']['mailTo']);
+		debug($receivers);
+		
+		foreach($receivers as $receiver) {
+			debug($this->findAllByMailOrUsername($receiver));
+			debug($this->find('all'));
+		}
 		return;	
 	}
 }

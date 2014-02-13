@@ -32,7 +32,7 @@
 	<h2>Email verschicken</h2>
 	<p> 
 	Hier können sie E-Mails an alle Mitarbeiter der Cafeteria versenden. E-Mail-Adressen, welche nicht einem Mitarbeiter in der Cafeteria zugeordnet werden
-	können, werden nicht akzeptiert. Sie können als Empfänder sowohl den <b>Vor- und Nachnamen</b>, als auch eine gültige <b>E-Mail-Adresse</b> angeben.
+	können, werden nicht akzeptiert. Sie können als Empfänger sowohl den <b>Benuternamen</b>, als auch eine gültige <b>E-Mail-Adresse</b> angeben.
 	Um eine E-Mail an alle Mitarbeiter, oder bestimmte Mitarbeitergruppen zu versenden, wählen sie bitte die Option "Rundmail verschicken" in der Seitenleiste.
 	</p>
 	<p>

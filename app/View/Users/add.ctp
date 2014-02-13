@@ -10,14 +10,12 @@
 		echo $this->Form->input('tel1');
 		echo $this->Form->input('tel2');
 		echo $this->Form->input('mail');
-		echo $this->Form->input('leave_date');
 		echo $this->Form->select('mo',$enumValues);
 		echo $this->Form->select('di',$enumValues);
 		echo $this->Form->select('mi',$enumValues);
 		echo $this->Form->select('do',$enumValues);
 		echo $this->Form->select('fr',$enumValues);
 		echo $this->Form->input('admin');
-		echo $this->Form->input('Column');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
