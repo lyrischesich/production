@@ -11,10 +11,10 @@
 				$(".inactiveUser").toggle();
 				if ($("#switchState").text() == state1) {
 					$("#switchState").text(state2);
-					$("#stateHeadline").text(state2);
+					$("#stateHeadline").text(state1);
 				} else {
 					$("#switchState").text(state1);
-					$("#stateHeadline").text(state1);
+					$("#stateHeadline").text(state2);
 				//$("#contactlist").fadeIn();
 				}
 			//});				
@@ -28,7 +28,7 @@
 		<ul class="nav nav-list">
 		<li class="nav-header">Aktionen</li>
 		<li><?php echo $this->Html->link('Zeige alle Benutzer','#',array('id' => 'switchState')); ?></li>
-		<li> Rundmail [TODO] </li>
+		<li><?php echo $this->Html->link('E-Mail verschicken',array('controller' => 'contacts','action' => 'mail'))?> </li>
 		<?php echo $this->element('staticActions'); ?>
 		</ul>
 	</div>
@@ -56,7 +56,14 @@
 			<td><?php echo h($user['User']['lname']); ?> &nbsp; </td>
 			<td><?php echo h($user['User']['tel1']);  ?> &nbsp; </td>
 			<td><?php echo h($user['User']['tel2']);  ?> &nbsp; </td>
-			<td><?php echo h($user['User']['mail']); ?> &nbsp; </td>
+			<td><i class="icon-envelope"></i>
+				<?php echo $this->Html->link(h($user['User']['mail']),array(
+						'controller' => 'contacts',
+						'action' => 'mail',
+						$user['User']['mail']
+						)); ?>
+			</td>
+			
 			<td class="<?php echo $user['User']['mo']['class']; ?>">
 				<?php echo h($user['User']['mo']['value']); ?>
 			</td>
@@ -75,4 +82,5 @@
 		</tr>
 		<?php endforeach;?>
 	</table>
+	<?php echo $this->Paginator->pagination(array('div' => 'pagination'));?>
 </div>

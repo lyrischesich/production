@@ -43,5 +43,11 @@
 				return array('value' => $dayValue,'class' => 'error');
 			}
 		}
+		
+		public function mail($to = null) {
+			if ($this->request->is('get')) {
+				
+			}
+		}
 	}
 ?>
