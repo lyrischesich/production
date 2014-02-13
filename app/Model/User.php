@@ -59,6 +59,11 @@ class User extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+			
+			'notEqualToField' => array(
+				'rule' => array('notEqualToField', 'fname'),
+				'message' => 'Ein Administrator darf seinen Vornamen nicht als Passwort benutzen!'			
+			),
 		),
 		'tel1' => array(
 			'notEmpty' => array(
@@ -160,14 +165,18 @@ class User extends AppModel {
 			),
 			'equalToField' => array(
 				'rule' => array('equalToField', 'password'),
-				'message' => 'Die Passw&ouml;rter stimmen nicht &uuml;berein.'
-			)
+				'message' => 'Die Passwörter stimmen nicht überein.'
+			),
 		),
 	);
 	
 	function equalToField($array, $field) { 
 		return strcmp($this->data[$this->alias][key($array)], 
 					$this->data[$this->alias][$field]) == 0; 
+	}
+	
+	function notEqualToField($array, $field) {
+		return !equalToField($array, $field);
 	}
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

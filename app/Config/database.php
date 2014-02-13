@@ -64,11 +64,11 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		//'host' => 'localhost',
+// 		'host' => 'localhost',
 		'host' => 'nations.no-ip.org',
 		'login' => 'cafeteria',
 		'password' => 'apfelkuchen1',
-//		'database' => 'cafeteria_geschlossen',
+// 		'database' => 'cafeteria_geschlossen',
  		'database' => 'cafeteria_dev',
 // 		'database' => 'cafeteria_test',
 		'prefix' => '',

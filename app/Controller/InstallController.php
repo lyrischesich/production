@@ -32,8 +32,7 @@ class InstallController extends AppController {
 				return $this->redirect(array('action' => 'index'));
 			}
 			
-			$dbManager = new DatabaseManager();
-			$result = $dbManager->import($this->request->data['User']['File']['tmp_name']); 
+			$result = DatabaseManager::import($this->request->data['User']['File']['tmp_name']); 
 			if ($result === true) {
 				//Import erfolgreich
 				$this->Session->setFlash('Installation erfolgreich abgeschlossen.', 'alert-box', array('class' => 'alert-success'));
@@ -56,6 +55,7 @@ class InstallController extends AppController {
 			if ($this->User->save($this->request->data)) {
 				$currentUser = $this->User->find('first', array('conditions' => array('username' => $this->request->data['User']['username'])));
 				$this->Auth->login($currentUser['User']);
+				$this->Session->setFlash('Installation erfolgreich abgeschlossen.', 'alert-box', array('class' => 'alert-success'));
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Session->setFlash('Benutzer konnte nicht angelegt werden.', 'alert-box', array('class' => 'alert-error'));
@@ -63,7 +63,7 @@ class InstallController extends AppController {
 			
 		}
 		
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'omg'));
 	}
 	
 	public function beforeFilter() {
@@ -73,7 +73,7 @@ class InstallController extends AppController {
 		if ($this->User->find('count') > 0) {
 			return;
 		} else {
-			$this->Auth->allow("index", "import", "create");
+			$this->Auth->allow();
 		}
 	}
 	
