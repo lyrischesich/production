@@ -1,7 +1,14 @@
 <div class="columns form">
-<?php echo $this->Form->create('Column'); ?>
+<?php echo $this->Form->create('Column', array(
+	'inputDefaults' => array(
+		'div' => 'control-group',
+		'label' => array(
+			'class' => 'control-label'
+		)
+)
+)); ?>
 	<fieldset>
-		<legend><?php echo __('Neue Spalte anlegen'); ?></legend>
+		<legend><?php echo 'Neue Spalte anlegen'; ?></legend>
 	<?php
 		echo $this->Form->input('name', array('label' => 'Name'));
 		echo $this->Form->input('type', array('label' => 'Typ', 'type' => 'select', 'options' => array(1 => 'Text', 2 => 'Benutzer')));

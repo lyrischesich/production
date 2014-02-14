@@ -15,7 +15,6 @@
 		echo $this->Form->select('mi',$enumValues);
 		echo $this->Form->select('do',$enumValues);
 		echo $this->Form->select('fr',$enumValues);
-		echo $this->Form->input('admin');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

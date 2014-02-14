@@ -7,6 +7,7 @@ class ContactsController extends AppController {
 	public $paginate = array(
 			'fields' => array('User.lname','User.fname','User.tel1','User.tel2','User.mail','User.mo','User.di','User.mi','User.do','User.fr','User.leave_date'),
 			'limit' => 25,
+			'conditions' => array('User.leave_date' => null),
 			'order' => array(
 					'User.lname' => 'asc'
 			),
@@ -78,6 +79,7 @@ class ContactsController extends AppController {
 				$EMail->subject($this->request->data['Mail']['subject']);
 				$EMail->config('web');
 				$EMail->template('default');
+				$EMail->replyTo($senderMail);
 				$EMail->emailFormat('html');
 				$EMail->viewVars(array(
 						'senderName' => $senderName,
@@ -86,19 +88,25 @@ class ContactsController extends AppController {
 						'subject' => $this->request->data['Mail']['subject']
 						));
 				if ($EMail->send()) {
-					$this->Session->setFlash('Die Email wurde erfolgreich abgeschickt','alert-box',array('class' => 'alert alert-success'));
+					$this->Session->setFlash('Die Email wurde erfolgreich abgeschickt.','alert-box',array('class' => 'alert alert-success'));
+					$this->redirect(array('action' => 'index'));
 				} else {
-					$this->Session->setFlash('Es ist ein Fehler aufgetreten','alert-box',array('class' => 'alert-error'));
+					$this->Session->setFlash('Es ist ein Fehler aufgetreten.','alert-box',array('class' => 'alert-error'));
 				}
 				
 			} else {
 				//Gebe in einer Fehlermeldung aus, welche Adressen/Benutzernamen fehlerhaft sind
 				$invalidData = implode(',', $invalidData);
-				$string =  "Die Nachricht konnte nicht gesendet werden, da folgende Empfänger keine Mitarbeiter der Cafeteria sind:" . $invalidData;
+				$string =  "Die Nachricht konnte nicht gesendet werden, da folgende Empfänger keine Mitarbeiter der Cafeteria sind: " . $invalidData;
 				$this->Session->setFlash($string, 'alert-box',array('class' => 'alert alert-block alert-error'));
 			}
 		}
 
+	}
+
+	public function isAuthorized($user) {
+		//Jeder Benutzer darf die Kontaktliste aufrufen
+		return true;
 	}
 
 }

@@ -1,5 +1,6 @@
 <div class="changelogs view">
 <h2><?php echo __('Changelog'); ?></h2>
+<table cellpadding="0" cellspacing="0" class="table table-bordered">
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -44,6 +45,6 @@
 		<li><?php echo $this->Html->link(__('Edit Changelog'), array('action' => 'edit', $changelog['Changelog']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__('Delete Changelog'), array('action' => 'delete', $changelog['Changelog']['id']), null, __('Are you sure you want to delete # %s?', $changelog['Changelog']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Changelogs'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Changelog'), array('action' => 'add')); ?> </li>
+		<!--<li><?php echo $this->Html->link(__('New Changelog'), array('action' => 'add')); ?> </li>-->
 	</ul>
 </div>
