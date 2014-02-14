@@ -176,7 +176,7 @@ class User extends AppModel {
 	}
 	
 	function notEqualToField($array, $field) {
-		return !equalToField($array, $field);
+		return !$this->equalToField($array, $field);
 	}
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
