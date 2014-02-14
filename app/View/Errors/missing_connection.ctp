@@ -1,8 +1,8 @@
 <?php
 
 //Wenn dieser View aufgerufen wird, dann existiert die Datenbank noch nicht -> Erstellen
-
 App::uses('DatabaseManager', 'Model');
+SessionComponent::delete('Auth');
 
 //Testen, ob Zugriff auf den Datenbankserver besteht
 //wenn nicht -> Fehlermeldung

@@ -211,7 +211,7 @@ class User extends AppModel {
 	}
 	
 	/**
-	 * Die E-Mail Funktion der Telefonliste soll mehre Empfänger entgegennehmen können. Diese werden entweder mit 
+	 * Die E-Mail Funktion der Telefonliste soll mehrere Empfänger entgegennehmen können. Diese werden entweder mit 
 	 * ihrem Benuternamen, oder ihrer E-Mail Adresse angegeben. Diese Funktionen zerlegt den ankommenden String
 	 * in die einzelnen Empfänger uind validiert die E-Mail-Adressen. Zurückgegeben wird ein Array, welches zu jedem Empfänger
 	 * jeweils den eingegeben String, die E-Mail-Adresse aus der Datenbank und ein Feld mit dem Namen valid, welches angibt, ob

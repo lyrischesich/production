@@ -1,3 +1,9 @@
+<?php echo $this->element('actions',array(
+	'actions' => array(
+// 		'new' => array('text' => 'Neue Spalte','params' => array('action' => 'add'))
+	)));
+?>
+
 <div class="columns form">
 <?php echo $this->Form->create('Column', array(
 			'type' => 'post',

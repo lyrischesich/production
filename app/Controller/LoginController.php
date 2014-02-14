@@ -19,17 +19,18 @@ class LoginController extends AppController {
 				if ($this->Auth->user('leave_date') != null) {
 					//Der Benutzeraccount wurde deaktiviert
 					$this->Session->setFlash('Ihre Logindaten sind zwar korrekt, allerdings wurde Ihr Zugang deaktiviert.<br/>Sollten Sie wieder in der Cafeteria arbeiten wollen, wenden Sie sich bitte an das <a href="mailto:humboldt-cafeteria@versanet.de">Cafeteria-Team</a>.','alert-box',array('class' => 'alert alert-block'));
-					return $this->logout();
+					$this->logout(false);
 				}
-				
-				return $this->redirect($this->Auth->redirectUrl());
+				debug($this->request->data);
+// 				return $this->redirect($this->Auth->redirectUrl());
+				return $this->redirect('/contacts');
 			}
-			$this->Session->setFlash(__('Login fehlgeschlagen!'),'alert-box',array('class' => 'alert-error'));
+			$this->Session->setFlash('Login fehlgeschlagen!','alert-box',array('class' => 'alert-error'));
 		}
 	}
 	
-	public function logout() {
-		$this->Session->delete('Message');
+	public function logout($removeWarnings=true) {
+		if ($removeWarnings) $this->Session->delete('Message');
 		return $this->redirect($this->Auth->logout());
 	}
 	

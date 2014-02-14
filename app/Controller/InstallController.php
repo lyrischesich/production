@@ -63,7 +63,7 @@ class InstallController extends AppController {
 			
 		}
 		
-		return $this->redirect(array('action' => 'omg'));
+		return $this->redirect(array('action' => 'index'));
 	}
 	
 	public function beforeFilter() {
