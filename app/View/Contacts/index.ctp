@@ -1,31 +1,5 @@
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(".inactiveUser").hide();
-
-		$("#switchState").click(function() {
-
-			var state1 = "Zeige alle Benutzer";
-			var state2 = "Zeige nur aktive Benutzer";
-			
-			//$("#contactlist").fadeOut(300,function() {
-				$(".inactiveUser").toggle();
-				if ($("#switchState").text() == state1) {
-					$("#switchState").text(state2);
-					$("#stateHeadline").text(state1);
-				} else {
-					$("#switchState").text(state1);
-					$("#stateHeadline").text(state2);
-				//$("#contactlist").fadeIn();
-				}
-			//});				
-		});
-	});
-
-</script>
-
 <?php echo $this->element('actions',array(
 		'actions' => array(
-			'showAll' => array('text' => 'Zeige alle Benutzer','params' => array('target' => '#','id' => 'switchState')),
 			'sendMail' => array('text' => 'E-Mail verschicken','params' => array('controller' => 'contacts','action' => 'mail'))
 		)));
 ?>
@@ -37,7 +11,7 @@
 			<th><?php echo $this->Paginator->sort('fname','Vorname'); ?></th>
 			<th><?php echo $this->Paginator->sort('tel1','Tel1'); ?></th>
 			<th><?php echo $this->Paginator->sort('tel2','Tel2'); ?></th>
-			<th><?php echo $this->Paginator->sort('mail','EMail'); ?></th>
+			<th><?php echo $this->Paginator->sort('mail','E-Mail'); ?></th>
 			<th><?php echo $this->Paginator->sort('mo'); ?></th>
 			<th><?php echo $this->Paginator->sort('di'); ?></th>
 			<th><?php echo $this->Paginator->sort('mi'); ?></th>

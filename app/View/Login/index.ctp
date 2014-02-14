@@ -3,12 +3,12 @@
 <?php echo $this->Form->create('User'); ?>
     <fieldset>
         <legend>
-            <?php echo __('Bitte Benutzername und Passwort eingeben'); ?>
+            <?php echo 'Bitte Benutzername und Passwort eingeben'; ?>
         </legend>
     	<?php 
-	        echo $this->Form->input('username', array('label' => 'Benutzername', 'type' => 'text'));
-        	echo $this->Form->input('password', array('label' => 'Passwort'));
+	        echo $this->Form->input('username', array('label' => array('text' => 'Benutzername'), 'placeholder' => 'Benutzername'));
+        	echo $this->Form->input('password', array('label' => array('text' => 'Passwort'), 'placeholder' => 'Passwort'));
     	?>
     </fieldset>
-<?php echo $this->Form->end(__('Login')); ?>
+<?php echo $this->Form->end('Login'); ?>
 </div>

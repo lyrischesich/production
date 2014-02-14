@@ -1,10 +1,3 @@
- <script>
-$(function() {
-$( "#sortable" ).sortable();
-$( "#sortable" ).disableSelection();
-});
-</script>
-
 <?php echo $this->element('actions',array(
 	'actions' => array(
 		'new' => array('text' => 'Neue Spalte','params' => array('action' => 'add'))
@@ -59,9 +52,6 @@ $( "#sortable" ).disableSelection();
 	?>	</p>
 	<div class="paging">
 	<?php
-		//echo $this->Paginator->prev('< ' . __('Zurück'), array(), null, array('class' => 'prev disabled'));
-		//echo $this->Paginator->numbers(array('separator' => ''));
-		//echo $this->Paginator->next(__('Weiter') . ' >', array(), null, array('class' => 'next disabled'));
 		  echo $this->Paginator->pagination(array('div' => 'pagination'));
 	?>
 	</div>
