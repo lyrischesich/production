@@ -83,7 +83,7 @@ class ColumnsController extends AppController {
 		if (!$this->Column->exists()) {
 			throw new NotFoundException('Unbekannte Spalte');
 		}
-		$this->request->onlyAllow('post', 'delete');
+		$this->request->onlyAllow('post', 'delete', 'get');
 		if ($this->Column->delete()) {
 			$this->Session->setFlash('Die Spalte wurde gelöscht.', 'alert-box', array('class' => 'alert-success'));
 		} else {

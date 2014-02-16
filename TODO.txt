@@ -1,0 +1,6 @@
+/contacts: "Nur aktive Benutzer"-Label entfernen
+/contacts/mail: Einrückung der Textfelder angleichen
+Validierungsfehler hervorheben (per CSS)
+/columns: Spaltenname wird vor dem Löschen nicht angezeigt
+Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
+Datenbankübertragung: ehemalige Ferien nicht mehr als geschlossen, sondern als Specialdate interpretieren -> Benutzer # entfernen

@@ -21,9 +21,9 @@ class LoginController extends AppController {
 					$this->Session->setFlash('Ihre Logindaten sind zwar korrekt, allerdings wurde Ihr Zugang deaktiviert.<br/>Sollten Sie wieder in der Cafeteria arbeiten wollen, wenden Sie sich bitte an das <a href="mailto:humboldt-cafeteria@versanet.de">Cafeteria-Team</a>.','alert-box',array('class' => 'alert alert-block'));
 					$this->logout(false);
 				}
-				debug($this->request->data);
-// 				return $this->redirect($this->Auth->redirectUrl());
-				return $this->redirect('/contacts');
+				
+				return $this->redirect($this->Auth->redirectUrl());
+// 				return $this->redirect('/contacts');
 			}
 			$this->Session->setFlash('Login fehlgeschlagen!','alert-box',array('class' => 'alert-error'));
 		}

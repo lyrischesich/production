@@ -10,6 +10,11 @@ class InstallController extends AppController {
 		$maxUploadSize = ini_get('upload_max_filesize');
 		$this->set('maxUploadSizeString', $this->getMaxUploadSizeDisplayFormat($maxUploadSize));
 		$this->set('maxUploadSizeBytes', $this->return_bytes($maxUploadSize));
+		
+		//Mögliche Validierungsfehler nach einem möglichen Redirect wieder laden, um sie anzuzeigen
+		$this->User->validationErrors = $this->Session->read('InstallByCreateValidationErrors');
+		//und schließlich zu löschen
+		$this->Session->delete('InstallByCreateValidationErrors');
 	}
 	
 	public function import() {		
@@ -59,6 +64,9 @@ class InstallController extends AppController {
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Session->setFlash('Benutzer konnte nicht angelegt werden.', 'alert-box', array('class' => 'alert-error'));
+				
+				//Fehlerinformationen vor Redirect sichern
+				$this->Session->write('InstallByCreateValidationErrors', $this->User->validationErrors);
 			}
 			
 		}

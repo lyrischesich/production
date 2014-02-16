@@ -207,6 +207,10 @@ class User extends AppModel {
 	    if (isset($this->data[$this->alias]['password'])) {
 	        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 	    }
+	    if (isset($this->data[$this->alias]['password2'])) {
+	    	$this->data[$this->alias]['password2'] = AuthComponent::password($this->data[$this->alias]['password2']);
+	    }
+	    
 	    return true;
 	}
 	

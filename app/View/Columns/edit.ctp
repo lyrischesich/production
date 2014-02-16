@@ -1,7 +1,15 @@
+<?php echo $this->element('actions',array(
+		'actions' => array(
+			'list' => array('text' => 'Spalten anzeigen','params' => array('controller' => 'columns','action' => 'index')),
+			'add' => array('text' => 'Neue Spalte','params' => array('controller' => 'columns','action' => 'add')),
+			'delete' => array('text' => 'Spalte löschen','params' => array('controller' => 'columns', 'action' => 'delete', $this->Form->value('Column.id')))
+		)));
+?>
+
 <div class="columns form">
 <?php echo $this->Form->create('Column'); ?>
 	<fieldset>
-		<legend><?php echo __('Spalte bearbeiten'); ?></legend>
+		<legend><?php echo 'Spalte bearbeiten'; ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name', array('label' => 'Name'));
@@ -11,14 +19,6 @@
 
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Speichern')); ?>
+<?php echo $this->Form->end('Speichern'); ?>
 </div>
-<div class="actions">
-	<h3><?php echo __('Aktionen'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Löschen'), array('action' => 'delete', $this->Form->value('Column.id')), null, __('Wollen sie wirklich die Spalte "%s" löschen?', $this->Form->value('Column.name'))); ?></li>
-		<li><?php echo $this->Html->link('Spalten anzeigen', array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link('Neue Spalte', array('action' => 'add')); ?> </li>
-	</ul>
 </div>

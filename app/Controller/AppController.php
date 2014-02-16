@@ -55,7 +55,7 @@ class AppController extends Controller {
 		'logoutRedirect' => array('controller' => 'login', 'action' => 'index'),
 
 		//Die angezeigte Fehlermeldung, wenn man eine Seite ohne Login aufruft 
-        'authError' => 'F&uuml;r diese Funktion ist ein Login notwendig',
+        'authError' => 'Für diese Funktion ist ein Login notwendig.',
         
 		//Legt fest, wo grundlegende Autorisierung stattfindet -> im Controller
 		'authorize' => array('Controller')
