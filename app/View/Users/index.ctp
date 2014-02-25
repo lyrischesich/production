@@ -2,39 +2,37 @@
 	<div class="well sidebar-nav">
 		<ul class="nav nav-list">
 		<li class="nav-header"> Aktionen </li>
-		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Columns'), array('controller' => 'columns', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Column'), array('controller' => 'columns', 'action' => 'add')); ?> </li>
-		<?php echo $this->element('staticActions'); ?>
+		<li><?php echo $this->Html->link('New User', array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link('List Columns', array('controller' => 'columns', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('New Column', array('controller' => 'columns', 'action' => 'add')); ?> </li>
+		<?php echo $this->element('actions'); ?>
 		</ul>
 	</div>
 </div>
 <div class="span9">
-	<h2><?php echo __('Users'); ?></h2>
+	<h2><?php echo 'Benutzer'; ?></h2>
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
 	<tr>
-			<th><?php echo $this->Paginator->sort('username'); ?></th>
-			<th><?php echo $this->Paginator->sort('fname'); ?></th>
-			<th><?php echo $this->Paginator->sort('lname'); ?></th>
-			<th><?php echo $this->Paginator->sort('password'); ?></th>
-			<th><?php echo $this->Paginator->sort('tel1'); ?></th>
-			<th><?php echo $this->Paginator->sort('tel2'); ?></th>
-			<th><?php echo $this->Paginator->sort('mail'); ?></th>
-			<th><?php echo $this->Paginator->sort('leave_date'); ?></th>
-			<th><?php echo $this->Paginator->sort('mo'); ?></th>
-			<th><?php echo $this->Paginator->sort('di'); ?></th>
-			<th><?php echo $this->Paginator->sort('mi'); ?></th>
-			<th><?php echo $this->Paginator->sort('do'); ?></th>
-			<th><?php echo $this->Paginator->sort('fr'); ?></th>
-			<th><?php echo $this->Paginator->sort('admin'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+			<th><?php echo $this->Paginator->sort('Benutzername'); ?></th>
+			<th><?php echo $this->Paginator->sort('Vorname'); ?></th>
+			<th><?php echo $this->Paginator->sort('Nachname'); ?></th>
+			<th><?php echo $this->Paginator->sort('Telefonnummer 1'); ?></th>
+			<th><?php echo $this->Paginator->sort('Telefonnummer 2'); ?></th>
+			<th><?php echo $this->Paginator->sort('E-mail-Adresse'); ?></th>
+			<th><?php echo $this->Paginator->sort('Ausstiegsdatum'); ?></th>
+			<th><?php echo $this->Paginator->sort('Mo'); ?></th>
+			<th><?php echo $this->Paginator->sort('Di'); ?></th>
+			<th><?php echo $this->Paginator->sort('Mi'); ?></th>
+			<th><?php echo $this->Paginator->sort('Do'); ?></th>
+			<th><?php echo $this->Paginator->sort('Fr'); ?></th>
+			<th><?php echo $this->Paginator->sort('Admin'); ?></th>
+			<th class="actions"><?php echo 'Actions'; ?></th>
 	</tr>
 	<?php foreach ($users as $user): ?>
 	<tr>
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['fname']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['lname']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['password']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['tel1']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['tel2']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['mail']); ?>&nbsp;</td>
@@ -46,9 +44,9 @@
 		<td><?php echo h($user['User']['fr']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['admin']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['username'])); ?>
+			<?php echo $this->Html->link('View', array('action' => 'view', $user['User']['id'])); ?>
+			<?php echo $this->Html->link('Edit', array('action' => 'edit', $user['User']['id'])); ?>
+			<?php echo $this->Form->postLink('Delete', array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['username'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

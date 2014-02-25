@@ -64,14 +64,14 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-// 		'host' => 'nations.no-ip.org',
+//		'host' => 'localhost',
+		'host' => 'nations.no-ip.org',
 		'login' => 'cafeteria',
 		'password' => 'apfelkuchen1',
 // 		'password' => 'apfelkuchen0',
 // 		'database' => 'cafeteria_geschlossen',
- 		'database' => 'cafeteria_dev',
-// 		'database' => 'cafeteria_test',
+// 		'database' => 'cafeteria_dev',
+ 		'database' => 'cafeteria_test',
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);

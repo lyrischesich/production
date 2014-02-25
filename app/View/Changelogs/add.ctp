@@ -10,7 +10,7 @@
 		echo $this->Form->input('shift');
 		echo $this->Form->input('user_did');
 		//'for_date' = ;
-		'change_date' => _getDate();
+		//'change_date' => _getDate();
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

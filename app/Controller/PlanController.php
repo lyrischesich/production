@@ -2,13 +2,14 @@
 
 class PlanController extends AppController {
 	
-	public $uses = array('Specialdate','ColumnsUser','ColumnsText');
+	//public $uses = array('Specialdate','ColumnsUser','ColumnsText');
+	public $uses = array('Plan');
 	public $helpers = array('Js','Time');
 	public $components = array('Paginator','Session');
 
 	public function index() {
-		$time = time();
-		debug($this->Time->nice($time));
+		
+		debug($this->Plan->getCurrentMonth());
 		
 	}
 }
