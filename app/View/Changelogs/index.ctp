@@ -16,9 +16,9 @@
 		<td><?php echo h($changelog['Changelog']['id']); ?>&nbsp;</td>
 		<td><?php echo h($changelog['Changelog']['for_date']); ?>&nbsp;</td>
 		<td><?php echo h($changelog['Changelog']['change_date']); ?>&nbsp;</td>
-		<td><?php echo h($changelog['Changelog']['name_before']); ?>&nbsp;</td>
-		<td><?php echo h($changelog['Changelog']['name_after']); ?>&nbsp;</td>
-		<td><?php echo h($changelog['Changelog']['shift']); ?>&nbsp;</td>
+		<td><?php echo h($changelog['Changelog']['value_before']); ?>&nbsp;</td>
+		<td><?php echo h($changelog['Changelog']['value_after']); ?>&nbsp;</td>
+		<td><?php echo h($changelog['Changelog']['column_name']); ?>&nbsp;</td>
 		<td><?php echo h($changelog['Changelog']['user_did']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $changelog['Changelog']['id'])); ?>

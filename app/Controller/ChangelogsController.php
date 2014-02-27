@@ -8,6 +8,14 @@ App::uses('AppController', 'Controller');
  */
 class ChangelogsController extends AppController {
 
+public $paginate = array(
+			'fields' => array('Changelog.id','Changelog.for_date','Changelog.change_date','Changelog.value_before','Changelog.value_after','Changelog.column_name','Changelog.user_did'),
+			'limit' => 25,
+			//'conditions' => array('User.value_before.leave_date' => null),
+			'order' => array(
+					'Changelog.ChangeDate' => 'desc'
+			),
+	);
 /**
  * Components
  *

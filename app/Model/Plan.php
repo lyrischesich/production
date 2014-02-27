@@ -45,12 +45,19 @@ class Plan extends AppModel {
 			$currentDate = $datetime->format('Y-m-d');
 			$data = array();
 			
+			$data['specialdate'] = in_array($currentDate, $specialdates);
+
 			$columnsUsers = new ColumnsUser();
 			$columnsUsers = $columnsUsers->find('all', array('recursive'=>-1, 'conditions' => array('date' => $currentDate)));
 			
 			foreach ($columnsUsers as $columnUser) {
 				//Bug/Formatfehler: Bei zweigeteilten Diensten wird der zweite überschrieben
-				$data[$columnUser['ColumnsUser']['column_id']] = $columnUser;
+				if ($columnUser['ColumnsUser']['half_shift'] == 3) {
+					$data[$columnUser['ColumnsUser']['column_id']][1] = $columnUser['ColumnsUser']['user_id'];
+					$data[$columnUser['ColumnsUser']['column_id']][2] = $columnUser['ColumnsUser']['user_id'];
+				} else {
+					$data[$columnUser['ColumnsUser']['column_id']][$columnUser['ColumnsUser']['half_shift']] = $columnUser['ColumnsUser']['user_id'];
+				}
 			}
 			
 			
