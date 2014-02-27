@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
  * ColumnsText Model
  *
  */
-class ColumnsText extends AppModel {
+class Comment extends AppModel {
 
 /**
  * Use table

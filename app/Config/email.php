@@ -67,6 +67,7 @@ class EmailConfig {
 		'port' => 587,
 		'username' => 'cafeteriaprojekt@web.de',
 		'password' => 'apfelkuchen0',
+		'replyTo' => 'humboldt-cafeteria@versanet.de'
 	);
 
 	public $fast = array(

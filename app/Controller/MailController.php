@@ -26,7 +26,6 @@ class MailController extends AppController {
 			$EMail->subject($this->request->data['Mail']['subject']);
 			$EMail->config('web');
 			$EMail->template('default');
-			$EMail->replyTo($senderMail);
 			$EMail->emailFormat('html');
 			$EMail->viewVars(array(
 					'senderName' => $senderName,
