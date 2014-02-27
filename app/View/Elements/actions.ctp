@@ -11,7 +11,16 @@
 		<li class="nav-header">
 			Statische Aktionen
 		</li>
-		<?php 
+		<?php
+		if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+			echo "<li>";
+			echo $this->Html->link('Rundmail verfassen', array(
+					'controller' => 'mail',
+					'action' => 'index'
+			));
+			echo "</li>";
+		}
+		
 		if (AuthComponent::user('id')) {
 			echo "<li>";
 			echo $this->Html->link('Logout',array(
@@ -19,7 +28,7 @@
 				'action' => 'logout'	
 				));
 			echo "</li>";
-		} 
+		}
 		?>
 		</ul>	
 	</div>

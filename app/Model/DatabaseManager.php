@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `changelogs` (
   `column_name` varchar(50) NOT NULL,
   `user_did` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -117,23 +117,23 @@ CREATE TABLE IF NOT EXISTS `columns` (
   `order` smallint(4) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1  ;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `columns_text`
+-- Tabellenstruktur für Tabelle `comments`
 --
 
-DROP TABLE IF EXISTS `columns_text`;
-CREATE TABLE IF NOT EXISTS `columns_text` (
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `message` varchar(200) NOT NULL,
   `column_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `column_id` (`column_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `columns_users` (
   PRIMARY KEY (`id`),
   KEY `column_id` (`column_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
 
 -- --------------------------------------------------------
 
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admin` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
 
 --
 -- Constraints der exportierten Tabellen

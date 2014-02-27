@@ -6,11 +6,10 @@
 		echo $this->Form->input('username');
 		echo $this->Form->input('fname');
 		echo $this->Form->input('lname');
-		echo $this->Form->input('password');
+		echo $this->Form->input('passwd');
 		echo $this->Form->input('tel1');
 		echo $this->Form->input('tel2');
 		echo $this->Form->input('mail');
-		echo $this->Form->input('admin');
 	?>
 	<table cellpadding = "0" cellspacing = "0" class = "table table-bordered">
 	<colgroup>
@@ -23,7 +22,7 @@
 	</tr>
 	<tr>
 		<td><?php echo "H"; ?></td>
-		<td><?php echo "Eine der zwei halben Schichten"; ?></td>
+		<td><?php echo "Halbe Schicht"; ?></td>
 	</tr>
 	<tr>
 		<td><?php echo "1"; ?></td>
@@ -45,12 +44,13 @@
 		echo $this->Form->select('mi',$enumValues);
 		echo $this->Form->select('do',$enumValues);
 		echo $this->Form->select('fr',$enumValues);
+		echo $this->Form->input('admin');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo 'Actions'; ?></h3>
+	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 
 		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>

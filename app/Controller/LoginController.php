@@ -23,7 +23,6 @@ class LoginController extends AppController {
 				}
 				
 				return $this->redirect($this->Auth->redirectUrl());
-// 				return $this->redirect('/contacts');
 			}
 			$this->Session->setFlash('Login fehlgeschlagen!','alert-box',array('class' => 'alert-error'));
 		}

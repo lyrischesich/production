@@ -1,37 +1,42 @@
 <div class="users view">
-<h2><?php echo 'Benutzer'; ?></h2>
+<h2><?php echo __('User'); ?></h2>
 	<dl>
-		<dt><?php echo 'Benutzername'; ?></dt>
+		<dt><?php echo __('Username'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['username']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'Vorname'; ?></dt>
+		<dt><?php echo __('Fname'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['fname']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'Nachname'; ?></dt>
+		<dt><?php echo __('Lname'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['lname']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'Telefonnummer 1'; ?></dt>
+		<dt><?php echo __('Passwd'); ?></dt>
+		<dd>
+			<?php echo h($user['User']['passwd']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Tel1'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['tel1']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'Telefonnummer 2'; ?></dt>
+		<dt><?php echo __('Tel2'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['tel2']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'E-Mail Adresse'; ?></dt>
+		<dt><?php echo __('Mail'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['mail']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo 'Ausstiegsdatum'; ?></dt>
+		<dt><?php echo __('Leave Date'); ?></dt>
 		<dd>
 			<?php echo h($user['User']['leave_date']); ?>
 			&nbsp;
@@ -110,7 +115,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link('New Column', array('controller' => 'columns', 'action' => 'add')); ?></li>
+			<li><?php echo $this->Html->link(__('New Column'), array('controller' => 'columns', 'action' => 'add')); ?> </li>
 		</ul>
 	</div>
 </div>
