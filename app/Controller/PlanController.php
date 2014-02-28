@@ -34,11 +34,13 @@ class PlanController extends AppController {
 			$results[$specialdate['Specialdate']['date']]['specialdate'] = null;
 		}
 
-		//TODO verallgemeinern
-		setlocale (LC_TIME, 'de_DE');
-		foreach (array_keys($results) as $dates) {
-			$datetime = new Datetime($dates);
-			$results[$dates]['dow'] = $datetime->format('D');
+		//auf Deutsch umstellen		
+		setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
+		
+		//Wochentag(dow=DayOfWeek) und Wochenende angeben
+		foreach (array_keys($results) as $date) {
+			$results[$date]['dow'] = strftime('%a', strtotime($date));
+			$results[$date]['weekend'] = date('N', strtotime($date)) >= 6;
 		}
 
 		$this->set('results', $results);
