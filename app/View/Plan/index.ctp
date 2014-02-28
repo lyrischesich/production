@@ -21,6 +21,5 @@
 	<?php endforeach; ?>
 </table>
 <?php debug($results); ?>
-<?php debug($columns); ?>
 
 </div>

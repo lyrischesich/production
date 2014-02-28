@@ -34,13 +34,14 @@ class PlanController extends AppController {
 			$results[$specialdate['Specialdate']['date']]['specialdate'] = null;
 		}
 
-//		$datetime 
+		//TODO verallgemeinern
+		setlocale (LC_TIME, 'de_DE');
 		foreach (array_keys($results) as $dates) {
-			//if (array_k
+			$datetime = new Datetime($dates);
+			$results[$dates]['dow'] = $datetime->format('D');
 		}
 
 		$this->set('results', $results);
-		$this->set('dates', $specialdates);
 		//Spalten übergeben
 		$columns = $this->Column->find('all', array('recursive' => -1, 'order' => array('Column.order' => 'ASC')));
 		$this->set('columns', $columns);
