@@ -54,15 +54,15 @@ class Plan extends AppModel {
 			foreach ($columnsUsers as $columnUser) {
 				//Benutzereinträge laden
 				if ($columnUser['ColumnsUser']['half_shift'] == 3) {
-					$data[$columnUser['ColumnsUser']['column_id']][1] = $columnUser['ColumnsUser']['user_id'];
-					$data[$columnUser['ColumnsUser']['column_id']][2] = $columnUser['ColumnsUser']['user_id'];
+					$data[$columnUser['ColumnsUser']['column_id']][1] = array('userid' => $columnUser['ColumnsUser']['user_id']);
+					$data[$columnUser['ColumnsUser']['column_id']][2] = array('userid' => $columnUser['ColumnsUser']['user_id']);
 					
 					if (in_array($columnUser['ColumnsUser']['column_id'], $obligatedColumns) && !array_key_exists($columnUser['ColumnsUser']['column_id'].'_1', $insertedData) && !array_key_exists($columnUser['ColumnsUser']['column_id'].'_2', $insertedData)) {
 						$insertedData[$columnUser['ColumnsUser']['column_id'].'_1'] = null;
 						$insertedData[$columnUser['ColumnsUser']['column_id'].'_2'] = null;
 					}
 				} else {
-					$data[$columnUser['ColumnsUser']['column_id']][$columnUser['ColumnsUser']['half_shift']] = $columnUser['ColumnsUser']['user_id'];
+					$data[$columnUser['ColumnsUser']['column_id']][$columnUser['ColumnsUser']['half_shift']] = array('userid' => $columnUser['ColumnsUser']['user_id']);
 					
 					if (in_array($columnUser['ColumnsUser']['column_id'], $obligatedColumns) && !array_key_exists($columnUser['ColumnsUser']['column_id'].'_'.$columnUser['ColumnsUser']['half_shift'], $insertedData)) {
 						$insertedData[$columnUser['ColumnsUser']['column_id'].'_'.$columnUser['ColumnsUser']['half_shift']] = null;
