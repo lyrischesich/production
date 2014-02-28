@@ -4,7 +4,6 @@
 		)));
 ?>
 	<h2>Telefonliste</h2>
-	<i><h6 id="stateHeadline">Nur aktive Benutzer</h6></i>
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered" id="contactlist">
 		<tr>
 			<th><?php echo $this->Paginator->sort('lname','Nachname'); ?></th>

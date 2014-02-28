@@ -37,7 +37,7 @@ class Plan extends AppModel {
 		//Zur Vollständigkeitsüberprüfung zu erwartende Anzahl an Einträgen ermitteln
 		$expectedCount = $this->getExpectedEntryCountPerDay();
 		$requiredColumns = new Column();
-		$requiredColumns = $requiredColumns->find('all', array('conditions' => array('Column.obligated' => 1)));
+		$requiredColumns = $requiredColumns->find('all', array('required' => 1, 'conditions' => array('Column.obligated' => 1)));
 		$obligatedColumns = array();
 		foreach ($requiredColumns as $requiredColumn) {
 			array_push($obligatedColumns, $requiredColumn['Column']['id']);
@@ -105,7 +105,7 @@ class Plan extends AppModel {
 		
 		$columns = new Column();
 		//Nur obligated-Spalten müssen belegt werden
-		$columns = $columns->find('all', array('conditions' => array('Column.obligated' => 1)));
+		$columns = $columns->find('all', array('recursive' => -1, 'conditions' => array('Column.obligated' => 1)));
 
 		foreach ($columns as $column) {
 			if ($column['Column']['type'] == 1) {

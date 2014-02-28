@@ -8,30 +8,33 @@ App::uses('AppController', 'Controller');
  */
 class ChangelogsController extends AppController {
 
-public $paginate = array(
-			'fields' => array('Changelog.id','Changelog.for_date','Changelog.change_date','Changelog.value_before','Changelog.value_after','Changelog.column_name','Changelog.user_did'),
-			'limit' => 25,
-			//'conditions' => array('User.value_before.leave_date' => null),
-			'order' => array(
-					'Changelog.ChangeDate' => 'desc'
-			),
-	);
 /**
  * Components
  *
  * @var array
  */
 	public $components = array('Paginator');
+	
+	public $paginate = array(
+			'fields' => array('Changelog.for_date','Changelog.change_date','Changelog.value_before','Changelog.value_after','Changelog.column_name','Changelog.user_did'),
+			'limit' => 25,
+			'order' => array(
+					'Changelog.change_date' => 'desc'
+			),
+	);
 
 /**
  * index method
  *
  * @return void
  */
-	public function index() {
+	public function index($count=50) {
 		$this->Changelog->recursive = 0;
+		$this->paginate['limit'] = $count;
+		$this->Paginator->settings = $this->paginate;				
 		$this->set('changelogs', $this->Paginator->paginate());
 	}
+
 
 /**
  * view method
