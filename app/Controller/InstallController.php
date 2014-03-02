@@ -92,7 +92,7 @@ class InstallController extends AppController {
 	
 	//Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
 	//und kann hier exakt so verwendet werden
-	function return_bytes($val) {
+	private function return_bytes($val) {
 		$val = trim($val);
 		$last = strtolower($val[strlen($val)-1]);
 		switch($last) {
@@ -109,7 +109,7 @@ class InstallController extends AppController {
 	}
 	
 	
-	function getMaxUploadSizeDisplayFormat($origValue) {
+	private function getMaxUploadSizeDisplayFormat($origValue) {
 		$val = trim($origValue);
 		$last = strtolower($val[strlen($val)-1]);
 		switch($last) {

@@ -3,14 +3,15 @@ require_once APP.DS."Config".DS."database.php";
 class DatabaseManager {
 	
 	public $name = 'DatabaseManager';
+	public $useTable = false;
 	
-	static $connection;
+	private static $connection;
 	
-	static $dbconf;
-	static $host;
-	static $user;
-	static $password;
-	static $db;
+	private static $dbconf;
+	private static $host;
+	private static $user;
+	private static $password;
+	private static $db;
 	
 	static function connect($autoSelectDB=true) {
 		self::$dbconf = new DATABASE_CONFIG();
@@ -36,18 +37,24 @@ class DatabaseManager {
 		$content = file_get_contents($dump_file);
 		
 		$sqls = explode(";", $content);
+		mysql_query('SET FOREIGN_KEY_CHECKS=0');
 		
 		foreach ($sqls as $sql) {
 			mysql_query($sql, self::$connection);
+			//Fehlerprüfung - "Query was empty" passiert, wenn nur Kommentare "ausgeführt" wurden und kein SQL, ist aber kein wirklicher Fehler
+			if (mysql_error() != '' && mysql_error() != 'Query was empty') {
+				return "Beim Importieren der Datenbank ist ein Fehler aufgetreten.<br/>Bitte überprüfen Sie die Integrität der Datenbank.";
+			}
 		}
-		
-		if (mysql_error() != '') {
-			return "Beim Importieren der Datenbank ist ein Fehler aufgetreten.<br/>Bitte überprüfen Sie die Integrität der Datenbank.";
-		}
+		mysql_query('SET FOREIGN_KEY_CHECKS=1');
 		
 		mysql_close();
 		
 		return true;
+	}
+	
+	public static function export($encrypt=false) {
+		return "Hier kommt ein (verschlüsselter) SQL-Dump\nZeile zwo";
 	}
 	
 	public static function createDatabaseStructure() {

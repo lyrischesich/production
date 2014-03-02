@@ -1,6 +1,12 @@
+/backup: Aussehen ok?
+/backup: Aktion "Zustand wiederherstellen" entfernen?
 /contacts: "Nur aktive Benutzer"-Label entfernen
-/contacts/mail: Einrückung der Textfelder angleichen
-Validierungsfehler hervorheben (per CSS)
+/contacts: "sie" im ersten Satz groß schreiben
+/contacts/mail: Rundmail-Verweis rausnehmen/nur für Admins anzeigen, evtl. Rundmail-Link aus der Seitenleiste nehmen
+/contacts/mail: Seiteleiste ist weiter rechts als normalerweise
+/changelogs: Überschrift auf Deutsch ändern, Paginator: Formulierung?
+/changelogs: irgendwelche Probleme unten auf der Seite
+/changelogs: Validierung des Parameters, u. U. Weniger-Option nicht anzeigen
 /columns: Spaltenname wird vor dem Löschen nicht angezeigt
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
-Datenbankübertragung: ehemalige Ferien nicht mehr als geschlossen, sondern als Specialdate interpretieren -> Benutzer # entfernen
+Datenbankübertragung: Probleme mit Zeichensätzen klären
