@@ -1,14 +1,14 @@
 Generiere die Überschriften (aufgrund von Benutzerspalten müssen diese aus zwei Teilfeldern bestehen, die aber zu einem vereinigt werden 
 
 Für jedes Datum tue
-	Setze die farbliche Gestaltung der Spalte nach folgenden Regeln:
+	Setze die farbliche Gestaltung der Zeile nach folgenden Regeln:
 		Ist es Wochenende oder (ein normaler Tag und ein Specialdate), so wird nicht gearbeitet -> neutral
 		Ist es ein normaler Tag oder (Wochenende und Specialdate)
 			alle Dienste vollständig belegt -> gut
 			nicht alle Dienste vollständig belegt -> schlecht
 	
-	Füge die Spalte mit dem Wochentag ein
-	Füge die Spalte mit dem Datum ein
+	Füge die Zelle mit dem Wochentag ein
+	Füge die Zelle mit dem Datum ein
 	
 	Für jede andere Spalte tue
 	//zweitrangig

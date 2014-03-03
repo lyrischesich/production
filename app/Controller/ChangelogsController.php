@@ -29,10 +29,16 @@ class ChangelogsController extends AppController {
  * @return void
  */
 	public function index($count=50) {
+		if ($count <= 0) $count = 50;
 		$this->Changelog->recursive = 0;
 		$this->paginate['limit'] = $count;
 		$this->Paginator->settings = $this->paginate;				
 		$this->set('changelogs', $this->Paginator->paginate());
+		if ($count < 51){
+			$this->set('displayLess', false);
+		} else {
+			$this->set('displayLess', true);
+		}
 	}
 
 

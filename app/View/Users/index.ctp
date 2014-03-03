@@ -1,13 +1,5 @@
-<div class="span2">
-	<div class="well sidebar-nav">
-		<ul class="nav nav-list">
-		<li class="nav-header"> Aktionen </li>
-		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Columns'), array('controller' => 'columns', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Column'), array('controller' => 'columns', 'action' => 'add')); ?> </li>
-		<?php echo $this->element('staticActions'); ?>
-		</ul>
-	</div>
+<?php echo $this->element('actions', array( 'actions' => array(
+	'New User' => array('text' => 'Neuen Benutzer einfügen', 'params' => array('controller' => 'Users', 'action' => 'add'))))); ?>
 </div>
 <div class="span9">
 	<h2><?php echo 'Benutzer'; ?></h2>
@@ -16,7 +8,6 @@
 			<th><?php echo $this->Paginator->sort('username', 'Benutzername'); ?></th>
 			<th><?php echo $this->Paginator->sort('fname', 'Vorname'); ?></th>
 			<th><?php echo $this->Paginator->sort('lname', 'Nachname'); ?></th>
-			<th><?php echo $this->Paginator->sort('password', 'Passwort'); ?></th>
 			<th><?php echo $this->Paginator->sort('tel1', 'Telefonnummer 1'); ?></th>
 			<th><?php echo $this->Paginator->sort('tel2', 'Telefonnummer 2'); ?></th>
 			<th><?php echo $this->Paginator->sort('mail', 'E-Mail Adresse'); ?></th>
@@ -34,7 +25,6 @@
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['fname']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['lname']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['password']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['tel1']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['tel2']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['mail']); ?>&nbsp;</td>
@@ -46,9 +36,9 @@
 		<td><?php echo h($user['User']['fr']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['admin']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['username'])); ?>
+			<?php echo $this->Html->link('View', array('action' => 'view', $user['User']['id'])); ?>
+			<?php echo $this->Html->link('Edit', array('action' => 'edit', $user['User']['id'])); ?>
+			<?php echo $this->Form->postLink('Delete', array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['username'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -56,7 +46,7 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Seite {:page} aus {:pages}, zeigt {:current} Einträge aus insgesamt {:count}, Anfang bei Eintrag #{:start}, Ende bei Eintrag #{:end}')
+	'format' => __('Seite {:page} aus {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag #{:start}, Ende bei Eintrag #{:end}')
 	));
 	?>	</p>
 	<!-- <div class="p">  -->

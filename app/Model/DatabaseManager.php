@@ -36,14 +36,14 @@ class DatabaseManager {
 					
 		$content = file_get_contents($dump_file);
 		
-		$sqls = explode(";", $content);
+		$sqls = explode(';', $content);
 		mysql_query('SET FOREIGN_KEY_CHECKS=0');
 		
 		foreach ($sqls as $sql) {
 			mysql_query($sql, self::$connection);
 			//Fehlerprüfung - "Query was empty" passiert, wenn nur Kommentare "ausgeführt" wurden und kein SQL, ist aber kein wirklicher Fehler
 			if (mysql_error() != '' && mysql_error() != 'Query was empty') {
-				return "Beim Importieren der Datenbank ist ein Fehler aufgetreten.<br/>Bitte überprüfen Sie die Integrität der Datenbank.";
+				return 'Beim Importieren der Datenbank ist ein Fehler aufgetreten.<br/>Bitte überprüfen Sie die Integrität der Datenbank.';
 			}
 		}
 		mysql_query('SET FOREIGN_KEY_CHECKS=1');
@@ -54,7 +54,20 @@ class DatabaseManager {
 	}
 	
 	public static function export($encrypt=false) {
-		return "Hier kommt ein (verschlüsselter) SQL-Dump\nZeile zwo";
+		if (!self::$connection) {
+			self::connect();
+		}		
+		$dump = '';
+		$tables = mysql_query('SHOW TABLES');
+
+		while ($table = mysql_fetch_row($tables)) {
+			$creation  = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table[0]));
+			$dump .= "\n\n\nDROP TABLE IF EXISTS `".$table[0]."`\n".$creation[1];
+		}
+
+		mysql_close();
+
+		return $dump;
 	}
 	
 	public static function createDatabaseStructure() {
@@ -206,8 +219,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Constraints der Tabelle `columns_text`
 --
-ALTER TABLE `columns_text`
-  ADD CONSTRAINT `columns_text_ibfk_2` FOREIGN KEY (`column_id`) REFERENCES `columns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`column_id`) REFERENCES `columns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `columns_users`
@@ -223,6 +236,8 @@ ALTER TABLE `columns_users`
 		$sql = explode(';', $sql);
 		foreach ($sql as $sqlString)
 			mysql_query($sqlString);
+
+		mysql_close();
 	}
 }
 ?>
