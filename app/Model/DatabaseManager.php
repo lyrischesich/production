@@ -57,19 +57,58 @@ class DatabaseManager {
 		if (!self::$connection) {
 			self::connect();
 		}		
-		$dump = '';
+
+		$tableActions = array();
+		$insertString = '';
+
 		$tables = mysql_query('SHOW TABLES');
 
 		while ($table = mysql_fetch_row($tables)) {
-			$creation  = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table[0]));
-			$dump .= "\n\n\nDROP TABLE IF EXISTS `".$table[0]."`\n".$creation[1];
+			//Stuktur exportieren
+			$creationString  = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table[0]));
+			$insertString = "DROP TABLE IF EXISTS `".$table[0]."`;\n".$creationString[1].";";
+
+
+			$fields = mysql_query('DESCRIBE `'.$table[0]."`");
+			$insertString .= "\n\nINSERT INTO `".$table[0]."` (".self::getInsertionHeadFormat($fields).") VALUES \n";
+
+			$data = mysql_query('SELECT * FROM `'.$table[0]."`");
+			$insertString .= self::getInsertionValueFormat($data).";";
+
+			array_push($tableActions, $insertString);
 		}
 
 		mysql_close();
 
-		return $dump;
+		return implode("\n\n\n", $tableActions);
+	}
+
+	private static function getInsertionHeadFormat($fields) {
+		$fieldNames = array();
+		while ($field = mysql_fetch_row($fields)) {
+			array_push($fieldNames, "`".$field[0]."`");
+		}
+		return implode(", ", $fieldNames);
 	}
 	
+	private static function getInsertionValueFormat($data) {
+		$values = array();		
+		$lines = array();
+		while ($row = mysql_fetch_row($data)) {
+			foreach ($row as $value) {
+				if (is_null($value)) {
+					array_push($values, "NULL");
+				} else
+				array_push($values, "'".$value."'");
+			}
+			
+			array_push($lines, "(".implode(', ', $values).")");
+			$values = array();
+		}
+
+		return implode(",\n", $lines);
+	}
+
 	public static function createDatabaseStructure() {
 		if (!self::$connection) {
 			self::connect(false);
