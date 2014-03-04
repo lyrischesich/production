@@ -8,3 +8,5 @@
 /columns: Spaltenname wird vor dem Löschen nicht angezeigt
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 Datenbankübertragung: Probleme mit Benutzerid's lösen
+Datenbank: Collation auf Deutsch stellen? / ist das nötig?
+Datenbank: Frau Wagner wegen Z?fle und Neu anschreiben
