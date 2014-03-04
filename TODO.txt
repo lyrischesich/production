@@ -1,10 +1,10 @@
 /backup: Aussehen ok?
 /backup: Aktion "Zustand wiederherstellen" entfernen?
+/backup/export: auf eventuelle Codierungsprobleme prüfen (Android, MacOS, iOS)
 /contacts: "Nur aktive Benutzer"-Label entfernen
 /contacts: "sie" im ersten Satz groß schreiben
 /contacts/mail: Rundmail-Verweis rausnehmen/nur für Admins anzeigen, evtl. Rundmail-Link aus der Seitenleiste nehmen
 /contacts/mail: Seiteleiste ist weiter rechts als normalerweise
 /columns: Spaltenname wird vor dem Löschen nicht angezeigt
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
-Datenbankübertragung: Probleme mit Zeichensätzen klären
-/install/create TESTEN
+Datenbankübertragung: Probleme mit Benutzerid's lösen

@@ -1,5 +1,8 @@
 <?php
 require_once APP.DS."Config".DS."database.php";
+//Der Präfix, der kennzeichnet, dass die Datei verschlüsselt ist.
+//Sollte auf \n enden
+define('ENCRYPTIONSIGNAL', "powered by encrypter15k\n");
 class DatabaseManager {
 	
 	public $name = 'DatabaseManager';
@@ -36,6 +39,12 @@ class DatabaseManager {
 					
 		$content = file_get_contents($dump_file);
 		
+		//Möglicherweise muss der Inhalt erst entschlüsselt werden
+		if (strpos($content, ENCRYPTIONSIGNAL) === 0) {
+			$content = Security::rijndael(base64_decode(substr($content, strlen(ENCRYPTIONSIGNAL))), Configure::read('Security.key'), 'decrypt');
+		}
+		
+		
 		$sqls = explode(';', $content);
 		mysql_query('SET FOREIGN_KEY_CHECKS=0');
 		
@@ -53,7 +62,7 @@ class DatabaseManager {
 		return true;
 	}
 	
-	public static function export($encrypt=false) {
+	public static function export($encrypt=true) {
 		if (!self::$connection) {
 			self::connect();
 		}		
@@ -66,23 +75,55 @@ class DatabaseManager {
 		while ($table = mysql_fetch_row($tables)) {
 			//Stuktur exportieren
 			$creationString  = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table[0]));
-			$insertString = "DROP TABLE IF EXISTS `".$table[0]."`;\n".$creationString[1].";";
+			$insertString = "DROP TABLE IF EXISTS `".$table[0]."`;\n".$creationString[1].";\n";
 
 
 			$fields = mysql_query('DESCRIBE `'.$table[0]."`");
-			$insertString .= "\n\nINSERT INTO `".$table[0]."` (".self::getInsertionHeadFormat($fields).") VALUES \n";
+			$insertHead = "\nINSERT INTO `".$table[0]."` (".self::getInsertionHeadFormat($fields).") VALUES \n";
 
 			$data = mysql_query('SELECT * FROM `'.$table[0]."`");
-			$insertString .= self::getInsertionValueFormat($data).";";
+			$dataArray = self::getInsertionDataArray($data);
+			
+			$rowsPerInsert = 100;
+			$dataCount = count($dataArray);
+			for ($i = 0; $i < $dataCount;$i += $rowsPerInsert) {
+				$currentData = array_slice($dataArray, $i, $rowsPerInsert);
+				$insertString .= $insertHead;
+				$insertString .= implode(",\n ", $currentData).";";
+			}
 
 			array_push($tableActions, $insertString);
 		}
 
 		mysql_close();
 
-		return implode("\n\n\n", $tableActions);
+		$res = implode("\n\n\n", $tableActions);
+		
+		if ($encrypt) {
+			$res = ENCRYPTIONSIGNAL.base64_encode(Security::rijndael($res, Configure::read('Security.key'), 'encrypt'));
+		}
+		
+		return $res;
 	}
 
+	private static function getInsertionDataArray($data) {
+		$values = array();
+		$lines = array();
+		while ($row = mysql_fetch_row($data)) {
+			foreach ($row as $value) {
+				if (is_null($value)) {
+					array_push($values, "NULL");
+				} else
+					array_push($values, "'".$value."'");
+			}
+				
+			array_push($lines, "(".implode(', ', $values).")");
+			$values = array();
+		}
+		
+		return $lines;
+	}
+	
 	private static function getInsertionHeadFormat($fields) {
 		$fieldNames = array();
 		while ($field = mysql_fetch_row($fields)) {
