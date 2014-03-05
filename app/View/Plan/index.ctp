@@ -5,9 +5,9 @@
 				'legende' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();'))
 		)));
 ?>
-<h2>Cafeteriaplan &#2665;</h2>
+<h2>Cafeteriaplan</h2>
 <br />	
-<table class="table table-condensed table-bordered" id="planTable">
+<table class="table table-condensed table-bordered table-centered" id="planTable">
 	<th>Tag</th>
 	<th>Datum</th>
 	<!-- Header -->
@@ -81,8 +81,10 @@
 					//Noch gar kein Dienst wurde belegt
 					
 					//Das Datum ist entweder ein SpecialDate oder Wochenende und es müssen Rauten ausgegeben werden
-					if ($type == "inactive") {
+					if ($type == "inactive" && !$result['weekend']) {
 						echo "<td colspan='2' class='success'>#</td>";
+					} elseif ($result['weekend']) {
+						echo "<td colspan='2'></td>";
 					} else {
 					//Oder es hat sich einfach noch niemand Eingetragen
 						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' class='error'></td>";
