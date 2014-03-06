@@ -97,6 +97,7 @@ class PlanController extends AppController {
 		}
 		
 		$users = $this->User->find("all", array("recursive" => -1, "conditions" => array("User.mail != " => "", "User.leave_date" => null)));
+		
 		$workableUsers = array();
 
 		foreach ($data as $date => $info) {
@@ -155,7 +156,59 @@ class PlanController extends AppController {
 			}
 		}
 		
-		debug($workableUsers);
+		$usersArray = array();
+		foreach ($users as $user) {
+			$usersArray[$user['User']['id']] = $user['User'];
+		}
+		
+		$halfshifts = array (
+			-1 => '',
+			1 => '1. Schicht ',
+			2 => '2. Schicht ',
+			3 => 'Ganzer Dienst '
+		);
+		foreach ($tmpColumns as $tmpColumn) {
+			$columnsArray[$tmpColumn['Column']['id']] = $tmpColumn['Column']['name'];
+		}
+		
+
+		$senderMail = 'humboldt-cafeteria@versanet.de';
+		$senderName = 'Humboldt Cafeteria';
+		
+		foreach ($workableUsers as $userid => $dates) {			
+			$mailContent = "Hallo ".$usersArray[$userid]['fname']." ".$usersArray[$userid]['lname'].",<br />";
+			$mailContent .= "leider sind zur Zeit noch nicht alle Dienste für die nächste Woche in der Humboldt-Cafeteria belegt.<br /><br />Es fehlen:<br />";
+			foreach ($dates as $date => $columns) {
+				$mailContent .= "<br />";
+				$mailContent .= $data[$date]["dow"].", ".date('d. m. Y', strtotime($date));
+				$mailContent .= "<ul>";
+				foreach ($columns as $columnid => $halfshift) {
+					$mailContent .= "<li>";
+					$mailContent .= $halfshifts[$halfshift].$columnsArray[$columnid];
+					$mailContent .= "</li>";
+					
+				}
+				$mailContent .= "</ul>";
+			}
+				
+			$EMail = new CakeEmail();
+			$EMail->from(array($senderMail => $senderName));
+			$EMail->to($usersArray[$userid]['mail']);
+			$EMail->subject("Humboldt-Cafeteria - nächste Woche unvollständig");
+			$EMail->config('web');
+			$EMail->template('default');
+			$EMail->emailFormat('html');
+			$EMail->viewVars(array(
+					'senderName' => $senderName,
+					'senderMail' => $senderMail,
+					'content' => $mailContent,
+					'subject' => "Humboldt-Cafeteria - nächste Woche unvollständig"
+			));
+
+			$EMail->send();
+		}
+		
+		return $this->redirect(array("controller" => "columns", "action" => "index"));
 	}
 
 	public function isAuthorized($user) {

@@ -8,9 +8,7 @@ class ContactsController extends AppController {
 			'fields' => array('User.lname','User.fname','User.tel1','User.tel2','User.mail','User.mo','User.di','User.mi','User.do','User.fr','User.leave_date'),
 			'limit' => 25,
 			'conditions' => array('User.leave_date' => null),
-			'order' => array(
-					'User.lname' => 'asc'
-			),
+			'order' => array('User.lname' => 'asc'),
 	);
 
 	public function index() {
@@ -38,9 +36,9 @@ class ContactsController extends AppController {
 	private function addStyle($dayValue = null) {
 		if (strcmp($dayValue,"G") == 0) {
 			return array('value' => $dayValue,'class' => 'success');
-		} elseif (strcmp($dayValue,"H") == 0 || strcmp($dayValue,"1") == 0 || strcmp($dayValue,"2") == 0) {
+		} else if (strcmp($dayValue,"H") == 0 || strcmp($dayValue,"1") == 0 || strcmp($dayValue,"2") == 0) {
 			return array('value' => $dayValue,'class' => 'warning');
-		} elseif (strcmp($dayValue,"N") ==0) {
+		} else if (strcmp($dayValue,"N") == 0) {
 			return array('value' => $dayValue,'class' => 'error');
 		}
 	}
