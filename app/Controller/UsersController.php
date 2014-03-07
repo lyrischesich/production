@@ -21,6 +21,35 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
+		if ($this->request->is("post")) {
+			$activeUsers = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.leave_date' => null)));
+			$activeUsersList = array();
+			foreach ($activeUsers as $activeUser) {
+				array_push($activeUsersList, $activeUser['User']['id']);
+			}
+
+
+			foreach ($this->request->data['User'] as $id => $data) {
+				$tmpArray = array();
+				$tmpArray['User']['id'] = $id;
+				$tmpArray['User']['admin'] = $data['admin'];	
+				if ($data['leave_date'] == 0){
+					if (in_array($id, $activeUsersList)){
+						$tmpArray['User']['leave_date'] = date('Y-m-d');
+					}
+				} else {
+					$tmpArray['User']['leave_date'] = null;
+				}
+
+				$this->User->create();
+				if ($this->User->save($tmpArray)) {
+					$this->Session->setFlash('Die Änderungen wurden gespeichert.', 'alert-box', array('class' => 'alert-success'));
+				} else {
+					$this->Session->setFlash('Die Änderungen konnten nicht gespeichert werden.', 'alert-box', array('class' => 'alert-error'));
+				}
+			}
+		}
+
 		$this->User->recursive = 0;
 		$this->set('users', $this->Paginator->paginate());
 	}

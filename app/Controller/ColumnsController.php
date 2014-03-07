@@ -39,7 +39,8 @@ class ColumnsController extends AppController {
 			$this->Column->create();
 			if ($this->Column->save($this->request->data)) {
 				$this->Session->setFlash('Die Spalte wurde angelegt.', 'alert-box', array('class' => 'alert-success'));
-				return $this->redirect(array('action' => 'index'));
+	debug($this->request->data);
+//				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash('Die Spalte konnte nicht gespeichert werden.', 'alert-box', array('class' => 'alert-error'));
 			}
