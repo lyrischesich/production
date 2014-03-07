@@ -11,3 +11,6 @@ Datenbank: Collation auf Deutsch stellen? / ist das nötig?
 Datenbank: Frau Wagner wegen Z?fle und Neu anschreiben
 Bei E-Mails: Was, wenn Absender keine Mail angegeben hat?
 Bei E-Mails: Was, wenn web.de nicht senden will?
+Telefonliste für Samstag?
+ContactsController->only(): Cake weigert sich, eine Zahl zu akzeptieren -> nötig, damit die Sache funktioniert
+ 

@@ -6,7 +6,7 @@ class PlanController extends AppController {
 	public $helpers = array('Js','Time');
 	public $components = array('Paginator','Session');
 
-	public function index($month=-1, $year=-1) {
+	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
 			$month = -1;

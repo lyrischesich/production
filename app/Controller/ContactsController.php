@@ -1,6 +1,6 @@
 <?php
 class ContactsController extends AppController {
-	public $uses = array('User');
+	public $uses = array('User', 'Plan');
 	public $helpers = array('Js');
 	public $components = array('Paginator','Session');
 
@@ -24,6 +24,60 @@ class ContactsController extends AppController {
 			$result['User']['fr'] = $this->addStyle($result['User']['fr']);
 		}
 		$this->set('users',$results);
+	}
+	
+	public function only($date=-1) {
+		$token = explode("-", $date);
+		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0])) {
+			//Ungültiges Datum
+			//-> nur normal Anzeigen, ohne Einschränkungen
+			return $this->redirect(array('action' => 'index'));
+		} else if (date('N', strtotime($date)) >= 6) { 
+			return $this->redirect(array('action' => 'index'));
+		} else {
+			$missingShifts = $this->Plan->getMissingShifts($date);
+			debug($missingShifts);
+			$shift1Needed = false;
+			$shift2Needed = false;
+			foreach ($missingShifts as $missingShift) {
+				if ($shift1Needed && $shift2Needed)  break;
+				
+				if (array_key_exists(1, $missingShift))
+					$shift1Needed = true;
+
+				if (array_key_exists(2, $missingShift))
+					$shift2Needed = true;
+			}
+			
+			//auf Deutsch umstellen
+			setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
+			
+			$conditions = array("User.leave_date" => null);
+			if ($shift1Needed && $shift2Needed) {
+				//Fehlt ein ganzer Dienst, kann jeder angezeigt werden, der dort arbeitet
+				$conditions['User.'.strtolower(strftime('%a', strtotime($date))).' !='] = "N";
+			} else if ($shift1Needed) {
+				$conditions['User.'.strtolower(strftime('%a', strtotime($date)))] = array(strval(1), "H", "G");
+			} else if ($shift2Needed) {
+				$conditions['User.'.strtolower(strftime('%a', strtotime($date)))] = array("'2'", "H", "G");
+			}		
+		}
+		
+		debug($conditions);
+		$this->paginate['conditions'] = $conditions;
+		//Unschöne Lösung
+		$this->paginate['maxLimit'] = 10000;
+		$this->paginate['limit'] = 10000;
+		$this->paginate['recursive'] = -1;
+		$this->Paginator->settings = $this->paginate;
+		debug($this->Paginator->settings);
+		$results = $this->Paginator->paginate();
+		foreach ($results as &$result) {
+			//Hier wird die CSS-Klasse für die jeweiligen Tage in das Array eingebunden
+			$result['User']['shift'] = $this->addStyle($result['User'][strtolower(strftime('%a', strtotime($date)))]);
+		}
+		$this->set('users', $results);
+		$this->set('dow', strftime('%A', strtotime($date)));
 	}
 
 	/**
@@ -103,7 +157,8 @@ class ContactsController extends AppController {
 	}
 
 	public function isAuthorized($user) {
-		//Jeder Benutzer darf die Kontaktliste aufrufen
+		//Jeder Benutzer darf die Kontaktliste aufrufen (auch die eingeschränkte)
+		//Jeder Benutzer darf die Mailfunktion nutzen
 		return true;
 	}
 
