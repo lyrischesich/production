@@ -2,10 +2,7 @@
 <h2><?php echo 'Benutzer'; ?></h2>
 	<dl><table cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
 		<dt><?php echo 'Benutzername'; ?></dt>
-		<dd>
-			<?php echo h($user['User']['username']); ?>
-			&nbsp;
-		</dd>
+		<dd><?php echo h($user['User']['username']); ?>	&nbsp;</dd>
 		<dt><?php echo 'Fname'; ?></dt>
 		<dd>
 			<?php echo h($user['User']['fname']); ?>
