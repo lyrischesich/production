@@ -1,4 +1,25 @@
 <h2>Telefonliste für <?php echo $dow; ?></h2>
+	<br />
+	<table border='1' align='center'>
+  		<tr>
+		    <td class='success'>G</td>
+	    	<td>Ganze Schicht, auch Hälfte</td>
+  		</tr>
+	  	<tr>
+    		<td class='warning'>H</td>
+	    	<td>Halbe Schicht</td>
+	  	</tr>
+	  	<tr>
+	  		<td class='warning'>1</td>
+	  		<td>Nur 1. Hälfte</td>
+	  	</tr>
+	  	<tr>
+	  		<td class='warning'>2</td>
+	  		<td>Nur 2. Hälfte</td>
+	  	</tr>
+	</table>
+	<br />
+
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered" id="contactlist">
 		<tr>
 			<th>Schicht</th>

@@ -28,7 +28,7 @@ class ContactsController extends AppController {
 	
 	public function only($date=-1) {
 		$token = explode("-", $date);
-		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0])) {
+		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token[2]) != 2) {
 			//Ungültiges Datum
 			//-> nur normal Anzeigen, ohne Einschränkungen
 			return $this->redirect(array('action' => 'index'));
@@ -55,20 +55,34 @@ class ContactsController extends AppController {
 			setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
 			
 			$conditions = array("User.leave_date" => null);
+			$dow = strtolower(strftime('%a', strtotime($date)));
 			if ($shift1Needed && $shift2Needed) {
 				//Fehlt ein ganzer Dienst, kann jeder angezeigt werden, der dort arbeitet
-				$conditions['User.'.strtolower(strftime('%a', strtotime($date))).' !='] = "N";
+				$conditions['User.'.$dow.' !='] = "N";
 			} else if ($shift1Needed) {
-				$conditions['User.'.strtolower(strftime('%a', strtotime($date)))] = array(strval(1), "H", "G");
+				//bei Char und Varchar ignoriert mysql Leerzeichen am Ende
+				//und "1" wird in Cake als Zahl interpretiert, was Probleme mit SQL verursacht
+				//'1 ' wird in Cake als String interpretiert, für mysql bedeutet es aber nur '1'
+				//(http://dev.mysql.com/doc/refman/5.1/de/char.html)
+				$conditions['User.'.$dow] = array("1 ", "H", "G");
 			} else if ($shift2Needed) {
-				$conditions['User.'.strtolower(strftime('%a', strtotime($date)))] = array("'2'", "H", "G");
+				//selbe Argumentation
+				$conditions['User.'.$dow] = array("2 ", "H", "G");
 			}		
 		}
 		
 		$this->paginate['conditions'] = $conditions;
-		//Unschöne Lösung
-		$this->paginate['maxLimit'] = 10000;
-		$this->paginate['limit'] = 10000;
+		//Es sollen alle Einträge auf einer Seite angezeigt werden -> Anzahl ermitteln
+		if ($shift1Needed && $shift2Needed) {
+			//Alle außer N werden rausgesucht
+			$entryCount = $this->User->find('count', array('recursive' => -1, 'conditions' => array('User.leave_date' => null, 'User.'.$dow.' !=' => 'N')));
+		} else {
+			//weiter oben ermittelte Schichten werden rausgesucht
+			$entryCount = $this->User->find('count', array('recursive' => -1, 'conditions' => array('User.leave_date' => null, 'User.'.$dow => $conditions['User.'.$dow])));
+		}
+		
+		$this->paginate['maxLimit'] = $entryCount;
+		$this->paginate['limit'] = $entryCount;
 		$this->paginate['recursive'] = -1;
 		$this->Paginator->settings = $this->paginate;
 // 		debug($this->Paginator->settings);
@@ -154,7 +168,6 @@ class ContactsController extends AppController {
 				$this->Session->setFlash($string, 'alert-box',array('class' => 'alert alert-block alert-error'));
 			}
 		}
-
 	}
 
 	public function isAuthorized($user) {
@@ -162,6 +175,5 @@ class ContactsController extends AppController {
 		//Jeder Benutzer darf die Mailfunktion nutzen
 		return true;
 	}
-
 }
 ?>
