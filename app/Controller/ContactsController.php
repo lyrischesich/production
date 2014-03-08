@@ -36,7 +36,9 @@ class ContactsController extends AppController {
 			return $this->redirect(array('action' => 'index'));
 		} else {
 			$missingShifts = $this->Plan->getMissingShifts($date);
-			debug($missingShifts);
+			if ($missingShifts == array())
+				return $this->redirect(array('action' => 'index'));
+			
 			$shift1Needed = false;
 			$shift2Needed = false;
 			foreach ($missingShifts as $missingShift) {
@@ -63,14 +65,13 @@ class ContactsController extends AppController {
 			}		
 		}
 		
-		debug($conditions);
 		$this->paginate['conditions'] = $conditions;
 		//Unschöne Lösung
 		$this->paginate['maxLimit'] = 10000;
 		$this->paginate['limit'] = 10000;
 		$this->paginate['recursive'] = -1;
 		$this->Paginator->settings = $this->paginate;
-		debug($this->Paginator->settings);
+// 		debug($this->Paginator->settings);
 		$results = $this->Paginator->paginate();
 		foreach ($results as &$result) {
 			//Hier wird die CSS-Klasse für die jeweiligen Tage in das Array eingebunden

@@ -1,6 +1,7 @@
 <?php
 class StatisticController extends AppController {
 	public $uses = array('User', 'ColumnsUser');
+	public $helpers = array('Form');
 
 	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
@@ -16,16 +17,32 @@ class StatisticController extends AppController {
 		}
 		
 		if ($month == -1 && $year == -1) {
-			//Kein Datum vorgegeben -> aktueller Monat
-			$month = date('m', time());
-			$year = date('Y', time());
-			$this->set('pageTitle', "Statistik für den ".$month.". ".$year);
+			//Kein Datum vorgegeben -> aktueller Monat, da dieser bereits abgeschlossen ist
+			$tmpDatetime = new DateTime('now');
+			$tmpDatetime->modify("-1 month");
+			$month = $tmpDatetime->format('m');
+			$year = $tmpDatetime->format('Y');
 		}
 
 		if ($year != -1 && $month == -1) {
 			//Jahresstatistik
+			//(Zur Zeit noch nicht verwendet)
 			$month = '__';
 			$this->set('pageTitle', "Statistik für ".$year);
+			$this->set('nextYear', $year);
+			$this->set('nextMonth', "01");
+			$this->set('previousYear', $year-1);
+			$this->set('previousMonth', "12");
+		} else 	if ($year != -1 && $month != -1) {
+			$this->set('pageTitle', "Statistik für ".$month."/".$year);
+			
+			$datetime = new DateTime($year."-".$month."-15");
+			$datetime->modify("+1 month");
+			$this->set('nextYear', $datetime->format('Y'));
+			$this->set('nextMonth', $datetime->format('m'));
+			$datetime->modify("-2 months");
+			$this->set('previousYear', $datetime->format('Y'));
+			$this->set('previousMonth', $datetime->format('m'));
 		}
 
 		$date = $year."-".$month."-__";
@@ -35,29 +52,45 @@ class StatisticController extends AppController {
 		$this->analyseAndSetData($data);
 	}
 
-	public function last($month=1) {
-		if (!is_numeric($month)) {
-			//Falsches Format => wie keine Daten
-			$month = 1;
+	public function interval() {
+		//Inputvalidierung
+		$token = explode(". ", $this->request->data['Date']['dateFrom']);
+		if (count($token) != 3 || !checkdate($token[1], $token[0], $token[2])) {
+			//Ungültiges Datum
+			//-> nur aktuellen Monat anzeigen
+			return $this->redirect(array('action' => 'index'));
+		} else {
+			$dateBegin = $token[2]."-".$token[1]."-".$token[0];
 		}
 
-		if ($month < 1) {
-			//Sachlich falsche Daten => wie keine Daten
-			$month = 1;
+		$token = explode(". ", $this->request->data['Date']['dateTo']);
+		if (count($token) != 3 || !checkdate($token[1], $token[0], $token[2])) {
+			//Ungültiges Datum
+			//-> nur aktuellen Monat anzeigen
+			return $this->redirect(array('action' => 'index'));
+		} else {
+			$dateEnd = $token[2]."-".$token[1]."-".$token[0];
 		}
-
-		$dateEnd = date('Y-m-d');
-		$dateBegin = new DateTime($dateEnd);
-		$dateBegin->modify("-".$month." months");
-		$dateBegin = $dateBegin->format('Y-m-d');
+		
+		
+		if (strtotime($dateBegin) > strtotime($dateEnd)) {
+			//Variablen tauschen
+			$tmp = $dateBegin;
+			$dateBegin = $dateEnd;
+			$dateEnd = $tmp;
+		}
+		
+		$datetime = new DateTime(date('Y-m-d'));
+		$datetime->modify("+1 month");
+		$this->set('nextYear', $datetime->format('Y'));
+		$this->set('nextMonth', $datetime->format('m'));
+		$datetime->modify("-2 months");
+		$this->set('previousYear', $datetime->format('Y'));
+		$this->set('previousMonth', $datetime->format('m'));
 
 		$data = $this->ColumnsUser->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date <= ' => $dateEnd, 'ColumnsUser.date >=' => $dateBegin)));
 
-		if ($month == 1)
-			$this->set('pageTitle', 'Statistik für den letzten Monat');
-		else
-			$this->set('pageTitle', 'Statistik für die letzten '.$month.' Monate');
-
+		$this->set('pageTitle', "Statistik für den Zeitraum vom ".date('d. m. Y', strtotime($dateBegin))." bis zum ".date('d. m. Y', strtotime($dateEnd)));
 		$this->analyseAndSetData($data);
 	}
 
@@ -71,15 +104,17 @@ class StatisticController extends AppController {
 			$userList[$user['User']['id']]['H']  = 0;
 			$userList[$user['User']['id']]['G']  = 0;
 			$userList[$user['User']['id']]['ges']  = 0;
+			$userList[$user['User']['id']]['active'] = true;
 		}
 
 		foreach ($dataArray as $data) {
 			if (!array_key_exists($data['ColumnsUser']['user_id'], $userList)) {
-				$username = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $data['ColumnsUser']['user_id'])));
-				$userList[$data['ColumnsUser']['user_id']] = array('username' => $username['User']['username']);
+				$userdata = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $data['ColumnsUser']['user_id'])));
+				$userList[$data['ColumnsUser']['user_id']] = array('username' => $userdata['User']['username']);
 				$userList[$data['ColumnsUser']['user_id']]['H']  = 0;
 				$userList[$data['ColumnsUser']['user_id']]['G']  = 0;
 				$userList[$data['ColumnsUser']['user_id']]['ges']  = 0;
+				$userList[$data['ColumnsUser']['user_id']]['active']  = $userdata['User']['leave_date'] == null;
 			}
 
 			$halfshift = $data['ColumnsUser']['half_shift'];
@@ -89,10 +124,13 @@ class StatisticController extends AppController {
 				$halfshift = 'G';
 
 			$userList[$data['ColumnsUser']['user_id']][$halfshift]++;
-			//so?
 			$userList[$data['ColumnsUser']['user_id']]['ges'] +=  ($halfshift == 'G') ? 1 : 0.5;
 		}
 
 		$this->set('data', $userList);
+	}
+	
+	public function createPDF() {
+		
 	}
 }

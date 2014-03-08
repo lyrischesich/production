@@ -4,7 +4,7 @@
 		<li class="nav-header">Aktionen</li>
 		<?php foreach($actions as $action){ 
 			echo "<li>";
-			echo $this->Html->link($action['text'],$action['params']);
+			echo $this->Html->link($action['text'],(isset($action['params']) ? $action['params'] : '#'),(isset($action['htmlattributes'])) ? $action['htmlattributes'] : array());
 			echo "</li>";			
 		}
 		?>

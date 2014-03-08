@@ -41,7 +41,18 @@
 	 	}	
 ?>
 
-			<td class="<?php echo $class;?>"><?php echo $result['dow']?></td>
+			<td class="<?php echo $class;?>">
+			<?php 
+				if ($class == "error" && strtotime($key) >= time()) {
+					//Nicht vollständig und noch nicht "abgelaufen"
+					//->Link auf zugeschnittene Kontaktliste geben
+					echo $this->Html->link($result['dow'], array('controller' => 'contacts', 'action' => 'only', $key), array('target' => 'blank', 'class' => $class));
+				} else {
+					echo $result['dow'];
+				}
+
+			?>
+			</td>
 			<td><?php echo date("d.m.Y",strtotime($key)); ?> </td> 	
 <?php 
 		//Spalten nacheinander ausgeben

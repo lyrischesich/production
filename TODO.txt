@@ -5,6 +5,7 @@
 /contacts: "sie" im ersten Satz groß schreiben
 /contacts/mail: Rundmail-Verweis rausnehmen/nur für Admins anzeigen, evtl. Rundmail-Link aus der Seitenleiste nehmen
 /contacts/mail: Seiteleiste ist weiter rechts als normalerweise
+/contacts/only: Legende einbauen
 /columns: Spaltenname wird vor dem Löschen nicht angezeigt
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 Datenbank: Collation auf Deutsch stellen? / ist das nötig?
@@ -15,5 +16,10 @@ Telefonliste für Samstag?
 ContactsController->only(): Cake weigert sich, eine Zahl zu akzeptieren -> nötig, damit die Sache funktioniert
 /users/index: Sidebar abschicken möglich machen
 /users/index: "Änderungen speichern"-Knopf löschen
-/statistic: Zählen halbe Dienste für die Gesamtzahl als einer?
- 
+/plan: Farbe der Links ändern
+E-Mail-Vorlage: "sie" schreibt man groß!
+Kräftigere Farben für den Plan
+Sidebar immer mit runterscrollen lassen
+/statistic: Jahresstatistik wenn genug Zeit vorhanden implementieren
+/statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
+/statistic/interval: sollen nächster Monat etc. angezeigt werden?
