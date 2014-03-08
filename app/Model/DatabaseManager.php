@@ -166,9 +166,9 @@ class DatabaseManager {
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 15. Feb 2014 um 13:46
+-- Erstellungszeit: 08. Mrz 2014 um 23:50
 -- Server Version: 5.5.35
--- PHP-Version: 5.3.10-1ubuntu3.9
+-- PHP-Version: 5.3.10-1ubuntu3.10
 
 SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
 SET time_zone = '+00:00';
@@ -194,47 +194,13 @@ CREATE TABLE IF NOT EXISTS `changelogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `for_date` date NOT NULL,
   `change_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `value_before` varchar(50) NOT NULL,
-  `value_after` varchar(50) NOT NULL,
-  `column_name` varchar(50) NOT NULL,
-  `user_did` varchar(50) NOT NULL,
+  `value_before` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `value_after` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `column_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `user_did` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `columns`
---
-
-DROP TABLE IF EXISTS `columns`;
-CREATE TABLE IF NOT EXISTS `columns` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `type` tinyint(4) NOT NULL,
-  `obligated` tinyint(4) NOT NULL,
-  `req_admin` tinyint(4) NOT NULL,
-  `order` smallint(4) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1  ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `comments`
---
-
-DROP TABLE IF EXISTS `comments`;
-CREATE TABLE IF NOT EXISTS `comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `date` date NOT NULL,
-  `message` varchar(200) NOT NULL,
-  `column_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `column_id` (`column_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5726 ;
+				
 -- --------------------------------------------------------
 
 --
@@ -251,7 +217,23 @@ CREATE TABLE IF NOT EXISTS `columns_users` (
   PRIMARY KEY (`id`),
   KEY `column_id` (`column_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4517 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `message` varchar(200) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `column_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `column_id` (`column_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=204 ;
 
 -- --------------------------------------------------------
 
@@ -268,39 +250,51 @@ CREATE TABLE IF NOT EXISTS `specialdates` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `columns`
+--
+
+DROP TABLE IF EXISTS `columns`;
+CREATE TABLE IF NOT EXISTS `columns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `obligated` tinyint(4) NOT NULL,
+  `req_admin` tinyint(4) NOT NULL,
+  `order` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `users`
 --
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `fname` varchar(50) NOT NULL,
-  `lname` varchar(50) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  `tel1` varchar(32) NOT NULL,
-  `tel2` varchar(32) NOT NULL,
-  `mail` varchar(100) NOT NULL,
+  `username` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `fname` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `lname` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `password` varchar(40) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `tel1` varchar(32) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `tel2` varchar(32) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `mail` varchar(100) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
   `leave_date` date DEFAULT NULL,
-  `mo` enum('N','G','1','2','H') NOT NULL,
-  `di` enum('N','G','1','2','H') NOT NULL,
-  `mi` enum('N','G','1','2','H') NOT NULL,
-  `do` enum('N','G','1','2','H') NOT NULL,
-  `fr` enum('N','G','1','2','H') NOT NULL,
+  `mo` enum('N','G','1','2','H') CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `di` enum('N','G','1','2','H') CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `mi` enum('N','G','1','2','H') CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `do` enum('N','G','1','2','H') CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `fr` enum('N','G','1','2','H') CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
   `admin` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=161 ;
 
 --
 -- Constraints der exportierten Tabellen
 --
-
---
--- Constraints der Tabelle `columns_text`
---
-ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`column_id`) REFERENCES `columns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `columns_users`
@@ -309,9 +303,15 @@ ALTER TABLE `columns_users`
   ADD CONSTRAINT `columns_users_ibfk_7` FOREIGN KEY (`column_id`) REFERENCES `columns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `columns_users_ibfk_9` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Constraints der Tabelle `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`column_id`) REFERENCES `columns` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;";
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */";
 		
 		$sql = explode(';', $sql);
 		foreach ($sql as $sqlString)

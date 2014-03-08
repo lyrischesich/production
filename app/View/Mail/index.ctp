@@ -1,3 +1,7 @@
+<?php echo $this->element('actions',array(
+		'actions' => array()
+));?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		//Gleiche die Breite der Textarea mit der des Betrefffeldes an
@@ -13,11 +17,6 @@
 		
 	});
 </script>
-
-<?php echo $this->element('actions',array(
-		'actions' => array()
-));?>
-
 	<h2>Rundmail verschicken</h2>
 	<p> 
 	Hier können Administratoren E-Mails an alle Mitarbeiter der Cafeteria versenden.

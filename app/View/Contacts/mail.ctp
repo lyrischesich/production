@@ -1,3 +1,19 @@
+<?php 
+$actions = array(
+	'back' => array('text' => 'Zur Telefonliste','params' => array('controller' => 'contacts','action' => 'index'))
+);
+
+//Nur für Admins sichtbar:
+if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+	$actions['mailToAll'] = array('text' => 'Rundmail verschicken', 'params' => array('controller' => 'mail', 'action' => 'index'));
+}
+
+echo $this->element('actions',array(
+		'actions' => $actions 
+));
+
+?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		//Gleiche die Breite der Textarea mit der des Empfängerfeldes an
@@ -14,20 +30,23 @@
 	});
 </script>
 
-<?php echo $this->element('actions',array(
-		'actions' => array(
-			'back' => array('text' => 'Zur Telefonliste','params' => array('controller' => 'contacts','action' => 'index'))		
-)));?>
-
 	<h2>Email verschicken</h2>
 	<p> 
-	Hier können sie E-Mails an alle Mitarbeiter der Cafeteria versenden. E-Mail-Adressen, welche nicht einem Mitarbeiter in der Cafeteria zugeordnet werden
+	Hier können Sie E-Mails an alle Mitarbeiter der Cafeteria versenden. E-Mail-Adressen, welche nicht einem Mitarbeiter in der Cafeteria zugeordnet werden
 	können, werden nicht akzeptiert. Sie können als Empfänger sowohl den <b>Benutzernamen</b>, als auch eine gültige <b>E-Mail-Adresse</b> angeben.
-	Um eine E-Mail an alle Mitarbeiter, oder bestimmte Mitarbeitergruppen zu versenden, wählen sie bitte die Option "Rundmail verschicken" in der Seitenleiste.
+	
+	<?php
+	//Nur für Admins sichtbar:
+	if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+		echo 'Um eine E-Mail an alle Mitarbeiter zu versenden, wählen Sie bitte die Option "Rundmail verschicken" in der Seitenleiste.';	
+	}
+	?>
 	</p>
+	
 	<p>
-	Wenn sie E-Mails an mehrere Mitarbeiter versenden wollen, so trennen sie bitte deren Namen bzw. Mail-Adressen mit einem <b>Semikolon(;)</b>
+	Wenn Sie E-Mails an mehrere Mitarbeiter versenden wollen, so trennen Sie bitte deren Namen bzw. Mail-Adressen mit einem <b>Semikolon(;)</b>.
 	</p>
+	
 	<br>
 	<?php echo "<legend>E-Mail versenden</legend>"; ?>
 	<?php echo $this->Form->create('Mail',array(
@@ -60,7 +79,7 @@
 					)
 				));?>
 		<?php echo $this->Form->textarea('content',array(
-				'placeholder' => 'Bitte geben sie den zu versendenden Text ein',
+				'placeholder' => 'Bitte geben Sie den zu versendenden Text ein',
 				'label' => array ( 'text' => 'Inhalt:')				
 				));?>
 		<div class="form-actions">

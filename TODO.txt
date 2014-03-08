@@ -1,26 +1,15 @@
-/backup: Aussehen ok?
-/backup: Aktion "Zustand wiederherstellen" entfernen?
-/backup/export: auf eventuelle Codierungsprobleme prüfen (Android, MacOS, iOS)
-/contacts: "Nur aktive Benutzer"-Label entfernen
-/contacts: "sie" im ersten Satz groß schreiben
-/contacts/mail: Rundmail-Verweis rausnehmen/nur für Admins anzeigen, evtl. Rundmail-Link aus der Seitenleiste nehmen
-/contacts/mail: Seiteleiste ist weiter rechts als normalerweise
-/contacts/only: Legende einbauen
-/columns: Spaltenname wird vor dem Löschen nicht angezeigt
+//Muss-Kriterien
+/backup/index und /install/import: Abstände anpassen
+/contacts/only: Legende verschönern
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
-Datenbank: Collation auf Deutsch stellen? / ist das nötig?
 Datenbank: Frau Wagner wegen Z?fle und Neu anschreiben
-Bei E-Mails: Was, wenn Absender keine Mail angegeben hat?
+Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
 Bei E-Mails: Was, wenn web.de nicht senden will?
-Telefonliste für Samstag?
-ContactsController->only(): Cake weigert sich, eine Zahl zu akzeptieren -> nötig, damit die Sache funktioniert
-/users/index: Sidebar abschicken möglich machen
-/users/index: "Änderungen speichern"-Knopf löschen
-/plan: Farbe der Links ändern
-/plan: Nicht-Obligated-User-Spalten trotzdem rot (Einarbeitung)
-E-Mail-Vorlage: "sie" schreibt man groß!
-Kräftigere Farben für den Plan
+/plan: Farbe der Links ändern (per CSS)
+Kräftigere Farben für den Plan und allgemein alle Felder (z. B. Verfügbarkeiten)
 Sidebar immer mit runterscrollen lassen
-/statistic: Jahresstatistik wenn genug Zeit vorhanden implementieren
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /statistic/interval: sollen nächster Monat etc. angezeigt werden?
+
+//Soll-Kriterien
+/statistic: Jahresstatistik implementieren

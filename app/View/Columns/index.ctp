@@ -36,7 +36,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link('Bearbeiten', array('action' => 'edit', $column['Column']['id'])); ?>
 			&nbsp;|&nbsp;
-			<?php echo $this->Form->postLink('Löschen', array('action' => 'delete', $column['Column']['id']), null, 'Wollen sie wirklich die Spalte "'.$column['Column']['name'].'" löschen?'); ?>
+			<?php echo $this->Form->postLink('Löschen', array('action' => 'delete', $column['Column']['id']), null, 'Wollen Sie wirklich die Spalte "'.$column['Column']['name'].'" löschen?'); ?>
 		</td>
 	</tr>
 

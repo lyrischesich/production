@@ -18,7 +18,7 @@
 ?>
 <?php $content = explode("\n", $content); ?>
 <h1>Cafeteria der Humboldt-Oberschule</h1>
-<h2><i>Eine Nachricht für sie</i></h2>
+<h2><i>Eine Nachricht für Sie</i></h2>
 <table>
   <tr>
     <td>Von:</td>
@@ -35,4 +35,4 @@ foreach ($content as $line):
 endforeach;
 ?>
 <br>
-<p> Wenn sie auf diese E-Mail antworten, so wird sie ausschließlich dem Absender zugestellt. </p>
+<p> Wenn Sie auf diese E-Mail antworten, so wird sie ausschließlich dem Absender zugestellt. </p>

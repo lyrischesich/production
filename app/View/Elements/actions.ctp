@@ -12,14 +12,6 @@
 			Statische Aktionen
 		</li>
 		<?php
-		if (AuthComponent::user('id') && AuthComponent::user('admin')) {
-			echo "<li>";
-			echo $this->Html->link('Rundmail verfassen', array(
-					'controller' => 'mail',
-					'action' => 'index'
-			));
-			echo "</li>";
-		}
 		
 		if (AuthComponent::user('id')) {
 			echo "<li>";

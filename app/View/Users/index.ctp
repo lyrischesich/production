@@ -1,6 +1,6 @@
 <?php echo $this->element('actions', array( 'actions' => array(
 	'New User' => array('text' => 'Neuen Benutzer einfügen', 'params' => array('controller' => 'Users', 'action' => 'add')),
-	'save changes' => array('text' => 'Änderungen speichern', 'params' => array('onclick' =>"document.forms['UserIndexForm'].submit();")),
+	'save changes' => array('text' => 'Änderungen speichern', 'htmlattributes' => array('onClick' =>"document.forms['UserIndexForm'].submit();")),
 	'reset changes' => array('text' => 'Änderungen zurücksetzen', 'params' => array('controller' => 'Users', 'action' => 'index'))
 ))); ?>
 </div>
@@ -23,16 +23,20 @@
 		<td class="actions">
 			<?php echo $this->Html->link('Anzeigen |', array('action' => 'view', $user['User']['id'])); ?>
 			<?php echo $this->Html->link(' Editieren |', array('action' => 'edit', $user['User']['id'])); ?>
-			<?php echo $this->Form->postLink(' Löschen', array('action' => 'delete', $user['User']['id']), null, __('Wollen Sie wirklich den Benutzer %s löschen?', $user['User']['username'])); ?>
+			<?php echo $this->Form->postLink(' Löschen', array('action' => 'delete', $user['User']['id']), null, __('Wollen Sie wirklich den Benutzer "%s" löschen?', $user['User']['username'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<?php echo $this->Form->end('Änderungen speichern'); ?>
+	
+	<?php 
+// 	echo $this->Form->input('Änderungen zurücksetzen', array('type' => 'button', 'onClick' => "window.location.href='.'", 'label' => false));
+	echo $this->Form->end('Änderungen speichern'); 
+	?>
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Seite {:page} von {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag #{:start}, Ende bei Eintrag #{:end}')
+	'format' => __('Seite {:page} von {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag {:start}, Ende bei Eintrag {:end}')
 	));
 	?>	</p>
 	<!-- <div class="p">  -->

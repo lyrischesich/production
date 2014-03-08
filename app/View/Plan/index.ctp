@@ -57,14 +57,17 @@
 <?php 
 		//Spalten nacheinander ausgeben
 		foreach ($columns as $column) {
+			$classString = "";
+			
 			//Ist die Spalte eine Textspalte?
 			if ($column['Column']['type'] == 1) {
 				//Wenn ja, dann gebe "einfach" die Bemerkung aus
-				
 				if (isset($result[$column['Column']['id']])) {
-					echo "<td>".$result[$column['Column']['id']]."</td>";
+					if ($column['Column']['obligated']) $classString = "class='success'";
+					echo "<td $classString>".$result[$column['Column']['id']]."</td>";
 				} else {
-					echo "<td></td>";
+					if ($column['Column']['obligated']) $classString = "class='error'";
+					echo "<td $classString></td>";
 				}
 								
 			} else if ($column['Column']['type'] == 2) {
@@ -74,7 +77,8 @@
 					//Beide Dienste an dem Tag sind bereit belegt. Bleibt die Frage: Von einer oder von 2 Personen?
 					if ($result[$column['Column']['id']]['1']['userid'] == $result[$column['Column']['id']]['2']['userid']) {
 						//Die gleiche Person übernimmt den Dienst
-						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' class='success'>".$result[$column['Column']['id']]['1']['username']."</td>";
+						if ($column['Column']['obligated']) $classString = "class='success'";
+						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString'>".$result[$column['Column']['id']]['1']['username']."</td>";
 					} else {
 						//Zwei verschiedene Halbschichten
 						echo "<td id='".$key."_".$column['Column']['id']."_1' class='success'>".$result[$column['Column']['id']]['1']['username']."</td>";
@@ -82,23 +86,29 @@
 					}
 				} else if (isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Jetzt ist nur der erste Dienst belegt
-						echo "<td id='".$key."_".$column['Column']['id']."_1' class='success'>".$result[$column['Column']['id']]['1']['username']."</td>";
-						echo "<td id='".$key."_".$column['Column']['id']."_2' class='error'></td>";						
+						if ($column['Column']['obligated']) $classString = "class='success'";
+						echo "<td id='".$key."_".$column['Column']['id']."_1' $classString>".$result[$column['Column']['id']]['1']['username']."</td>";
+						if ($column['Column']['obligated']) $classString = "class='error'";
+						echo "<td id='".$key."_".$column['Column']['id']."_2' $classString></td>";						
 				} else if (!isset($result[$column['Column']['id']]['1']) && isset($result[$column['Column']['id']]['2'])) {
 					//Nur der zweite Dienst ist belegt
-					echo "<td id='".$key."_".$column['Column']['id']."_1' class='error'></td>";
-					echo "<td id='".$key."_".$column['Column']['id']."_2' class='success'>".$result[$column['Column']['id']]['2']['username']."</td>";
+					if ($column['Column']['obligated']) $classString = "class='error'";
+					echo "<td id='".$key."_".$column['Column']['id']."_1' $classString'></td>";
+					if ($column['Column']['obligated']) $classString = "class='success'";
+					echo "<td id='".$key."_".$column['Column']['id']."_2' $classString'>".$result[$column['Column']['id']]['2']['username']."</td>";
 				} else if (!isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Noch gar kein Dienst wurde belegt
 					
-					//Das Datum ist entweder ein SpecialDate oder Wochenende und es müssen Rauten ausgegeben werden
+					//Das Datum ist entweder ein Specialdate oder Wochenende und es müssen Rauten ausgegeben werden
 					if ($type == "inactive" && !$result['weekend']) {
-						echo "<td colspan='2' class='success'>#</td>";
-					} elseif ($result['weekend']) {
+						if ($column['Column']['obligated']) $classString = "class='success'";
+						echo "<td colspan='2' $classString>#</td>";
+					} else if ($result['weekend']) {
 						echo "<td colspan='2'></td>";
 					} else {
-					//Oder es hat sich einfach noch niemand Eingetragen
-						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' class='error'></td>";
+						//Oder es hat sich einfach noch niemand Eingetragen
+						if ($column['Column']['obligated']) $classString = "class='error'";
+						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString></td>";
 					}
 				}
 							

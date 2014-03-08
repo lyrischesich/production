@@ -2,7 +2,7 @@
 		'actions' => array(
 			'list' => array('text' => 'Spalten anzeigen','params' => array('controller' => 'columns','action' => 'index')),
 			'add' => array('text' => 'Neue Spalte','params' => array('controller' => 'columns','action' => 'add')),
-			'delete' => array('text' => 'Spalte löschen','params' => array('controller' => 'columns', 'action' => 'delete', $this->Form->value('Column.id')))
+			'delete' => array('text' => 'Spalte löschen','htmlattributes' => array('onClick' => "if (confirm('Wollen Sie wirklich die Spalte \"".$this->Form->value('Column.name')."\" l\u00f6schen?')) window.location.href='../delete/".$this->Form->value('Column.id')."';event.returnValue = false; return false;"))
 		)));
 ?>
 

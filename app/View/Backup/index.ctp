@@ -1,6 +1,6 @@
 <?php echo $this->element('actions',array(
 	'actions' => array(
-		'import' => array('text' => 'Zustand wiederherstellen','params' => array('controller' => 'backup', 'action' => 'index')),
+		'import' => array('text' => 'Zustand wiederherstellen','htmlattributes' => array('onClick' => '$( "#ImportDumpForm" ).submit()')),
 		'export' => array('text' => 'Sicherung durchführen','params' => array('controller' => 'backup', 'action' => 'export'))
 	)));
 ?>

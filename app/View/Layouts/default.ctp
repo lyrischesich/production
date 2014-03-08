@@ -51,7 +51,7 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		</div>
 		<hr>
 		<footer>
-			<p> (c) 2014 by Die Neuinstallisierer </p>
+			<p> &copy; 2014 by Die Neuinstallisierer </p>
 		</footer>
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
