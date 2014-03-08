@@ -3,13 +3,13 @@
 	<fieldset>
 		<legend><?php echo __('Add User'); ?></legend>
 	<?php
-		echo $this->Form->input('username');
-		echo $this->Form->input('fname');
-		echo $this->Form->input('lname');
-		echo $this->Form->input('passwd');
-		echo $this->Form->input('tel1');
-		echo $this->Form->input('tel2');
-		echo $this->Form->input('mail');
+		echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));
+		echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));
+		echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));
+		echo $this->Form->input('password', array('label' => array('text' =>'Passwort')));
+		echo $this->Form->input('tel1', array('label' => array('text' =>'Telefonnummer 1')));
+		echo $this->Form->input('tel2', array('label' => array('text' =>'Telefonnummer 2')));
+		echo $this->Form->input('mail', array('label' => array('text' =>'E-Mail Adresse')));
 	?>
 	<table cellpadding = "0" cellspacing = "0" class = "table table-bordered">
 	<colgroup>
@@ -47,14 +47,5 @@
 		echo $this->Form->input('admin');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<!--<li><?php echo $this->Html->link(__('List Columns'), array('controller' => 'columns', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Column'), array('controller' => 'columns', 'action' => 'add')); ?> </li>-->
-	</ul>
+<?php echo $this->Form->end('Benutzer erstellen'); ?>
 </div>

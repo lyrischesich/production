@@ -1,10 +1,10 @@
 <?php 
 
-$actions =  array(
-		'more' => array('text' => 'Mehr anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', count($changelogs) + 200)));
+$actions =  array();
 if ($displayLess)  {
 	$actions['less'] = array('text' => 'Weniger anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', count($changelogs) - 50));
 }
+$actions['more'] = array('text' => 'Mehr anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', count($changelogs) + 200));
 
 echo $this->element('actions', array (
 		'actions' => $actions
@@ -36,7 +36,7 @@ echo $this->element('actions', array (
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => 'Seite {:page} aus {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag {:start}, Ende bei Eintrag {:end}')
+	'format' => 'Seite {:page} von {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag {:start}, Ende bei Eintrag {:end}')
 	);
 	?>	</p>
 	<div class="paging">

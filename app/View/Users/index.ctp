@@ -1,52 +1,38 @@
 <?php echo $this->element('actions', array( 'actions' => array(
-	'New User' => array('text' => 'Neuen Benutzer einfügen', 'params' => array('controller' => 'Users', 'action' => 'add'))))); ?>
+	'New User' => array('text' => 'Neuen Benutzer einfügen', 'params' => array('controller' => 'Users', 'action' => 'add')),
+	'save changes' => array('text' => 'Änderungen speichern', 'params' => array('onclick' =>"document.forms['UserIndexForm'].submit();")),
+	'reset changes' => array('text' => 'Änderungen zurücksetzen', 'params' => array('controller' => 'Users', 'action' => 'index'))
+))); ?>
 </div>
 <div class="span9">
-	<h2><?php echo 'Benutzer'; ?></h2>
+	<?php echo $this->Form->create('User'); ?>
+	<h2><?php echo 'Benutzerverwaltung'; ?></h2>
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
 	<tr>
-			<th><?php echo $this->Paginator->sort('username', 'Benutzername'); ?></th>
-			<th><?php echo $this->Paginator->sort('fname', 'Vorname'); ?></th>
-			<th><?php echo $this->Paginator->sort('lname', 'Nachname'); ?></th>
-			<th><?php echo $this->Paginator->sort('tel1', 'Telefonnummer 1'); ?></th>
-			<th><?php echo $this->Paginator->sort('tel2', 'Telefonnummer 2'); ?></th>
-			<th><?php echo $this->Paginator->sort('mail', 'E-Mail Adresse'); ?></th>
-			<th><?php echo $this->Paginator->sort('leave_date', 'Ausstiegsdatum'); ?></th>
-			<th><?php echo $this->Paginator->sort('mo'); ?></th>
-			<th><?php echo $this->Paginator->sort('di'); ?></th>
-			<th><?php echo $this->Paginator->sort('mi'); ?></th>
-			<th><?php echo $this->Paginator->sort('do'); ?></th>
-			<th><?php echo $this->Paginator->sort('fr'); ?></th>
+			<th><?php echo $this->Paginator->sort('username', 'Name'); ?></th>
+			<th><?php echo $this->Paginator->sort('leave_date', 'Aktiv'); ?></th>
 			<th><?php echo $this->Paginator->sort('admin', 'Administrator'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+			<th class="actions"><?php echo 'Aktionen'; ?></th>
 	</tr>
 	<?php foreach ($users as $user): ?>
 	<tr>
-		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['fname']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['lname']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['tel1']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['tel2']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['mail']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['leave_date']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['mo']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['di']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['mi']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['do']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['fr']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['admin']); ?>&nbsp;</td>
+		<td><?php echo h($user['User']['username']." (".$user['User']['fname']." ".$user['User']['lname'].")"); ?>&nbsp;</td>
+		<td><?php echo $this->Form->input('leave_date', array('type' => 'checkbox', 'label' => array('text' =>  ($user['User']['leave_date'] == null) ? "(noch aktiv)" : "inaktiv seit dem ".date('d. m. Y', strtotime($user['User']['leave_date'])))  , 'checked' => $user['User']['leave_date'] == null, 'name' => "data[User][".$user['User']['id']."][leave_date]", 'id' => "Userleave_date".$user['User']['id'])); ?> </td>
+		<td><?php echo $this->Form->input('admin', array('type' => 'checkbox', 'label' => array('text' =>  ($user['User']['admin']) ? "ist Admin" : "ist kein Admin"), 'name' => "data[User][".$user['User']['id']."][admin]", 'checked' => $user['User']['admin'], 'id' => "UserAdmin".$user['User']['id']."", 'align' => 'right')); ?></td>
+
 		<td class="actions">
-			<?php echo $this->Html->link('View', array('action' => 'view', $user['User']['id'])); ?>
-			<?php echo $this->Html->link('Edit', array('action' => 'edit', $user['User']['id'])); ?>
-			<?php echo $this->Form->postLink('Delete', array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['username'])); ?>
+			<?php echo $this->Html->link('Anzeigen |', array('action' => 'view', $user['User']['id'])); ?>
+			<?php echo $this->Html->link(' Editieren |', array('action' => 'edit', $user['User']['id'])); ?>
+			<?php echo $this->Form->postLink(' Löschen', array('action' => 'delete', $user['User']['id']), null, __('Wollen Sie wirklich den Benutzer %s löschen?', $user['User']['username'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
 	</table>
+	<?php echo $this->Form->end('Änderungen speichern'); ?>
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Seite {:page} aus {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag #{:start}, Ende bei Eintrag #{:end}')
+	'format' => __('Seite {:page} von {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag #{:start}, Ende bei Eintrag #{:end}')
 	));
 	?>	</p>
 	<!-- <div class="p">  -->
@@ -55,7 +41,6 @@
 		//echo $this->Paginator->numbers(array('separator' => ''));
 		//echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 		echo $this->Paginator->pagination(array('div' => 'pagination'));
-		
 	?>
 	<!--</div>   -->
 </div>

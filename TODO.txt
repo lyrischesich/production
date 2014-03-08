@@ -13,4 +13,7 @@ Bei E-Mails: Was, wenn Absender keine Mail angegeben hat?
 Bei E-Mails: Was, wenn web.de nicht senden will?
 Telefonliste für Samstag?
 ContactsController->only(): Cake weigert sich, eine Zahl zu akzeptieren -> nötig, damit die Sache funktioniert
+/users/index: Sidebar abschicken möglich machen
+/users/index: "Änderungen speichern"-Knopf löschen
+/statistic: Zählen halbe Dienste für die Gesamtzahl als einer?
  
