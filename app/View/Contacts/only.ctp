@@ -2,19 +2,19 @@
 	<br />
 	<table border='1' align='center'>
   		<tr>
-		    <td class='success'>G</td>
+		    <td class='tdsuccess'>G</td>
 	    	<td>Ganze Schicht, auch Hälfte</td>
   		</tr>
 	  	<tr>
-    		<td class='warning'>H</td>
+    		<td class='tdwarning'>H</td>
 	    	<td>Halbe Schicht</td>
 	  	</tr>
 	  	<tr>
-	  		<td class='warning'>1</td>
+	  		<td class='tdwarning'>1</td>
 	  		<td>Nur 1. Hälfte</td>
 	  	</tr>
 	  	<tr>
-	  		<td class='warning'>2</td>
+	  		<td class='tdwarning'>2</td>
 	  		<td>Nur 2. Hälfte</td>
 	  	</tr>
 	</table>

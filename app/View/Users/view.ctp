@@ -16,7 +16,7 @@
 	?>
 	<table cellpadding = "0" cellspacing = "0" class = "table table-bordered">
 	<colgroup>
-	<col width = "20">
+	<col width = "20" length = "20">
 	<col>
 	</colgroup>
 	<tr>

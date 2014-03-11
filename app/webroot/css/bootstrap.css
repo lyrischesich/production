@@ -6215,3 +6215,20 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+/* Plan-Spalten-CSS */
+td.tdsuccess > .table-striped tbody {
+	background-color: #dff0d8;
+}
+
+td.tdwarning > .table-striped tbody{
+	background-color: rgb(255, 253, 22);
+}
+
+td.tderror > .table-striped tbody, td.tderrorlink > .table-striped tbody{
+	background-color: #f2dede;	 
+}
+
+td.tderrorlink:hover {
+	background-color: rgb(255, 200, 200);
+}
