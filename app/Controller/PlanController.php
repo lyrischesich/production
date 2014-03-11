@@ -1,5 +1,5 @@
 <?php
-
+App::uses('AppController', 'Controller');
 class PlanController extends AppController {
 	
  	public $uses = array('Specialdate','User', 'Column', 'Plan');
@@ -207,8 +207,6 @@ class PlanController extends AppController {
 
 			$EMail->send();
 		}
-		
-		return $this->redirect(array("controller" => "columns", "action" => "index"));
 	}
 
 	public function isAuthorized($user) {
@@ -216,7 +214,8 @@ class PlanController extends AppController {
 			//Diese Methode ist zuständig für das Generieren und Versenden der Mails
 			//bezüglich fehlender Dienste im Plan und wird zu gegebener Zeit automatisch aufgerufen
 			//->Niemand darf diese Funkion über die URL aufrufen
-			return true;
+			//Stattdessen muss PERMISSION_TO_ACCESS_AUTOMAIL definiert und true sein
+			return defined("PERMISSION_TO_ACCESS_AUTOMAIL") && PERMISSION_TO_ACCESS_AUTOMAIL === true;
 		}
 		
 		//Alle angemeldeten Benutzer dürfen den Plan einsehen

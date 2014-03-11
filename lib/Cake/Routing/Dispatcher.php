@@ -147,9 +147,9 @@ class Dispatcher implements CakeEventListener {
 			$beforeEvent->result->send();
 			return;
 		}
-
+		
 		$controller = $this->_getController($request, $response);
-
+		
 		if (!($controller instanceof Controller)) {
 			throw new MissingControllerException(array(
 				'class' => Inflector::camelize($request->params['controller']) . 'Controller',
@@ -180,7 +180,7 @@ class Dispatcher implements CakeEventListener {
 	protected function _invoke(Controller $controller, CakeRequest $request, CakeResponse $response) {
 		$controller->constructClasses();
 		$controller->startupProcess();
-
+		
 		$render = true;
 		$result = $controller->invokeAction($request);
 		if ($result instanceof CakeResponse) {
