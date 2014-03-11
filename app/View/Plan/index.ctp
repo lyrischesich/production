@@ -35,23 +35,22 @@
 		
 		//Komplette, aktive Tage grün, die nicht kompletten, aktiven Rot 
 		if ($result['complete'] && $type=="active") {
-			$class = "success";
-		} else if(!$result['complete'] && $type=="active") {
-			$class = "error";
-	 	}	
+			$class = "tdsuccess";
+			$onclick = "";
+		} else if(!$result['complete'] && $type=="active" && strtotime($key) < time()) {
+			$class = "tderror";
+			$onclick = "";
+	 	} else if (!$result['complete'] && $type=="active" && strtotime($key) >= time()) {
+			$class = 'tderrorlink';
+			$onclick = "onClick=\"window.open('contacts/only/$key',  'toolbar=no,location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=800,height=550,left=10,top=10')\"";
+		} else {
+			//Alles andere
+			$onclick = "";
+		}
 ?>
 
-			<td class="<?php echo $class;?>">
-			<?php 
-				if ($class == "error" && strtotime($key) >= time()) {
-					//Nicht vollständig und noch nicht "abgelaufen"
-					//->Link auf zugeschnittene Kontaktliste geben
-					echo $this->Html->link($result['dow'], array('controller' => 'contacts', 'action' => 'only', $key), array('target' => 'blank', 'class' => $class));
-				} else {
-					echo $result['dow'];
-				}
-
-			?>
+			<td class="<?php echo $class; ?>" <?php echo $onclick; ?>>
+			<?php echo $result['dow']; ?>
 			</td>
 			<td><?php echo date("d.m.Y",strtotime($key)); ?> </td> 	
 <?php 
@@ -76,7 +75,7 @@
 				if (isset($result[$column['Column']['id']]['1']) && isset($result[$column['Column']['id']]['2'])) {
 					//Beide Dienste an dem Tag sind bereit belegt. Bleibt die Frage: Von einer oder von 2 Personen?
 					if ($result[$column['Column']['id']]['1']['userid'] == $result[$column['Column']['id']]['2']['userid']) {
-						//Die gleiche Person übernimmt den Dienst
+						//Die gleiche Person übernimmt den Dienst	
 						if ($column['Column']['obligated']) $classString = "class='success'";
 						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString'>".$result[$column['Column']['id']]['1']['username']."</td>";
 					} else {

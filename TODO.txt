@@ -5,7 +5,6 @@ Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 Datenbank: Frau Wagner wegen Z?fle und Neu anschreiben
 Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
 Bei E-Mails: Was, wenn web.de nicht senden will?
-/plan: Farbe der Links ändern (per CSS)
 Kräftigere Farben für den Plan und allgemein alle Felder (z. B. Verfügbarkeiten)
 Sidebar immer mit runterscrollen lassen
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern

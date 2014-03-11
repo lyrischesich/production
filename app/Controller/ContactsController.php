@@ -104,11 +104,11 @@ class ContactsController extends AppController {
 	 */
 	private function addStyle($dayValue = null) {
 		if (strcmp($dayValue,"G") == 0) {
-			return array('value' => $dayValue,'class' => 'success');
+			return array('value' => $dayValue,'class' => 'tdsuccess');
 		} else if (strcmp($dayValue,"H") == 0 || strcmp($dayValue,"1") == 0 || strcmp($dayValue,"2") == 0) {
-			return array('value' => $dayValue,'class' => 'warning');
+			return array('value' => $dayValue,'class' => 'tdwarning');
 		} else if (strcmp($dayValue,"N") == 0) {
-			return array('value' => $dayValue,'class' => 'error');
+			return array('value' => $dayValue,'class' => 'tderror');
 		}
 	}
 	
