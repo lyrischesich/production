@@ -6217,15 +6217,15 @@ a.badge:focus {
 }
 
 /* Plan-Spalten-CSS */
-td.tdsuccess > .table-striped tbody {
+td.tdsuccess {
 	background-color: #dff0d8;
 }
 
-td.tdwarning > .table-striped tbody{
+td.tdwarning {
 	background-color: rgb(255, 253, 22);
 }
 
-td.tderror > .table-striped tbody, td.tderrorlink > .table-striped tbody{
+td.tderror, td.tderrorlink {
 	background-color: #f2dede;	 
 }
 

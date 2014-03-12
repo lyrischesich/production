@@ -4,7 +4,7 @@
 		)));
 ?>
 	<h2>Telefonliste</h2>
-	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered" id="contactlist">
+	<table cellpadding="0" cellspacing="0" class="table table-bordered" id="contactlist">
 		<tr>
 			<th><?php echo $this->Paginator->sort('lname','Nachname'); ?></th>
 			<th><?php echo $this->Paginator->sort('fname','Vorname'); ?></th>
