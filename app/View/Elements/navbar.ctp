@@ -7,22 +7,46 @@
 		if (!AuthComponent::user('id')) {
 			echo "<li class='active'>
 					<a href='#'>Login</a>
-				</li>
+			      </li>
 			";
 		} else {
-			$active = $this->params['controller'];
-			$aCtrlClasses = App::objects('controller');
-			foreach ($aCtrlClasses as $controller) {
-				if ($controller != "AppController" && $controller != "LoginController") {
-					$controllerName = str_replace("Controller", "", $controller);
-					$name = strtolower($controllerName);
-					if ($active == $name) echo "<li class='active'>";  else  echo "<li>";				
-					echo $this->Html->link($controllerName,array(
-							'controller' => $name,
-							'action' => 'index'
-							));
-					echo "</li>";
+// 			$active = $this->params['controller'];
+// 			$aCtrlClasses = App::objects('controller');
+// 			foreach ($aCtrlClasses as $controller) {
+// 				if ($controller != "AppController" && $controller != "LoginController") {
+// 					$controllerName = str_replace("Controller", "", $controller);
+// 					$name = strtolower($controllerName);
+// 					if ($active == $name) echo "<li class='active'>";  else  echo "<li>";				
+// 					echo $this->Html->link($controllerName,array(
+// 							'controller' => $name,
+// 							'action' => 'index'
+// 							));
+// 					echo "</li>";
+// 				}
+// 			}
+			
+			$linksToPrint = array(
+				'Sicherung' => array('admin' => true, 'controller' => 'backup', 'action' => 'index'),
+				'Änderungsliste' => array('admin' => true, 'controller' => 'changelogs', 'action' => 'index'),	
+				'Spaltenverwaltung' => array('admin' => true, 'controller' => 'columns', 'action' => 'index'),
+				'Kontaktliste' => array('admin' => false, 'controller' => 'contacts', 'action' => 'index'),
+				'Rundmail' => array('admin' => true, 'controller' => 'mail', 'action' => 'index'),
+				'Plan' => array('admin' => false, 'controller' => 'plan', 'action' => 'index'),
+				'Statistik' => array('admin' => true, 'controller' => 'statistic', 'action' => 'index'),
+				'Benutzerverwaltung' => array('admin' => true, 'controller' => 'users', 'action' => 'index'),
+				'(Profil)' => array('admin' => false, 'controller' => 'users', 'action' => 'edit')
+			);
+			
+			$active = $this->params['controller']."/".$this->params['action'];
+			foreach ($linksToPrint as $name => $linkdata) {
+				if ($active == $linkdata['controller']."/".$linkdata['action']) echo "<li class='active'>";
+				else echo "<li>";
+				
+				if (($linkdata['admin'] && AuthComponent::user('id') && AuthComponent::user('admin')) || !$linkdata['admin']) {
+					echo $this->Html->link($name, array('controller' => $linkdata['controller'], 'action' => $linkdata['action']));
 				}
+				
+				echo "</li>";
 			}
 		}		
 		?>

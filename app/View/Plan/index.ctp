@@ -123,9 +123,9 @@
 				} else if (!isset($result[$column['Column']['id']]['1']) && isset($result[$column['Column']['id']]['2'])) {
 					//Nur der zweite Dienst ist belegt
 					if ($column['Column']['obligated']) $classString = ($dateIsInFuture) ? $errorlink : $error;
-					echo "<td id='".$key."_".$column['Column']['id']."_1' $classString'></td>";
+					echo "<td id='".$key."_".$column['Column']['id']."_1' $classString></td>";
 					if ($column['Column']['obligated']) $classString = $success;
-					echo "<td id='".$key."_".$column['Column']['id']."_2' $classString'>".$result[$column['Column']['id']]['2']['username']."</td>";
+					echo "<td id='".$key."_".$column['Column']['id']."_2' $classString>".$result[$column['Column']['id']]['2']['username']."</td>";
 				} else if (!isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Noch gar kein Dienst wurde belegt
 					
