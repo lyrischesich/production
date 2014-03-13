@@ -83,16 +83,72 @@ class PlanController extends AppController {
 		return true;
 	}
 
-	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1) {
-		if (!$this->check_date($date) || !$this->Column->exists($columnid) || $halfshift > 3 || $halfshift < 1) {
+	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username) {
+		if (!$this->check_date($date) || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 		
+		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
+		if ($column['Column']['type'] != 2)
+			return "Keine Benutzerspalte.";
 		
+		$aSpecialdate = $this->Specialdate->exists($date);
+		if ((date('N', strtotime($date)) >= 6 && !$aSpecialdate) || (date('N', strtotime($date)) <= 5 && $aSpecialdate) ) {
+			//Inaktiver Tag -> Kein Eintragen möglich
+			return "Inaktiver Tag.";
+		}
+		
+		if ($username != "") {
+			//Existiert der angegebene Benutzer?
+			if ($this->User->find('count', array('recursive' => -1, 'conditions' => array('User.username' => $username))) != 1) {
+				return "Benutzer nicht gefunden";
+			} else {
+				$userdata = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
+			}
+		} else {
+			//Benutzerschicht soll gelöscht werden
+			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $halfshift)));
+			if (count($aColumnsUser) != 1)
+				return "Dienst bereits leer.";
+			
+			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) )))
+				return "Keine Berechtigung zum Löschen";
+			debug($aColumnsUser);
+			if ($this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
+				//Erfolgreich->Abbruch, da Aufgabe erledigt ist
+				return;
+			} else {
+				return "Fehler beim Austragen";
+			}
+		}
+		
+		if ($halfshift == 3)
+			$notAllowedShifts = array(1, 2, 3);
+		else
+			$notAllowedShifts = array($halfshift, 3);
+		
+		$columnsUsers = $this->ColumnsUser->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $notAllowedShifts)));
+		debug ($columnsUsers);
+		if (count($columnsUsers) > 0) {
+			//Es gibt bereits Einträge, die sich mit diesem überschneiden würden
+			//Diese dürfen nur mit Adminrechten überschrieben werden
+			if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+				//Benutzer hat Adminrechte->Bisherige Einträge löschen
+				foreach ($columnsUsers as $columnsUser) {
+					$this->ColumnsUser->delete($columnsUser['ColumnsUser']['id']);
+				}
+			} else {
+				//Benutzer hat keine Adminrechte->Fehler
+				return "Keine Berechtigung";
+			}
+		}
+		
+		//Wird das Skript hier noch ausgeführt, so sind alle Berechtigungen gegeben->Eintragen
+// 		if ($)		
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
-		if (!$this->check_date($date) || !$this->Column->exists($columnid) || $message === -1) {
+		if (!$this->check_date($date) || !$this->Column->exists($columnid) || $message === -1 || $message == null) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 		
@@ -160,7 +216,7 @@ class PlanController extends AppController {
 	}
 
 	public function savetest() {
-		debug($this->saveTextEntry('2014-03-13', 1, ""));
+		debug($this->saveUserEntry('2014-03-20', 3, 2, ""));
 	}
 	
 	public function saveSpecialdate($date=-1) {
