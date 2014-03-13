@@ -71,6 +71,39 @@ class PlanController extends AppController {
 		$this->set('results', $results);
 		
 	}
+
+	private function check_date($date=-1) {
+		$token = explode("-", $date);
+		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token	[2]) != 2) {
+			//Ungültiges Datum
+			//-> nur normal Anzeigen, ohne Einschränkungen
+			return false;
+		}
+
+		return true;
+	}
+
+	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1) {
+		if (!check_date($date) || !$this->Column->exists($columnid) || $halfshift > 3 || $halfshift < 1) {
+			return "Beim Eintragen ist ein Fehler aufgetreten.";
+		}
+		
+		
+	}
+
+	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
+		if (!check_date($date) || !$this->Column->exists($columnid) || $message === -1) {
+			return "Beim Eintragen ist ein Fehler aufgetreten.";
+		}
+	}
+
+	public function saveSpecialdate($date=-1) {
+		if (!check_date($date)) {
+			return "Beim Eintragen ist ein Fehler aufgetreten.";
+		}
+
+		if ($this->Specialdate->exists($date))
+	}
 	
 	public function sendMissingShiftMails(){
 		$firstDate = new DateTime('now');

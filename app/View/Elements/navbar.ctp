@@ -34,7 +34,7 @@
 				'Plan' => array('admin' => false, 'controller' => 'plan', 'action' => 'index'),
 				'Statistik' => array('admin' => true, 'controller' => 'statistic', 'action' => 'index'),
 				'Benutzerverwaltung' => array('admin' => true, 'controller' => 'users', 'action' => 'index'),
-				'(Profil)' => array('admin' => false, 'controller' => 'users', 'action' => 'edit')
+				AuthComponent::user('username') => array('admin' => false, 'controller' => 'users', 'action' => 'edit')
 			);
 			
 			$active = $this->params['controller']."/".$this->params['action'];

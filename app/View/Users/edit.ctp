@@ -1,31 +1,54 @@
 <div class="users form">
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit User'); ?></legend>
+		<legend><?php echo 'Benutzer anlegen'; ?></legend>
+	<table>
+	<tr>
+		<td>	<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> </td>
+		<td>	<?php echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));?> </td>
+		<td>	<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?> </td>
+	</tr>
+	<tr>
+	<td>		<?php echo $this->Form->input('password', array('label' => array('text' =>'Passwort', 'value' => "")));?> </td>
+	<td>		<?php echo $this->Form->input("password2", array('label' => array('text' =>'Passwort wiederholen')));?> </td>
+	</tr>
+	<tr>
+		<td>	<?php echo $this->Form->input('tel1', array('label' => array('text' =>'Telefonnummer 1')));?> </td>
+		<td>	<?php echo $this->Form->input('tel2', array('label' => array('text' =>'Telefonnummer 2')));?> </td>
+		<td>	<?php echo $this->Form->input('mail', array('label' => array('text' =>'E-Mail Adresse'))); ?> </td>
+	</tr>
+	</table>
+	
+
 	<?php
-		echo $this->Form->input('username');
-		echo $this->Form->input('fname');
-		echo $this->Form->input('lname');
-		echo $this->Form->input('passwd');
-		echo $this->Form->input('tel1');
-		echo $this->Form->input('tel2');
-		echo $this->Form->input('mail');
 		echo $this->Form->select('mo',$enumValues);
 		echo $this->Form->select('di',$enumValues);
 		echo $this->Form->select('mi',$enumValues);
 		echo $this->Form->select('do',$enumValues);
 		echo $this->Form->select('fr',$enumValues);
 	?>
+<table border="2" align="center">
+	<tr>
+		<td><?php echo "G"; ?></td>
+		<td><?php echo "Ganze Schicht"; ?></td>
+	</tr>
+	<tr>
+		<td><?php echo "H"; ?></td>
+		<td><?php echo "Halbe Schicht"; ?></td>
+	</tr>
+	<tr>
+		<td><?php echo "1"; ?></td>
+		<td><?php echo "Nur 1. Hälfte"; ?></td>
+	</tr>
+	<tr>
+		<td><?php echo "2"; ?></td>
+		<td><?php echo "Nur 2. Hälfte"; ?></td>
+	</tr>
+	<tr>
+		<td><?php echo "N"; ?></td>
+		<td><?php echo "Kein Dienst"; ?></td>
+	</tr>
+	</table>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('User.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('User.username'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Columns'), array('controller' => 'columns', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Column'), array('controller' => 'columns', 'action' => 'add')); ?> </li>
-	</ul>
+<?php echo $this->Form->end('Benutzer erstellen'); ?>
 </div>

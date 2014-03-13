@@ -21,7 +21,7 @@
 		<td><?php echo $this->Form->input('admin', array('type' => 'checkbox', 'label' => array('text' =>  ($user['User']['admin']) ? "ist Admin" : "ist kein Admin"), 'name' => "data[User][".$user['User']['id']."][admin]", 'checked' => $user['User']['admin'], 'id' => "UserAdmin".$user['User']['id']."", 'align' => 'right')); ?></td>
 
 		<td class="actions">
-			<?php echo $this->Html->link('Anzeigen |', array('action' => 'view', $user['User']['id'])); ?>
+			<!--<?php echo $this->Html->link('Anzeigen |', array('action' => 'view', $user['User']['id'])); ?>-->
 			<?php echo $this->Html->link(' Editieren |', array('action' => 'edit', $user['User']['id'])); ?>
 			<?php echo $this->Form->postLink(' Löschen', array('action' => 'delete', $user['User']['id']), null, __('Wollen Sie wirklich den Benutzer "%s" löschen?', $user['User']['username'])); ?>
 		</td>
