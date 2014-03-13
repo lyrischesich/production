@@ -2,7 +2,7 @@
 App::uses('AppController', 'Controller');
 class PlanController extends AppController {
 	
- 	public $uses = array('Specialdate','User', 'Column', 'Plan');
+ 	public $uses = array('Specialdate','User', 'Column', 'Plan', 'Comment', 'ColumnsUser', 'Changelog');
 	public $helpers = array('Js','Time');
 	public $components = array('Paginator','Session');
 
@@ -84,7 +84,7 @@ class PlanController extends AppController {
 	}
 
 	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1) {
-		if (!check_date($date) || !$this->Column->exists($columnid) || $halfshift > 3 || $halfshift < 1) {
+		if (!$this->check_date($date) || !$this->Column->exists($columnid) || $halfshift > 3 || $halfshift < 1) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 		
@@ -92,17 +92,99 @@ class PlanController extends AppController {
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
-		if (!check_date($date) || !$this->Column->exists($columnid) || $message === -1) {
+		if (!$this->check_date($date) || !$this->Column->exists($columnid) || $message === -1) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
+		}
+		
+		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
+		if ($column['Column']['type'] != 1)
+			return "Beim Eintragen ist ein Fehler aufgetreten.";
+		
+		$data = $this->Comment->find('first', array('recursive' => -1, 'conditions' => array('Comment.date' => $date, 'Comment.column_id' => $columnid)));
+		if (trim($message) == "") {
+			//Der Eintrag soll gelöscht werden			
+			if ($data == array()) {
+				//Eintrag existiert nicht, es wurde einfach nur mit dem Textfeld rumgespielt
+				//->nichts tun
+			} else {
+				//Eintrag existiert und soll gelöscht werden, da "" wie kein Eintrag ist
+				if ($this->Comment->delete($data['Comment']['id'])) {					
+					//Erfolgreich -> In Changelog eintragen
+					$changelogArray = array(
+						'Changelog'	=> array(
+								'for_date' => $date,
+								'value_before' => $data['Comment']['message'],
+								'value_after' => "",
+								'column_name' => $column['Column']['name'],
+								'user_did' => AuthComponent::user('username')
+						)
+					);
+					$this->Changelog->save($changelogArray);
+				} else {
+					return "Beim Eintragen ist ein Fehler aufgetreten.";
+				}
+			}
+		} else {
+			//Der Eintrag soll gepeichert werden
+			if ($data == array()) {
+				//Eintrag existiert noch nicht und muss neu angelegt werden
+				$savearray = array(
+						'Comment' => array(
+								'date' => $date,
+								'column_id' => $columnid,
+								'message' => $message
+						)
+				);
+			} else {
+				//Eintrag existiert bereits und muss aktualisiert werden
+				$savearray = $data;
+				$savearray['Comment']['message'] = $message;
+			}
+			
+			if ($this->Comment->save($savearray)) {
+				//Erfolgreich->in Changelog eintragen
+				$changelogArray = array(
+						'Changelog'	=> array(
+								'for_date' => $date,
+								'value_before' => ($data == array()) ? "" : $data['Comment']['message'],
+								'value_after' => $message,
+								'column_name' => $column['Column']['name'],
+								'user_did' => AuthComponent::user('username')
+						)
+				);
+				$this->Changelog->save($changelogArray);
+			} else {
+				return "Beim Eintragen ist ein Fehler aufgetreten";
+			}
 		}
 	}
 
+	public function savetest() {
+		debug($this->saveTextEntry('2014-03-13', 1, ""));
+	}
+	
 	public function saveSpecialdate($date=-1) {
-		if (!check_date($date)) {
+		if (!$this->check_date($date)) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 
-		if ($this->Specialdate->exists($date))
+		if ($this->Specialdate->exists($date)) {
+			//Datum ist bereits Specialdate -> löschen
+			if ($this->Specialdate->delete($date)) {
+				//Erfolgreich
+			} else {
+				return "Beim Austragen ist ein Fehler aufgetreten.";
+			}
+		} else {
+			//Datum ist noch nicht eingetragen -> eintragen
+			$savearray['Specialdate']['date'] = $date;
+			if ($this->Specialdate->save($savearray)) {
+				//Erfolgreich
+			} else {
+				return "Beim Eintragen ist ein Fehler aufgetreten.";
+			}
+		}
+		
 	}
 	
 	public function sendMissingShiftMails(){
