@@ -107,21 +107,39 @@ class PlanController extends AppController {
 			}
 		} else {
 			//Benutzerschicht soll gelöscht werden
+			//TODO 12/3 Bug fixen
 			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $halfshift)));
 			if (count($aColumnsUser) != 1)
 				return "Dienst bereits leer.";
+				//TODO evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
 			
 			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) )))
 				return "Keine Berechtigung zum Löschen";
 			debug($aColumnsUser);
 			if ($this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
-				//Erfolgreich->Abbruch, da Aufgabe erledigt ist
+				//Erfolgreich->Eintragen in Changelog
+				$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $aColumnsUser['ColumnsUser']['user_id'])));
+				$changelogArray = array(
+						'Changelog'	=> array(
+								'for_date' => $date,
+								'value_before' => $userinfo['User']['username'],
+								'value_after' => "",
+								'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
+								'user_did' => AuthComponent::user('username')
+						)
+				);
+				$this->Changelog->save($changelogArray);
+				
+				//Bei zu kurzer Differenz zum aktuellen Datum Notfallmail verschicken
+				//Abbruch, da Aufgabe erledigt ist
+				//TODO Automail
 				return;
 			} else {
 				return "Fehler beim Austragen";
 			}
 		}
 		
+		//Ab hier kann man davon ausgehen, dass der Benutzer sich eintragen möchte und nicht austragen
 		if ($halfshift == 3)
 			$notAllowedShifts = array(1, 2, 3);
 		else
@@ -136,6 +154,7 @@ class PlanController extends AppController {
 				//Benutzer hat Adminrechte->Bisherige Einträge löschen
 				foreach ($columnsUsers as $columnsUser) {
 					$this->ColumnsUser->delete($columnsUser['ColumnsUser']['id']);
+					//In den Changelog
 				}
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
@@ -144,7 +163,31 @@ class PlanController extends AppController {
 		}
 		
 		//Wird das Skript hier noch ausgeführt, so sind alle Berechtigungen gegeben->Eintragen
-// 		if ($)		
+		$savearray = array(
+			'ColumnsUser' => array(
+				'date' => $date,
+				'half_shift' => $halfshift,
+				'column_id' => $columnid,
+				'user_id' => $userdata['User']['id']
+			)
+		);
+		//TODO Changelogeinträge prüfen
+		if ($this->ColumnsUser->save($savearray)) {
+			//Erfolgreich->in Changelog eintragen
+			$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
+			$changelogArray = array(
+					'Changelog'	=> array(
+							'for_date' => $date,
+							'value_before' => (count($userinfo) > 0) ? $userinfo['User']['username'] : "",
+							'value_after' => $username,
+							'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
+							'user_did' => AuthComponent::user('username')
+					)
+			);
+			$this->Changelog->save($changelogArray);
+		} else {
+			return "Fehler beim Eintragen.";
+		}
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
@@ -216,7 +259,7 @@ class PlanController extends AppController {
 	}
 
 	public function savetest() {
-		debug($this->saveUserEntry('2014-03-20', 3, 2, ""));
+		debug($this->saveUserEntry('2014-03-20', 2, 2, "Lilienthal"));
 	}
 	
 	public function saveSpecialdate($date=-1) {
