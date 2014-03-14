@@ -77,20 +77,25 @@ class PlanController extends AppController {
 		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token	[2]) != 2) {
 			//Ungültiges Datum
 			//-> nur normal Anzeigen, ohne Einschränkungen
-			return false;
+			return "Ungültige Werte.";
+		} else if (strtotime($date)+DAY < time()) {
+			return "Datum bereits vorbei.";
 		}
 
 		return true;
 	}
 
 	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username) {
-		if (!$this->check_date($date) || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
+		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 		
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
 		if ($column['Column']['type'] != 2)
 			return "Keine Benutzerspalte.";
+		
+		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin')))
+			return "Zugriff verweigert.";
 		
 		$aSpecialdate = $this->Specialdate->exists($date);
 		if ((date('N', strtotime($date)) >= 6 && !$aSpecialdate) || (date('N', strtotime($date)) <= 5 && $aSpecialdate) ) {
@@ -99,6 +104,9 @@ class PlanController extends AppController {
 		}
 		
 		if ($username != "") {
+			if ($username != AuthComponent::user('username') && !(AuthComponent::user('id') && AuthComponent::user('admin')))
+				return "Mieser fieser Hacker!";
+			
 			//Existiert der angegebene Benutzer?
 			if ($this->User->find('count', array('recursive' => -1, 'conditions' => array('User.username' => $username))) != 1) {
 				return "Benutzer nicht gefunden";
@@ -107,15 +115,15 @@ class PlanController extends AppController {
 			}
 		} else {
 			//Benutzerschicht soll gelöscht werden
-			//TODO 12/3 Bug fixen
+			
 			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $halfshift)));
 			if (count($aColumnsUser) != 1)
-				return "Dienst bereits leer.";
-				//TODO evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
+				return;// "Dienst bereits leer.";
+				//evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
 			
 			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) )))
 				return "Keine Berechtigung zum Löschen";
-			debug($aColumnsUser);
+			
 			if ($this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
 				//Erfolgreich->Eintragen in Changelog
 				$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $aColumnsUser['ColumnsUser']['user_id'])));
@@ -170,15 +178,32 @@ class PlanController extends AppController {
 				}
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
-				return "Keine Berechtigung";
+				return "Keine Berechtigung.";
 			}
 		}
 		
 		//Wird das Skript hier noch ausgeführt, so sind alle Berechtigungen gegeben->Eintragen
+		$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
+		if ($halfshift == 1 || $halfshift == 2) {
+			//Der Benutzer hat nur einen halben Dienst belegt
+			//Prüfen, ob der Benutzer den anderen halben Dienst früher schon belegt hat
+			$columnsuserid = $this->ColumnsUser->find('first', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => (3-$halfshift))));
+			if (count($columnsuserid) == 1 && $columnsuserid['ColumnsUser']['user_id'] == $userinfo['User']['id']) {
+				//ja
+				$columnsuserid = $columnsuserid['ColumnsUser']['id'];
+			} else {
+				//nein
+				$columnsuserid = null;
+			}
+		} else {
+			$columnsuserid = null;
+		}
+		
 		$savearray = array(
 			'ColumnsUser' => array(
+				'id' => $columnsuserid,
 				'date' => $date,
-				'half_shift' => $halfshift,
+				'half_shift' => ($columnsuserid == null) ? $halfshift : 3,
 				'column_id' => $columnid,
 				'user_id' => $userdata['User']['id']
 			)
@@ -186,8 +211,7 @@ class PlanController extends AppController {
 
 		
 		if ($this->ColumnsUser->save($savearray)) {
-			//Erfolgreich->in Changelog eintragen
-			$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
+			//Erfolgreich->in Changelog eintragen			
 			$changelogArray = array(
 					'Changelog'	=> array(
 							'for_date' => $date,
@@ -205,13 +229,16 @@ class PlanController extends AppController {
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
-		if (!$this->check_date($date) || !$this->Column->exists($columnid) || $message === -1 || $message == null) {
+		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || $message === -1 || $message == null) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 		
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
 		if ($column['Column']['type'] != 1)
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
+		
+		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin')))
+			return "Zugriff verweigert.";
 		
 		$data = $this->Comment->find('first', array('recursive' => -1, 'conditions' => array('Comment.date' => $date, 'Comment.column_id' => $columnid)));
 		if (trim($message) == "") {
@@ -273,11 +300,11 @@ class PlanController extends AppController {
 	}
 
 	public function savetest() {
-		debug($this->saveUserEntry('2014-03-20', 2, 2, "LoeserA"));
+		debug($this->saveUserEntry('2014-03-22', 2, 3, ""));
 	}
 	
-	public function saveSpecialdate($date=-1) {
-		if (!$this->check_date($date)) {
+	public function saveSpecialdate($date=-1) {		
+		if ($this->check_date($date) !== true) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
 
@@ -446,7 +473,12 @@ class PlanController extends AppController {
 			return defined("PERMISSION_TO_ACCESS_AUTOMAIL") && PERMISSION_TO_ACCESS_AUTOMAIL === true;
 		}
 		
-		//Alle angemeldeten Benutzer dürfen den Plan einsehen
+		if ($this->action == "saveSpecialdate") {
+			//Nur Administratoren dürfen Specialdates eintragen
+			return parent::isAuthorized($user);
+		}
+		
+		//Alle angemeldeten Benutzer dürfen den Plan einsehen und sich ein- und austragen
 		return true;
 	}
 }
