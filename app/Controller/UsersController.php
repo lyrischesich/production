@@ -99,7 +99,8 @@ class UsersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function edit($id=-1) {
+		if ($id == -1) $id = AuthComponent::user('id');
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException('Unbekannter Benutzer');
 		}

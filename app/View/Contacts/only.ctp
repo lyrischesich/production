@@ -1,23 +1,6 @@
 <h2>Telefonliste für <?php echo $dow; ?></h2>
 	<br />
-	<table border='1' align='center'>
-  		<tr>
-		    <td class='tdsuccess'>G</td>
-	    	<td>Ganze Schicht, auch Hälfte</td>
-  		</tr>
-	  	<tr>
-    		<td class='tdwarning'>H</td>
-	    	<td>Halbe Schicht</td>
-	  	</tr>
-	  	<tr>
-	  		<td class='tdwarning'>1</td>
-	  		<td>Nur 1. Hälfte</td>
-	  	</tr>
-	  	<tr>
-	  		<td class='tdwarning'>2</td>
-	  		<td>Nur 2. Hälfte</td>
-	  	</tr>
-	</table>
+	<?php echo $this->Element('legend'); ?>
 	<br />
 
 	<table cellpadding="0" cellspacing="0" class="table table-bordered" id="contactlist">

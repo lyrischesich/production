@@ -154,7 +154,19 @@ class PlanController extends AppController {
 				//Benutzer hat Adminrechte->Bisherige Einträge löschen
 				foreach ($columnsUsers as $columnsUser) {
 					$this->ColumnsUser->delete($columnsUser['ColumnsUser']['id']);
-					//In den Changelog
+					//In den Changelog eintragen
+					$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $columnsUser['ColumnsUser']['user_id'])));
+					$changelogArray = array(
+						'Changelog' => array(
+							'for_date' => $date,
+							'value_before' => (isset($userinfo['User']['username'])) ? $userinfo['User']['username'] : "",
+							'value_after' => "",
+							'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
+							'user_did' => AuthComponent::user('username')
+						)
+					);
+					$this->Changelog->clear();
+					debug($this->Changelog->save($changelogArray));
 				}
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
@@ -171,19 +183,21 @@ class PlanController extends AppController {
 				'user_id' => $userdata['User']['id']
 			)
 		);
-		//TODO Changelogeinträge prüfen
+
+		
 		if ($this->ColumnsUser->save($savearray)) {
 			//Erfolgreich->in Changelog eintragen
 			$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
 			$changelogArray = array(
 					'Changelog'	=> array(
 							'for_date' => $date,
-							'value_before' => (count($userinfo) > 0) ? $userinfo['User']['username'] : "",
+							'value_before' => "",
 							'value_after' => $username,
 							'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
 							'user_did' => AuthComponent::user('username')
 					)
 			);
+			$this->Changelog->clear();
 			$this->Changelog->save($changelogArray);
 		} else {
 			return "Fehler beim Eintragen.";
@@ -259,7 +273,7 @@ class PlanController extends AppController {
 	}
 
 	public function savetest() {
-		debug($this->saveUserEntry('2014-03-20', 2, 2, "Lilienthal"));
+		debug($this->saveUserEntry('2014-03-20', 2, 2, "LoeserA"));
 	}
 	
 	public function saveSpecialdate($date=-1) {

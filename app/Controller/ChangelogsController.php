@@ -19,7 +19,7 @@ class ChangelogsController extends AppController {
 			'fields' => array('Changelog.for_date','Changelog.change_date','Changelog.value_before','Changelog.value_after','Changelog.column_name','Changelog.user_did'),
 			'limit' => 25,
 			'order' => array(
-					'Changelog.change_date' => 'desc'
+					'Changelog.id' => 'desc'
 			),
 	);
 

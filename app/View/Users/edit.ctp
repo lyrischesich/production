@@ -1,7 +1,7 @@
 <div class="users form">
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
-		<legend><?php echo 'Benutzer anlegen'; ?></legend>
+		<legend><?php echo 'Benutzer editieren'; ?></legend>
 	<table>
 	<tr>
 		<td>	<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> </td>
@@ -9,7 +9,7 @@
 		<td>	<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?> </td>
 	</tr>
 	<tr>
-	<td>		<?php echo $this->Form->input('password', array('label' => array('text' =>'Passwort', 'value' => "")));?> </td>
+	<td>		<?php echo $this->Form->input('password', array('label' => array('text' =>'Passwort'), 'value'=>""));?> </td>
 	<td>		<?php echo $this->Form->input("password2", array('label' => array('text' =>'Passwort wiederholen')));?> </td>
 	</tr>
 	<tr>
@@ -27,28 +27,7 @@
 		echo $this->Form->select('do',$enumValues);
 		echo $this->Form->select('fr',$enumValues);
 	?>
-<table border="2" align="center">
-	<tr>
-		<td><?php echo "G"; ?></td>
-		<td><?php echo "Ganze Schicht"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "H"; ?></td>
-		<td><?php echo "Halbe Schicht"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "1"; ?></td>
-		<td><?php echo "Nur 1. Hälfte"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "2"; ?></td>
-		<td><?php echo "Nur 2. Hälfte"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "N"; ?></td>
-		<td><?php echo "Kein Dienst"; ?></td>
-	</tr>
-	</table>
+	<?php echo $this->element('legend'); ?>
 	</fieldset>
-<?php echo $this->Form->end('Benutzer erstellen'); ?>
+<?php echo $this->Form->end('Änderungen speichern'); ?>
 </div>

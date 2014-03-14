@@ -10,6 +10,6 @@ Sidebar immer mit runterscrollen lassen
 NavBar Collapsable machen			
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /statistic/interval: sollen nächster Monat etc. angezeigt werden?
-
+/Users : Registrierung und Änderungs-Formular schön machen(irgendwie)
 //Soll-Kriterien
 /statistic: Jahresstatistik implementieren

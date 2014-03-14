@@ -161,7 +161,7 @@ class User extends AppModel {
 		),
 		'password2' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty'
+				'rule' => 'notEmpty',
 			),
 			'equalToField' => array(
 				'rule' => array('equalToField', 'password'),

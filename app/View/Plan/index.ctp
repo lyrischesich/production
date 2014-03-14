@@ -1,3 +1,5 @@
+<?php echo $this->Html->script('planScript.js'); ?>
+
 <?php echo $this->element('actions',array(
 			'actions' => array(
 				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'Plan','action' => 'createPDF')),
@@ -69,10 +71,10 @@
 				//Wenn ja, dann gebe "einfach" die Bemerkung aus
 				if (isset($result[$column['Column']['id']])) {
 					if ($column['Column']['obligated']) $classString = $success;
-					echo "<td $classString>".$result[$column['Column']['id']]."</td>";
+					echo "<td id='txt_".$key."' $classString>".$result[$column['Column']['id']]."</td>";
 				} else {
 					if ($column['Column']['obligated'] && $type == "active") $classString = ($dateIsInFuture) ? $errorlink : $error;
-					echo "<td $classString></td>";
+					echo "<td id='txt_".$key."' $classString></td>";
 				}
 								
 			} else if ($column['Column']['type'] == 2) {
@@ -141,4 +143,17 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
+</div>
+
+<div id="wahlmenu" title="Bitte ausw&auml;hlen" style="text-align: center;">
+	<br />
+	<button id="eintragen" style="width:200px">Eintragen</button>
+	<br />
+	<button id="austragen" style="width:200px">Austragen</button>
+	<div id="eintragenSwitch">Schicht:
+		<input type="radio" id="radio1" name="radio" value="" checked="checked" />
+		<label for="radio1">Ganz</label><input type="radio" id="radio2" name="radio" value="_1" />
+		<label for="radio2">1. H</label><input type="radio" id="radio3" name="radio" value="_2" />
+		<label for="radio3">2. H</label>
+	</div>
 </div>
