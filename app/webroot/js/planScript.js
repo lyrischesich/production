@@ -144,6 +144,23 @@ function ajaxHandler() {
 								$("#"+cellToEdit).text(username);
 							}
 						}
+					} else if (sel_shift == '2') {
+						if (halfshift == "2") {
+							var splittedID = cellID.split("_");
+							var celRoot = splittedID[0] + "_" + splittedID[1];
+							var cellToComp = splittedID[0] + "_" + splittedID[1] + "_1";
+							var cellToEdit = splittedID[0] + "_" + splittedID[1] + "_2";
+							
+							if ($("#"+cellToComp).text() == username) {
+								$("#"+cellToEdit).remove();
+								$("#"+cellToComp).attr('colspan',2);
+								$("#"+cellToComp).attr('id',celRoot);
+							} else {
+								$("#"+cellToEdit).removeClass("tderrorlink");
+								$("#"+cellToEdit).addClass("tdsuccesslink");
+								$("#"+cellToEdit).text(username);
+							}
+						}
 					}
 
 				} else if (response == "210") {
