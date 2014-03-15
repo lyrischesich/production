@@ -75,8 +75,12 @@ function ajaxHandler() {
 				halfshift = "3";
 			}
 		}
-		
-		var requestUrl = document.URL + "/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+		var str = document.URL
+		if( str.charAt( str.length-1) == "/" ) {
+			var requestUrl = document.URL + "saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+		} else {
+			var requestUrl = document.URL + "/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+		}
 		if (username != "") requestUrl += username;
 		$.ajax( {
 			type: 'POST',
