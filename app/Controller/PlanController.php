@@ -141,48 +141,62 @@ class PlanController extends AppController {
 	}
 
 	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username="") {
+		if ($username == "") $username = "";
 		
 		if ($this->RequestHandler->isAjax()) {
 			$this->autoRender = $this->layout =  false;
 			Configure::write('debug','0');
 		}
+		
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
-			return "Beim Eintragen ist ein Fehler aufgetreten.";
+			echo "Beim Eintragen ist ein Fehler aufgetreten.";
+			exit;
 		}
 		
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
-		if ($column['Column']['type'] != 2)
-			return "Keine Benutzerspalte.";
+		if ($column['Column']['type'] != 2) {
+			echo "Keine Benutzerspalte.";
+			exit;
+		}
 		
-		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin')))
-			return "Zugriff verweigert.";
+		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
+			echo "Zugriff verweigert.";
+			exit;
+		}
 		
 		$aSpecialdate = $this->Specialdate->exists($date);
 		if ((date('N', strtotime($date)) >= 6 && !$aSpecialdate) || (date('N', strtotime($date)) <= 5 && $aSpecialdate) ) {
 			//Inaktiver Tag -> Kein Eintragen möglich
-			return "Inaktiver Tag.";
+			echo "Inaktiver Tag.";
+			exit;
 		}
 		
 		if ($username != "") {
-			if ($username != AuthComponent::user('username') && !(AuthComponent::user('id') && AuthComponent::user('admin')))
-				return "Mieser fieser Hacker!";
-			
+			if ($username != AuthComponent::user('username') && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
+				echo "Mieser fieser Hacker!";
+				exit;
+			}
 			//Existiert der angegebene Benutzer?
 			if ($this->User->find('count', array('recursive' => -1, 'conditions' => array('User.username' => $username))) != 1) {
-				return "Benutzer nicht gefunden";
+				echo "Benutzer nicht gefunden";
+				exit;
 			} else {
 				$userdata = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
 			}
 		} else {
+
 			//Benutzerschicht soll gelöscht werden
-			
 			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $halfshift)));
-			if (count($aColumnsUser) != 1)
-				return;// "Dienst bereits leer.";
+			if (count($aColumnsUser) != 1) {
+				echo "Dienst ist bereits leer";// "Dienst bereits leer.";
 				//evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
+				exit;
+			}
 			
-			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) )))
-				return "Keine Berechtigung zum Löschen";
+			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) ))) {
+				echo "Keine Berechtigung zum Löschen";
+				exit;
+			}
 			
 			if ($this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
 				//Erfolgreich->Eintragen in Changelog
@@ -204,20 +218,23 @@ class PlanController extends AppController {
 				}
 				
 				//Abbruch, da Aufgabe erledigt ist
-				return;
+				echo "210";
+				exit;
 			} else {
-				return "Fehler beim Austragen";
+				echo "510";
+				exit;
 			}
 		}
+
 		
 		//Ab hier kann man davon ausgehen, dass der Benutzer sich eintragen möchte und nicht austragen
-		if ($halfshift == 3)
+		if ($halfshift == 3) {
 			$notAllowedShifts = array(1, 2, 3);
-		else
+		} else {
 			$notAllowedShifts = array($halfshift, 3);
+		}
 		
 		$columnsUsers = $this->ColumnsUser->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $notAllowedShifts)));
-		debug ($columnsUsers);
 		if (count($columnsUsers) > 0) {
 			//Es gibt bereits Einträge, die sich mit diesem überschneiden würden
 			//Diese dürfen nur mit Adminrechten überschrieben werden
@@ -237,14 +254,14 @@ class PlanController extends AppController {
 						)
 					);
 					$this->Changelog->clear();
-					debug($this->Changelog->save($changelogArray));
 				}
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
-				return "Keine Berechtigung.";
+				echo "Keine Berechtigung.";
+				exit;
 			}
 		}
-		
+
 		//Wird das Skript hier noch ausgeführt, so sind alle Berechtigungen gegeben->Eintragen
 		$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
 		if ($halfshift == 1 || $halfshift == 2) {
@@ -289,22 +306,26 @@ class PlanController extends AppController {
 			echo "200"; //Alles okay
 			exit;
 		} else {
-			return "Fehler beim Eintragen.";
+			echo "Fehler beim Eintragen.";
+			exit;
 		}
 		
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || $message === -1 || $message == null) {
-			return "Beim Eintragen ist ein Fehler aufgetreten.";
+			echo "Beim Eintragen ist ein Fehler aufgetreten.";
+			exit;
 		}
 		
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
 		if ($column['Column']['type'] != 1)
-			return "Beim Eintragen ist ein Fehler aufgetreten.";
+			echo "Beim Eintragen ist ein Fehler aufgetreten.";
+			exit;
 		
 		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin')))
-			return "Zugriff verweigert.";
+			echo "Zugriff verweigert.";
+			exit;
 		
 		$data = $this->Comment->find('first', array('recursive' => -1, 'conditions' => array('Comment.date' => $date, 'Comment.column_id' => $columnid)));
 		if (trim($message) == "") {
@@ -327,7 +348,8 @@ class PlanController extends AppController {
 					);
 					$this->Changelog->save($changelogArray);
 				} else {
-					return "Beim Eintragen ist ein Fehler aufgetreten.";
+					echo "Beim Eintragen ist ein Fehler aufgetreten.";
+					exit;
 				}
 			}
 		} else {
@@ -360,7 +382,8 @@ class PlanController extends AppController {
 				);
 				$this->Changelog->save($changelogArray);
 			} else {
-				return "Beim Eintragen ist ein Fehler aufgetreten";
+				echo "Beim Eintragen ist ein Fehler aufgetreten";
+				exit;
 			}
 		}
 	}
