@@ -116,11 +116,13 @@ function ajaxHandler() {
 						}
 					} else if (old_shift == '1') {
 						if (halfshift == "3") {
-							//Es gab vorher eine Halbschicht, jetzt übernimmt einer die ganze
+							//Es gab vorher eine Halbschicht rechts, jetzt übernimmt einer die ganze
 							var splittedID = cellID.split("_");
 							var newCellID = splittedID[0] + "_" + splittedID[1];
-							$("#"+cellID).attr('id',newCellID);
-							$("#"+newCellID).Attr('colspan',2);
+							var otherID = newCellID + "_2";
+							$("#"+cellID).remove();							
+							$("#"+otherID).attr('id',newCellID);
+							$("#"+newCellID).attr('colspan',2);
 						}
 					}
 
