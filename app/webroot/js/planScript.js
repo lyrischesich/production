@@ -127,6 +127,22 @@ function ajaxHandler() {
 							$("#"+cellID).remove();							
 							$("#"+otherID).attr('id',newCellID);
 							$("#"+newCellID).attr('colspan',2);
+						} else if (halfshift == "1") {
+							//Es gibt rechts eine Schicht und jetzt wird links eine eingefügt.
+							var splittedID = cellID.split("_");
+							var celRoot = splittedID[0] + "_" + splittedID[1];
+							var cellToComp = splittedID[0] + "_" + splittedID[1] + "_2";
+							var cellToEdit = splittedID[0] + "_" + splittedID[1] + "_1";
+							
+							if ($("#"+cellToComp).text() == username) {
+								$("#"+cellToEdit).remove();
+								$("#"+cellToComp).attr('colspan',2);
+								$("#"+cellToComp).attr('id',celRoot);
+							} else {
+								$("#"+cellToEdit).removeClass("tderrorlink");
+								$("#"+cellToEdit).addClass("tdsuccesslink");
+								$("#"+cellToEdit).text(username);
+							}
 						}
 					}
 
