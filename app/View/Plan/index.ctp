@@ -158,16 +158,18 @@
   <div class="modal-body">
     <p>Tragen sie sich für den gewählten Dienst ein</p>
     <br/>
-    <div class="btn-group" data-toggle="buttons-radio">
-    	<button type="button" class="btn btn-primary active" id="btn-full">Ganze Schicht</button>
-    	<button type="button" class="btn btn-primary" id="btn-first">1. Halbschicht</button>
-    	<button type="button" class="btn btn-primary" id="btn-second">2. Halbschicht</button>
+    <?php echo $this->Form->create('submitShift');?>
+    <div class="btn-group" id="halfshift-btngroup" data-toggle="buttons-radio" value="">
+    	<button type="button" value="3" class="btn btn-primary active" id="btn-full">Ganze Schicht</button>
+    	<button type="button" value="1" class="btn btn-primary" id="btn-first">1. Halbschicht</button>
+    	<button type="button" value="2" class="btn btn-primary" id="btn-second">2. Halbschicht</button>
     </div>
-    <input type="hidden" id="cellID"></input>
+    <input type="hidden" id="cellID" value="" />
+    <input type="hidden" id="usernameHidden" value="<?php echo AuthComponent::user('username');?>"/>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Zurück</button>
-    <button class="btn btn-primary" id="btnDialogConfirm">Speichern</button>
+    <button class="btn btn-primary" id="btnDialogConfirm" data-loading-text="Bitte warten ...">Speichern</button>
   </div>
 </div>
 

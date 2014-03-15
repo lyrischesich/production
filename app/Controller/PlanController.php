@@ -4,7 +4,7 @@ class PlanController extends AppController {
 	
  	public $uses = array('Specialdate','User', 'Column', 'Plan', 'Comment', 'ColumnsUser', 'Changelog');
 	public $helpers = array('Js','Time');
-	public $components = array('Paginator','Session');
+	public $components = array('Paginator','Session','RequestHandler');
 
 	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
@@ -141,6 +141,11 @@ class PlanController extends AppController {
 	}
 
 	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username="") {
+		
+		if ($this->RequestHandler->isAjax()) {
+			$this->autoRender = $this->layout =  false;
+			Configure::write('debug','0');
+		}
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
@@ -281,9 +286,12 @@ class PlanController extends AppController {
 			);
 			$this->Changelog->clear();
 			$this->Changelog->save($changelogArray);
+			echo "200"; //Alles okay
+			exit;
 		} else {
 			return "Fehler beim Eintragen.";
 		}
+		
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
