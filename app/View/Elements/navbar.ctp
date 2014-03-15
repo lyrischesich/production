@@ -26,14 +26,14 @@
 // 			}
 			
 			$linksToPrint = array(
-				'Sicherung' => array('admin' => true, 'controller' => 'backup', 'action' => 'index'),
-				'Änderungsliste' => array('admin' => true, 'controller' => 'changelogs', 'action' => 'index'),	
-				'Spaltenverwaltung' => array('admin' => true, 'controller' => 'columns', 'action' => 'index'),
+				'Plan' => array('admin' => false, 'controller' => 'plan', 'action' => 'index'),
+				'Benutzerverwaltung' => array('admin' => true, 'controller' => 'users', 'action' => 'index'),
 				'Kontaktliste' => array('admin' => false, 'controller' => 'contacts', 'action' => 'index'),
 				'Rundmail' => array('admin' => true, 'controller' => 'mail', 'action' => 'index'),
-				'Plan' => array('admin' => false, 'controller' => 'plan', 'action' => 'index'),
+				'Änderungsliste' => array('admin' => true, 'controller' => 'changelogs', 'action' => 'index'),
 				'Statistik' => array('admin' => true, 'controller' => 'statistic', 'action' => 'index'),
-				'Benutzerverwaltung' => array('admin' => true, 'controller' => 'users', 'action' => 'index'),
+				'Sicherung' => array('admin' => true, 'controller' => 'backup', 'action' => 'index'),				
+				'Spaltenverwaltung' => array('admin' => true, 'controller' => 'columns', 'action' => 'index'),
 				AuthComponent::user('username') => array('admin' => false, 'controller' => 'users', 'action' => 'edit')
 			);
 			

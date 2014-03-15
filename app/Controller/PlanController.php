@@ -72,6 +72,61 @@ class PlanController extends AppController {
 		
 	}
 
+	private function sendEmergencyMail($date, $halfshift, $exceptOf, $shiftname) {
+		//auf Deutsch umstellen
+		setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
+		$dow = strtolower(strftime('%a', strtotime($date)));
+		
+		$conditionArray = array(
+				'User.leave_date' => null,
+				'User.id != ' => $exceptOf,
+				'User.mail != ' => ''
+		);
+		
+		if ($dow == "sa" || $dow == "so") {
+			
+		} else {
+			if ($halfshift == 3) {
+				$conditionsArray['User.'.$dow] = array('1 ', '2 ', 'H', 'G');				
+			} else {
+				$conditionsArray['User.'.$dow] = array($hilfshift.' ', 'H', 'G');	
+			}
+		}		
+		
+		$receivingUsers = $this->User->find('all', array('recursive' => -1, 'conditions' => $conditionArray));
+		
+		$senderMail = 'humboldt-cafeteria@versanet.de';
+		$senderName = 'Humboldt Cafeteria';
+		$mailContent = "Hallo,<br />
+				leider ist  ".$shiftname." für ".strftime('%A', strtotime($date)).", den ".date('d. m. Y', strtotime($date)).", kurzfristig frei geworden.
+				Falls Ihr Zeit habt, springt bitte ein.
+				
+				Mit freundlichen Grüßen
+				Das Cafeteria-Team
+				";
+		
+		$EMail = new CakeEmail();
+		$EMail->from(array($senderMail => $senderName));
+		$EMail->subject("Humboldt-Cafeteria - Dienst kurzfristig frei geworden");
+		$EMail->config('web');
+		$EMail->template('default');
+		$EMail->emailFormat('html');
+		$EMail->viewVars(array(
+				'senderName' => $senderName,
+				'senderMail' => $senderMail,
+				'content' => $mailContent,
+				'subject' => "Humboldt-Cafeteria - nächste Woche unvollständig"
+		));
+		
+		$bcc = array();
+		foreach ($receivingUsers as $receivingUser) {
+			array_push($bcc, $receivingUser['User']['mail']);
+		}
+		
+		$EMail->bcc($bcc);
+		$EMail->send();
+	}
+	
 	private function check_date($date=-1) {
 		$token = explode("-", $date);
 		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token	[2]) != 2) {
@@ -85,7 +140,7 @@ class PlanController extends AppController {
 		return true;
 	}
 
-	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username) {
+	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username="") {
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
 			return "Beim Eintragen ist ein Fehler aufgetreten.";
 		}
@@ -139,8 +194,11 @@ class PlanController extends AppController {
 				$this->Changelog->save($changelogArray);
 				
 				//Bei zu kurzer Differenz zum aktuellen Datum Notfallmail verschicken
+				if (strtotime($date)-time()-7*DAY + DAY < 0) {
+					$this->sendEmergencyMail($date, $halfshift, $aColumnsUser['ColumnsUser']['user_id'], ($halfshift == 3) ? " der ganze Dienst ".$column['Column']['name'] : "die ".$halfshift.". Schicht ".$column['Column']['name']);
+				}
+				
 				//Abbruch, da Aufgabe erledigt ist
-				//TODO Automail
 				return;
 			} else {
 				return "Fehler beim Austragen";
@@ -300,7 +358,8 @@ class PlanController extends AppController {
 	}
 
 	public function savetest() {
-		debug($this->saveUserEntry('2014-03-22', 2, 3, ""));
+		debug($this->saveUserEntry('2014-03-20', 2, 3, ""));
+		$this->saveUserEntry('2014-03-20', 2, 3, "Löser");
 	}
 	
 	public function saveSpecialdate($date=-1) {		
