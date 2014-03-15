@@ -76,7 +76,7 @@ function ajaxHandler() {
 			}
 		}
 		
-		var requestUrl = window.location.pathname + "/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+		var requestUrl = document.URL + "/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
 		if (username != "") requestUrl += username;
 		$.ajax( {
 			type: 'POST',
@@ -84,8 +84,8 @@ function ajaxHandler() {
 			data: "ajax=1",
 			success: function(response) {
 				if (response == "200") {
-					var old_shift = cellID.split("_")[2];
-					if (typeof old_shift == 'undefined') {
+					var sel_shift = cellID.split("_")[2];
+					if (typeof sel_shift == 'undefined') {
 						if (halfshift == "3") {
 							//Es gab vorher keine Halbschicht und es wird auf keine geben
 							$("#"+cellID).removeClass("tderrorlink");
@@ -114,7 +114,7 @@ function ajaxHandler() {
 							
 							$("#"+newCellID).after(scdCell);
 						}
-					} else if (old_shift == '1') {
+					} else if (sel_shift == '1') {
 						if (halfshift == "3") {
 							//Es gab vorher eine Halbschicht rechts, jetzt übernimmt einer die ganze
 							var splittedID = cellID.split("_");
