@@ -66,7 +66,6 @@
 <?php 
 		//Spalten nacheinander ausgeben
 		foreach ($columns as $column) {
-						
 			$classString = "";
 			
 			//Ist die Spalte eine Textspalte?
@@ -95,6 +94,7 @@
 // 				} else if ($type == "inactive" && $result['weekend']) {
 // 					echo "<td colspan='2'></td>";
 // 				} 
+				
 				if ($type == "inactive") {
 					if (!$result['weekend']) {
 						if ($column['Column']['obligated']) {
@@ -108,6 +108,7 @@
 					}
 				} else 	if (isset($result[$column['Column']['id']]['1']) && isset($result[$column['Column']['id']]['2'])) {
 					
+				
 					//Beide Dienste an dem Tag sind bereit belegt. Bleibt die Frage: Von einer oder von 2 Personen?	
 					if ($result[$column['Column']['id']]['1']['userid'] == $result[$column['Column']['id']]['2']['userid']) {
 						//Die gleiche Person übernimmt den Dienst
@@ -139,8 +140,9 @@
 					if ($column['Column']['obligated']) $classString = $classString = ($dateIsInFuture) ? $errorlink : $error;
 					echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString></td>";
 				}
+							
+						
 			}
-
 		}
 ?>
 		</tr>
@@ -154,19 +156,22 @@
     <h3 id="modalMenuLabel"></h3>
   </div>
   <div class="modal-body">
+    <p>Tragen sie sich für den gewählten Dienst ein</p>
+    <br/>
+    <?php echo $this->Form->create('submitShift');?>
     <div class="btn-group" id="halfshift-btngroup" data-toggle="buttons-radio" value="">
     	<button type="button" value="3" class="btn btn-primary active" id="btn-full">Ganze Schicht</button>
     	<button type="button" value="1" class="btn btn-primary" id="btn-first">1. Halbschicht</button>
     	<button type="button" value="2" class="btn btn-primary" id="btn-second">2. Halbschicht</button>
     </div>
     <input type="hidden" id="cellID" value="" />
-    <input type="hidden" id="method" value="" />
     <input type="hidden" id="usernameHidden" value="<?php echo AuthComponent::user('username');?>"/>
-    <input type="hidden" id="isAdmin" value="<?php echo AuthComponent::user('admin');?>" />
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Zurück</button>
     <button class="btn btn-primary" id="btnDialogConfirm" data-loading-text="Bitte warten ...">Speichern</button>
   </div>
 </div>
+
 </div>
+
