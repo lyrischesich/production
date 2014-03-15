@@ -143,17 +143,28 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
+ 
+<!-- Modal -->
+<div id="modalMenu" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalMenuLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="modalMenuLabel"></h3>
+  </div>
+  <div class="modal-body">
+    <p>Tragen sie sich für den gewählten Dienst ein</p>
+    <br/>
+    <div class="btn-group" data-toggle="buttons-radio">
+    	<button type="button" class="btn btn-primary active" id="btn-full">Ganze Schicht</button>
+    	<button type="button" class="btn btn-primary" id="btn-first">1. Halbschicht</button>
+    	<button type="button" class="btn btn-primary" id="btn-second">2. Halbschicht</button>
+    </div>
+    <input type="hidden" id="cellID"></input>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Zurück</button>
+    <button class="btn btn-primary" id="btnDialogConfirm">Speichern</button>
+  </div>
 </div>
 
-<div id="wahlmenu" title="Bitte ausw&auml;hlen" style="text-align: center;">
-	<br />
-	<button id="eintragen" style="width:200px">Eintragen</button>
-	<br />
-	<button id="austragen" style="width:200px">Austragen</button>
-	<div id="eintragenSwitch">Schicht:
-		<input type="radio" id="radio1" name="radio" value="" checked="checked" />
-		<label for="radio1">Ganz</label><input type="radio" id="radio2" name="radio" value="_1" />
-		<label for="radio2">1. H</label><input type="radio" id="radio3" name="radio" value="_2" />
-		<label for="radio3">2. H</label>
-	</div>
 </div>
+

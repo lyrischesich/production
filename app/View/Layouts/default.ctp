@@ -32,7 +32,7 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		echo $this->Html->css('bootstrap');
 		echo $this->Html->css('smoothness/jquery-ui-1.10.4.custom.min');
 		echo $this->Html->script('jquery');
-		echo $this->Html->script('jquery-ui');
+		echo $this->Html->script('bootstrap');
 		echo $this->Html->script('/CakeBootstrappifier/js/cakebootstrap');
 
 		echo $this->fetch('meta');
