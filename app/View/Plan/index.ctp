@@ -4,7 +4,7 @@
 			'actions' => array(
 				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'Plan','action' => 'createPDF')),
 				'admin' => array('text' => 'Adminmodus', 'params' => array('id' => 'activateAdminMode')),
-				'legende' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();'))
+				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();'))
 		)));
 ?>
 <h2>Cafeteriaplan</h2>
@@ -24,8 +24,10 @@
 	<!-- Data -->
 	<?php 
 	$success = "class='tdsuccess'";
+	$successlink = "class='tdsuccesslink'";
 	$error = "class='tderror'";
 	$errorlink = "class='tderrorlink'";
+	
 	
 	foreach ($results as $key => $result): 
 		//Initialisiere die Variable, welche das Aussehen der Tabellenzeile regelt:
@@ -73,7 +75,7 @@
 					if ($column['Column']['obligated']) $classString = $success;
 					echo "<td id='txt_".$key."' $classString>".$result[$column['Column']['id']]."</td>";
 				} else {
-					if ($column['Column']['obligated'] && $type == "active") $classString = ($dateIsInFuture) ? $errorlink : $error;
+					if ($column['Column']['obligated'] && $type == "active") $classString = $error;
 					echo "<td id='txt_".$key."' $classString></td>";
 				}
 								
@@ -105,20 +107,23 @@
 						echo "<td colspan='2'></td>";
 					}
 				} else 	if (isset($result[$column['Column']['id']]['1']) && isset($result[$column['Column']['id']]['2'])) {
-					if ($column['Column']['obligated']) $classString = $success;
+					
 				
 					//Beide Dienste an dem Tag sind bereit belegt. Bleibt die Frage: Von einer oder von 2 Personen?	
 					if ($result[$column['Column']['id']]['1']['userid'] == $result[$column['Column']['id']]['2']['userid']) {
-						//Die gleiche Person übernimmt den Dienst	
+						//Die gleiche Person übernimmt den Dienst
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;	
 						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString'>".$result[$column['Column']['id']]['1']['username']."</td>";
 					} else {
 						//Zwei verschiedene Halbschichten
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						echo "<td id='".$key."_".$column['Column']['id']."_1' $classString>".$result[$column['Column']['id']]['1']['username']."</td>";
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['2']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						echo "<td id='".$key."_".$column['Column']['id']."_2' $classString>".$result[$column['Column']['id']]['2']['username']."</td>";
 					}
 				} else if (isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Jetzt ist nur der erste Dienst belegt
-						if ($column['Column']['obligated']) $classString = $success;
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						echo "<td id='".$key."_".$column['Column']['id']."_1' $classString>".$result[$column['Column']['id']]['1']['username']."</td>";
 						if ($column['Column']['obligated']) $classString = ($dateIsInFuture) ? $errorlink : $error;
 						echo "<td id='".$key."_".$column['Column']['id']."_2' $classString></td>";						
@@ -126,7 +131,7 @@
 					//Nur der zweite Dienst ist belegt
 					if ($column['Column']['obligated']) $classString = ($dateIsInFuture) ? $errorlink : $error;
 					echo "<td id='".$key."_".$column['Column']['id']."_1' $classString></td>";
-					if ($column['Column']['obligated']) $classString = $success;
+					if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['2']['userid'] == AuthComponent::user('id')) ? $successlink : $success;;
 					echo "<td id='".$key."_".$column['Column']['id']."_2' $classString>".$result[$column['Column']['id']]['2']['username']."</td>";
 				} else if (!isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Noch gar kein Dienst wurde belegt
