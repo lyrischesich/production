@@ -70,6 +70,15 @@ class PlanController extends AppController {
 
 		$this->set('results', $results);
 		
+		//Daten für Navigationslinks setzen
+		$datetime = new DateTime($year."-".$month."-14");
+		$datetime->modify("+1 month");
+		$this->set('nextYear', $datetime->format("Y"));
+		$this->set('nextMonth', $datetime->format("m"));
+		$datetime->modify("-2 month");
+		$this->set('prevYear', $datetime->format("Y"));
+		$this->set('prevMonth', $datetime->format("m"));
+		
 	}
 
 	private function sendEmergencyMail($date, $halfshift, $exceptOf, $shiftname) {
