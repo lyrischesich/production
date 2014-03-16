@@ -62,7 +62,8 @@
 		}
 ?>
 
-			<td <?php echo $class." "; echo $onclick; ?>>
+			<td id="<?php echo "dow_".date("Y-m-d",strtotime($key)); ?>"
+			<?php echo $class." "; echo $onclick; ?>>
 			<?php echo $result['dow']; ?>
 			</td>
 			<td><?php echo date("d.m.Y",strtotime($key)); ?> </td> 	

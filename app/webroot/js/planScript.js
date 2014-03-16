@@ -209,7 +209,32 @@ function ajaxHandler() {
 				} else {
 					alert ("Unknown response code: " + response);
 				}
-
+				
+				//Es wurde in jedem Fall eine Änderung vorgenommen (Egal ob erfolgreich oder nicht), daher wird der Wochentag auf vollständigkeit überprüft
+				
+				if( str.charAt( str.length-1) == "/" ) {
+					var validationUrl = str + "datecomplete/" + date;
+				} else {
+					var validationUrl = str + "/datecomplete/" + date;
+				}
+				
+				$.ajax( {
+					type: 'POST',
+					data: "ajax=1",
+					url: validationUrl,
+					error: function(response) {
+						alert("Bei der Datumsvalidierung ist ein unbekannter Fehler aufgetreten. Bitte laden sie die Seite erneut.");
+					},
+					success: function(response) {
+						$("#dow_"+date).removeClass();
+						if (response == "true") {
+							$("#dow_"+date).addClass("tdsuccess");
+						} else {
+							$("#dow_"+date).addClass("tderror");
+						}
+					}
+						
+				});
 			},
 			error: function(response) {
 				alert ("Unbekannter Fehler");
