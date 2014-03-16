@@ -34,6 +34,15 @@ $(document).ready(function() {
 			} else {
 				// Es handelt sich um eine Benutzerspalte
 				if (eintragen) {
+					//Es sollen nur Optionen angezeigt werden, welche zutreffen
+					if (typeof cellID.split("_") != 'undefined') {
+						$("#halfshift-btngroup").hide();
+						var lastChar = cellID.charAt(cellID.length -1);
+						if (lastChar == "1") $("#btn-first").addClass('active');
+						if (lastChar == "2") $("#btn-second").addClass('active');
+					} else {
+						$("#btn-full").addClass('active');
+					}
 					$("#modalMenuLabel").html("Eintragen");
 					$("#btnDialogConfirm").html("Eintragen");
 					method = "in";
@@ -164,10 +173,39 @@ function ajaxHandler() {
 					}
 
 				} else if (response == "210") {
-					$("#modalMenu").modal('hide');
-					$("#"+cellID).text("");
-					$("#"+cellID).removeClass("tdsuccesslink");
-					$("#"+cellID).addClass("tderrorlink");
+					var splitted_id = cellID.split("_")
+					var sel_shift = splitted_id[2];
+					
+					if (typeof sel_shift == 'undefined') {
+						$("#"+cellID).text("");
+						$("#"+cellID).removeClass("tdsuccesslink");
+						$("#"+cellID).addClass("tderrorlink");
+					} else if (sel_shift == "1") {
+						var otherCellID = splitted_id[0] + "_" + splitted_id[1] + "_2";
+						if ($("#"+otherCellID).hasClass("tderrorlink")) {
+							var newCellID = splitted_id[0] + "_" + splitted_id[1];
+							$("#"+cellID).remove();
+							$("#"+otherCellID).attr('id',newCellID);
+							$("#"+newCellID).attr('colspan',2);
+						} else {
+							$("#"+cellID).text("");
+							$("#"+cellID).removeClass("tdsuccesslink");
+							$("#"+cellID).addClass("tderrorlink");
+						}
+					} else if (sel_shift == "2") {
+						var otherCellID = splitted_id[0] + "_" + splitted_id[1] + "_1";
+						if ($("#"+otherCellID).hasClass("tderrorlink")) {
+							var newCellID = splitted_id[0] + "_" + splitted_id[1];
+							$("#"+otherCellID).attr('colspan',"2");
+							$("#"+otherCellID).attr('id',newCellID);
+							$("#"+cellID).remove();
+						} else {
+							$("#"+cellID).text("");
+							$("#"+cellID).removeClass("tdsuccesslink");
+							$("#"+cellID).addClass("tderrorlink");
+						}
+					}
+
 				} else {
 					alert ("Unknown response code: " + response);
 				}
@@ -181,5 +219,9 @@ function ajaxHandler() {
 	}
 $("#btnDialogConfirm").button('reset');
 $("#modalMenu").modal('hide');
+$("#halfshift-btngroup").show();
+$("#btn-first").removeClass('active');
+$("#btn-second").removeClass('active');
+$("#btn-full").removeClass('active');
 return false;
 }

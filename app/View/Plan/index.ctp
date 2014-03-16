@@ -155,7 +155,7 @@
   </div>
   <div class="modal-body">
     <div class="btn-group" id="halfshift-btngroup" data-toggle="buttons-radio" value="">
-    	<button type="button" value="3" class="btn btn-primary active" id="btn-full">Ganze Schicht</button>
+    	<button type="button" value="3" class="btn btn-primary" id="btn-full">Ganze Schicht</button>
     	<button type="button" value="1" class="btn btn-primary" id="btn-first">1. Halbschicht</button>
     	<button type="button" value="2" class="btn btn-primary" id="btn-second">2. Halbschicht</button>
     </div>
