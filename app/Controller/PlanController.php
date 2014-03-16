@@ -17,7 +17,7 @@ class PlanController extends AppController {
 				exit;
 			}
 			
-			echo ($this->Plan->isDateComplete($date)) ? "true" : "falseasdf";
+			echo ($this->Plan->isDateComplete($date)) ? "true" : "false";
 			exit;
 		}
 		
