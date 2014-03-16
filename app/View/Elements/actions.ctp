@@ -1,5 +1,10 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#navlist").affix();
+	});
+</script>
 <div class="span2">
-	<div class="well sidebar-nav">
+	<div id="navlist" class="well sidebar-nav">
 		<ul class="nav nav-list">
 		<li class="nav-header">Aktionen</li>
 		<?php foreach($actions as $action){ 

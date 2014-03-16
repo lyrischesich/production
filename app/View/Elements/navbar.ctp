@@ -58,9 +58,11 @@
 		}		
 	?>
 			</ul>
+	<?php if ($this->Session->read('Auth.User')):?>
 		<p class="navbar-text pull-right"> Eingeloggt als:
 				<?php echo $this->Html->link(AuthComponent::user('username'), array('controller' => 'users', 'action' => 'edit'));?>
 			</p>
+	<?php endif;?>
 		</div>
 		</div>
 	</div>
