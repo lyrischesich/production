@@ -158,6 +158,11 @@
     <h3 id="modalMenuLabel"></h3>
   </div>
   <div class="modal-body">
+  	<p id="eintragenText">Sie sind im Begriff folgendes auszuführen:<br/>
+  		Operation: <i id="methodAnchor"></i> <br />
+  		Datum: <i id="dateAnchor"></i> <br />
+  		Schicht: <i id="shiftAnchor"></i><br />
+  	</p>
     <div class="btn-group" id="halfshift-btngroup" data-toggle="buttons-radio" value="">
     	<button type="button" value="3" class="btn btn-primary" id="btn-full">Ganze Schicht</button>
     	<button type="button" value="1" class="btn btn-primary" id="btn-first">1. Halbschicht</button>

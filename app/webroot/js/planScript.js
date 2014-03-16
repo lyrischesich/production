@@ -13,11 +13,14 @@ $(document).ready(function() {
 	
 	$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
 		var cellID = $(this).attr('id');
+		var isNoWeekday = cellID.substr(0,3) != "dow";
 		
-		if ($(this).hasClass("tderrorlink")) {
-			openDialog(cellID,true);
-		} else {
-			openDialog(cellID,false);
+		if (isNoWeekday) {
+			if ($(this).hasClass("tderrorlink")) {
+				openDialog(cellID,true);
+			} else {
+				openDialog(cellID,false);
+			}
 		}
 	});
 
@@ -29,11 +32,14 @@ $(document).ready(function() {
 	
 	function openDialog(cellID,eintragen) {
 			$("#btn-first").removeClass('active');
-			$("#btn-first").show();
 			$("#btn-second").removeClass('active');
 			$("#btn-second").show();
 			$("#btn-full").removeClass('active');
 			$("#btn-full").show();
+			
+			$("#methodAnchor").html("");
+			$("#dateAnchor").html("");
+			$("#shiftAnchor").html("");
 			
 			
 			if (cellID.substr(0, 3) == "txt") {
@@ -42,6 +48,7 @@ $(document).ready(function() {
 			} else {
 				// Es handelt sich um eine Benutzerspalte
 				if (eintragen) {
+					$("#methodAnchor").html("Eintragen");
 					//Es sollen nur Optionen angezeigt werden, welche zutreffen
 					if (typeof cellID.split("_")[2] != 'undefined') {
 						$("#halfshift-btngroup").hide();
@@ -65,11 +72,20 @@ $(document).ready(function() {
 					$("#halfshift-btngroup").show();
 				} else {
 					//Hier geht es jetzt ums austragen
+					$("#methodAnchor").html("Austragen");
 					$("#modalMenuLabel").html("Austragen");
 					$("#btnDialogConfirm").html("Austragen");
 					method = "out";
 					$("#halfshift-btngroup").hide();
 				}
+				var formatDate = new Date(cellID.substr(0,10));
+				$("#dateAnchor").html(formatDate.getDate() + "." + (formatDate.getMonth()+1) + "." + formatDate.getFullYear());
+				
+				//Finde den TableHeader zu der entsprechenden Schicht:
+				var $td = $("#"+cellID)
+				var $th = $td.closest('table').find('th').eq($td.index());
+				$("#shiftAnchor").html($th.html());
+						
 				$("#cellID").val(cellID);
 				$("#modalMenu").modal('show');
 			}
