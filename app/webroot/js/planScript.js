@@ -255,7 +255,7 @@ function ajaxHandler() {
 					data: "ajax=1",
 					url: validationUrl,
 					error: function(response) {
-						alert("Bei der Datumsvalidierung ist ein unbekannter Fehler aufgetreten. Bitte laden sie die Seite erneut.");
+						alert("Ein Fehler ist aufgetreten. Bitte laden sie die Seite erneut.");
 					},
 					success: function(response) {
 						$("#dow_"+date).removeClass();

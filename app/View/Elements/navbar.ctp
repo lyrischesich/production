@@ -1,7 +1,13 @@
-<div class="navbar navbar-inverse  navbar-fixed-top">
+<div class="navbar navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container-fluid">
 		<a class="brand" href="/Cafeteria">Cafeteria-Planer</a>
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+     	</a>
+		<div class="nav-collapse collapse">
 		<ul class="nav">
 		<?php 
 		if (!AuthComponent::user('id')) {
@@ -34,9 +40,10 @@
 				'Statistik' => array('admin' => true, 'controller' => 'statistic', 'action' => 'index'),
 				'Sicherung' => array('admin' => true, 'controller' => 'backup', 'action' => 'index'),				
 				'Spaltenverwaltung' => array('admin' => true, 'controller' => 'columns', 'action' => 'index'),
-				AuthComponent::user('username') => array('admin' => false, 'controller' => 'users', 'action' => 'edit')
 			);
+?>
 			
+<?php 
 			$active = $this->params['controller']."/".$this->params['action'];
 			foreach ($linksToPrint as $name => $linkdata) {
 				if ($active == $linkdata['controller']."/".$linkdata['action']) echo "<li class='active'>";
@@ -49,8 +56,12 @@
 				echo "</li>";
 			}
 		}		
-		?>
-		</ul>
+	?>
+			</ul>
+		<p class="navbar-text pull-right"> Eingeloggt als:
+				<?php echo $this->Html->link(AuthComponent::user('username'), array('controller' => 'users', 'action' => 'edit'));?>
+			</p>
+		</div>
 		</div>
 	</div>
 </div>

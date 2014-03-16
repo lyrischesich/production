@@ -26,11 +26,12 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		<?php echo $cakeDescription ?>:
 		<?php echo $title_for_layout; ?>
 	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<?php
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('bootstrap');
-		echo $this->Html->css('smoothness/jquery-ui-1.10.4.custom.min');
+		echo $this->Html->css('bootstrap-responsive');
 		echo $this->Html->script('jquery');
 		echo $this->Html->script('bootstrap');
 		echo $this->Html->script('/CakeBootstrappifier/js/cakebootstrap');
@@ -40,7 +41,7 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		echo $this->fetch('script');
 	?>
 </head>
-<body style="padding-top: 60px; padding-bottom: 40px;">
+<body>
 	<?php echo $this->element('navbar'); ?>
 	<div class="container-fluid">
 		<div class="row-fluid">	
