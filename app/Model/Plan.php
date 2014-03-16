@@ -9,6 +9,26 @@ class Plan extends AppModel {
 	
 	public $useTable = false; 
 	
+	public function isDateComplete($date=-1) {
+		//TODO check_date verfügbar machen
+		if ($date == -1) return false;
+		$count = 0;
+		
+		$columnsUsers = new ColumnsUser();
+		$columnsUsers = $columnsUsers->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date)));
+		foreach ($columnsUsers as $columnsUser) {
+			$count += ($columnsUser['ColumnsUser']['half_shift'] == 3) ? 2 : 1;
+		}
+		
+		$comments = new Comment();
+		$comments = $comments->find('all', array('recursive' => -1, 'conditions' => array('Comment.date' => $date)));
+		foreach ($comments as $coment) {
+			$count++;
+		}
+		
+		return $count == $this->getExpectedEntryCountPerDay();
+	}
+	
 	public function getPlanData($month=-1, $year=-1) {		
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten

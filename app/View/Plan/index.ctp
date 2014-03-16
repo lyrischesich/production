@@ -2,9 +2,12 @@
 
 <?php echo $this->element('actions',array(
 			'actions' => array(
-				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'Plan','action' => 'createPDF')),
-				'admin' => array('text' => 'Adminmodus', 'params' => array('id' => 'activateAdminMode')),
-				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();'))
+// 				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'Plan','action' => 'createPDF')),
+// 				'admin' => array('text' => 'Adminmodus', 'params' => array('id' => 'activateAdminMode')),
+// 				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();')),
+				'prev' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $prevYear, $prevMonth)),
+				'next' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $nextYear, $nextMonth))
+				
 		)));
 ?>
 <h2>Cafeteriaplan</h2>

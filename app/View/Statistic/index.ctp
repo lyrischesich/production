@@ -4,7 +4,7 @@
 			'previousMonth' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $previousYear, $previousMonth)),
 			'currentMonth' => array('text' => 'Aktueller Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y'), date('m'))),
 			'nextMonth' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $nextYear, $nextMonth)),			
-			'interval' => array('text' => 'Statistik für Zeitraum', 'htmlattributes' => array('onClick' => '$("#StatisticIntervalForm").dialog({title: "Zeitraum festlegen",modal: true});'))
+			'interval' => array('text' => 'Statistik für Zeitraum', 'htmlattributes' => array('onClick' => 'document.getElementById("StatisticIntervalFormDiv").dialog({title: "Zeitraum festlegen",modal: true});'))
 		)));
 ?>
  <script>
@@ -64,7 +64,8 @@ echo "</div>";
 				echo "</td>";
 				echo "<td>".$user['H']."</td>";
 				echo "<td>".$user['G']."</td>";
-				echo "<td>".$user['ges']."</td>";
+				if ($user['ges'] == 0) echo "<td style='color:red;'>0</td>";
+				else echo "<td>".$user['ges']."</td>";
 				echo "</tr>";
 			}
 		?>

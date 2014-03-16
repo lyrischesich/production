@@ -6,6 +6,24 @@ class PlanController extends AppController {
 	public $helpers = array('Js','Time');
 	public $components = array('Paginator','Session','RequestHandler');
 
+	public function datecomplete($date=-1) {
+		if ($this->RequestHandler->isAjax()) {
+			$this->autoRender = $this->layout = false;
+			Configure::write('debug','0');
+		
+
+			if (!$this->check_date($date)) {
+				echo "false";
+				exit;
+			}
+			
+			echo ($this->Plan->isDateComplete($date)) ? "true" : "false";
+			exit;
+		}
+		
+		return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
+	}
+	
 	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
@@ -69,6 +87,15 @@ class PlanController extends AppController {
 		}
 
 		$this->set('results', $results);
+		
+		//Daten für Navigationslinks setzen
+		$datetime = new DateTime($year."-".$month."-14");
+		$datetime->modify("+1 month");
+		$this->set('nextYear', $datetime->format("Y"));
+		$this->set('nextMonth', $datetime->format("m"));
+		$datetime->modify("-2 month");
+		$this->set('prevYear', $datetime->format("Y"));
+		$this->set('prevMonth', $datetime->format("m"));
 		
 	}
 
