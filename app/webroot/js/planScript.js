@@ -28,6 +28,14 @@ $(document).ready(function() {
 	
 	
 	function openDialog(cellID,eintragen) {
+			$("#btn-first").removeClass('active');
+			$("#btn-first").show();
+			$("#btn-second").removeClass('active');
+			$("#btn-second").show();
+			$("#btn-full").removeClass('active');
+			$("#btn-full").show();
+			
+			
 			if (cellID.substr(0, 3) == "txt") {
 				// Es handelt sich um eine Textspalte
 				// Das machen wir später! TODO
@@ -35,11 +43,19 @@ $(document).ready(function() {
 				// Es handelt sich um eine Benutzerspalte
 				if (eintragen) {
 					//Es sollen nur Optionen angezeigt werden, welche zutreffen
-					if (typeof cellID.split("_") != 'undefined') {
+					if (typeof cellID.split("_")[2] != 'undefined') {
 						$("#halfshift-btngroup").hide();
 						var lastChar = cellID.charAt(cellID.length -1);
-						if (lastChar == "1") $("#btn-first").addClass('active');
-						if (lastChar == "2") $("#btn-second").addClass('active');
+						if (lastChar == "1") {
+							$("#btn-first").addClass('active');
+							$("#btn-full").hide();
+							$("#btn-second").hide();
+						}
+						if (lastChar == "2") {
+							$("#btn-second").addClass('active');
+							$("#btn-full").hide();
+							$("#btn-first").hide();
+						}
 					} else {
 						$("#btn-full").addClass('active');
 					}
@@ -230,7 +246,7 @@ function ajaxHandler() {
 						if (response == "true") {
 							$("#dow_"+date).addClass("tdsuccess");
 						} else {
-							$("#dow_"+date).addClass("tderror");
+							$("#dow_"+date).addClass("tderrorlink");
 						}
 					}
 						
@@ -245,8 +261,5 @@ function ajaxHandler() {
 $("#btnDialogConfirm").button('reset');
 $("#modalMenu").modal('hide');
 $("#halfshift-btngroup").show();
-$("#btn-first").removeClass('active');
-$("#btn-second").removeClass('active');
-$("#btn-full").removeClass('active');
 return false;
 }
