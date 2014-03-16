@@ -9,7 +9,6 @@ NavBar Collapsable machen
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /statistic/interval: sollen nächster Monat etc. angezeigt werden?
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)
-/statistic: 0 bei ges in roter Farbe
 
 //Soll-Kriterien
 /statistic: Jahresstatistik implementieren

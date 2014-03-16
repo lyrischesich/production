@@ -10,7 +10,7 @@
 				
 		)));
 ?>
-<h2>Cafeteriaplan</h2>
+<h2>Cafeteriaplan <?php echo $headingDate; ?></h2>
 <br />	
 <table class="table table-condensed table-bordered table-centered" id="planTable">
 	<th>Tag</th>
@@ -70,7 +70,7 @@
 <?php 
 		//Spalten nacheinander ausgeben
 		foreach ($columns as $column) {
-						
+			$userIsAuthorized = AuthComponent::user('id') && (AuthComponent::user('admin') == true || (!AuthComponent::user('admin') && !$column['Column']['req_admin']));
 			$classString = "";
 			
 			//Ist die Spalte eine Textspalte?
@@ -87,18 +87,6 @@
 			} else if ($column['Column']['type'] == 2) {
 				//Ist die Spalte keine Textspalte, dann füge die Dienste entsprechend ein.
 				
-// 				//Ist das Datum ist entweder ein Specialdate oder Wochenende und es müssen Rauten ausgegeben werden
-// 				if ($type == "inactive" && !$result['weekend']) {
-// 					if ($column['Column']['obligated']) {
-// 						$classString = $success;
-// 						echo "<td colspan='2' $classString>#</td>";
-// 					} else {
-// 						echo "<td colspan='2'></td>";
-// 					}
-// 					continue;
-// 				} else if ($type == "inactive" && $result['weekend']) {
-// 					echo "<td colspan='2'></td>";
-// 				} 
 				if ($type == "inactive") {
 					if (!$result['weekend']) {
 						if ($column['Column']['obligated']) {
@@ -115,32 +103,32 @@
 					//Beide Dienste an dem Tag sind bereit belegt. Bleibt die Frage: Von einer oder von 2 Personen?	
 					if ($result[$column['Column']['id']]['1']['userid'] == $result[$column['Column']['id']]['2']['userid']) {
 						//Die gleiche Person übernimmt den Dienst
-						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;	
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;	
 						echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString'>".$result[$column['Column']['id']]['1']['username']."</td>";
 					} else {
 						//Zwei verschiedene Halbschichten
-						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						echo "<td id='".$key."_".$column['Column']['id']."_1' $classString>".$result[$column['Column']['id']]['1']['username']."</td>";
-						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['2']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']]['2']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						echo "<td id='".$key."_".$column['Column']['id']."_2' $classString>".$result[$column['Column']['id']]['2']['username']."</td>";
 					}
 				} else if (isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Jetzt ist nur der erste Dienst belegt
-						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']]['1']['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						echo "<td id='".$key."_".$column['Column']['id']."_1' $classString>".$result[$column['Column']['id']]['1']['username']."</td>";
-						if ($column['Column']['obligated']) $classString = ($dateIsInFuture) ? $errorlink : $error;
+						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized) ? $errorlink : $error;
 						echo "<td id='".$key."_".$column['Column']['id']."_2' $classString></td>";						
 				} else if (!isset($result[$column['Column']['id']]['1']) && isset($result[$column['Column']['id']]['2'])) {
 					//Nur der zweite Dienst ist belegt
-					if ($column['Column']['obligated']) $classString = ($dateIsInFuture) ? $errorlink : $error;
+					if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized) ? $errorlink : $error;
 					echo "<td id='".$key."_".$column['Column']['id']."_1' $classString></td>";
-					if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $result[$column['Column']['id']]['2']['userid'] == AuthComponent::user('id')) ? $successlink : $success;;
+					if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']]['2']['userid'] == AuthComponent::user('id')) ? $successlink : $success;;
 					echo "<td id='".$key."_".$column['Column']['id']."_2' $classString>".$result[$column['Column']['id']]['2']['username']."</td>";
 				} else if (!isset($result[$column['Column']['id']]['1']) && !isset($result[$column['Column']['id']]['2'])) {
 					//Noch gar kein Dienst wurde belegt
 					
 					//Oder es hat sich einfach noch niemand Eingetragen
-					if ($column['Column']['obligated']) $classString = $classString = ($dateIsInFuture) ? $errorlink : $error;
+					if ($column['Column']['obligated']) $classString = $classString = ($dateIsInFuture && $userIsAuthorized) ? $errorlink : $error;
 					echo "<td colspan='2' id='".$key."_".$column['Column']['id']."' $classString></td>";
 				}
 			}
