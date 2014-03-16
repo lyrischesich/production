@@ -64,7 +64,8 @@ echo "</div>";
 				echo "</td>";
 				echo "<td>".$user['H']."</td>";
 				echo "<td>".$user['G']."</td>";
-				echo "<td>".$user['ges']."</td>";
+				if ($user['ges'] == 0) echo "<td style='color:red;'>0</td>";
+				else echo "<td>".$user['ges']."</td>";
 				echo "</tr>";
 			}
 		?>
