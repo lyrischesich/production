@@ -60,7 +60,7 @@
 			</ul>
 	<?php if ($this->Session->read('Auth.User')):?>
 		<p class="navbar-text pull-right"> Eingeloggt als:
-				<?php echo $this->Html->link(AuthComponent::user('username'), array('controller' => 'users', 'action' => 'edit'));?>
+				<?php echo $this->Html->link(AuthComponent::user('username'), array('controller' => 'users', 'action' => 'edit'),array('id' => 'loggedInUserAnchor'));?>
 			</p>
 	<?php endif;?>
 		</div>

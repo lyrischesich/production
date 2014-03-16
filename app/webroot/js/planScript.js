@@ -5,15 +5,28 @@
  */
 	
 var method;
+var loggedInAs;
 
 $(document).ready(function() {
-
+	
+	loggedInAs = $("#loggedInUserAnchor").html();
+	
+	$("#planTable td").each(function() {
+		if ($(this).hasClass("tdnonobligatedlink")) {
+			if ($(this).html() == loggedInAs) {
+				$(this).removeClass();
+				$(this).addClass("tdnonobligatedbyuser");
+			}
+		}
+	});
 	
 	$("#halfshift-btngroup").hide();
 	
+	//Alles für obligated Cells
 	$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
+
 		
 		if (isNoWeekday) {
 			if ($(this).hasClass("tderrorlink")) {
@@ -23,15 +36,14 @@ $(document).ready(function() {
 			}
 		}
 	});
-
-
+	
 	
 	//Eventhandler für den Bestätigenknopf im regulären austragen Dialog
 	$("#btnDialogConfirm").on('click',ajaxHandler);
 	
-	
 	function openDialog(cellID,eintragen) {
 			$("#btn-first").removeClass('active');
+			$("#btn-first").show();
 			$("#btn-second").removeClass('active');
 			$("#btn-second").show();
 			$("#btn-full").removeClass('active');
@@ -82,7 +94,7 @@ $(document).ready(function() {
 				$("#dateAnchor").html(formatDate.getDate() + "." + (formatDate.getMonth()+1) + "." + formatDate.getFullYear());
 				
 				//Finde den TableHeader zu der entsprechenden Schicht:
-				var $td = $("#"+cellID)
+				var $td = $("#"+cellID);
 				var $th = $td.closest('table').find('th').eq($td.index());
 				$("#shiftAnchor").html($th.html());
 						
@@ -116,12 +128,9 @@ function ajaxHandler() {
 				halfshift = "3";
 			}
 		}
-		var str = document.URL
-		if( str.charAt( str.length-1) == "/" ) {
-			var requestUrl = document.URL + "saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
-		} else {
-			var requestUrl = document.URL + "/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
-		}
+		var str = document.URL.split('plan');
+			var requestUrl = str[0] + "plan/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+			
 		if (username != "") requestUrl += username;
 		$.ajax( {
 			type: 'POST',
@@ -205,7 +214,7 @@ function ajaxHandler() {
 					}
 
 				} else if (response == "210") {
-					var splitted_id = cellID.split("_")
+					var splitted_id = cellID.split("_");
 					var sel_shift = splitted_id[2];
 					
 					if (typeof sel_shift == 'undefined') {
@@ -244,11 +253,8 @@ function ajaxHandler() {
 				
 				//Es wurde in jedem Fall eine Änderung vorgenommen (Egal ob erfolgreich oder nicht), daher wird der Wochentag auf vollständigkeit überprüft
 				
-				if( str.charAt( str.length-1) == "/" ) {
-					var validationUrl = str + "datecomplete/" + date;
-				} else {
-					var validationUrl = str + "/datecomplete/" + date;
-				}
+					var validationUrl = str[0] + "plan/datecomplete/" + date;
+
 				
 				$.ajax( {
 					type: 'POST',

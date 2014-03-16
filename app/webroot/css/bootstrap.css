@@ -6218,7 +6218,7 @@ a.badge:focus {
 
 /* Plan-Spalten-CSS */
 td.tdsuccess {
-	background-color: #d6e9c6;
+	background-color: #bad8a0;
 }
 
 td.tdwarning {
@@ -6226,11 +6226,11 @@ td.tdwarning {
 }
 
 td.tderror, td.tderrorlink {
-	background-color: #f2dede;	 
+	background-color: #eed3d7;	 
 }
 
 td.tderrorlink:hover {
-	background-color: rgb(255, 200, 200);
+	background-color: #b94a48;
 }
 
 td.tdsuccesslink 
@@ -6240,4 +6240,18 @@ td.tdsuccesslink
 
 td.tdsuccesslink:hover {
 	background-color: #3a87ad;	
+}
+
+td.tdnonobligated,td.tdnonobligatedlink {
+	background-color: #ffffff;
+}
+
+
+td.tdnonobligatedlink:hover,td.tdnonobligatedbyuser:hover {
+	background-color: #f89406;
+
+}
+
+td.tdnonobligatedbyuser {
+	background-color: #fbb450;
 }
