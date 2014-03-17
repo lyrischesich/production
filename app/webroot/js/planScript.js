@@ -6,10 +6,15 @@
 	
 var method;
 var loggedInAs;
+var adminModeActive = false;
 
 $(document).ready(function() {
 	
 	loggedInAs = $("#loggedInUserAnchor").html();
+
+	$("#adminLinkAnchor").on('click',function() {
+		activateAdminMode(!adminModeActive);
+	});
 	
 	$("#planTable td").each(function() {
 		if ($(this).hasClass("tdnonobligatedlink")) {
@@ -36,73 +41,50 @@ $(document).ready(function() {
 			}
 		}
 	});
-	
-	
+
+	//Alles für Textspalten
+	$("body").on('click','td[id^="txt_"]',function() {
+		alert("Not implemented yet!");
+	});
+
+
 	//Eventhandler für den Bestätigenknopf im regulären austragen Dialog
 	$("#btnDialogConfirm").on('click',ajaxHandler);
-	
-	function openDialog(cellID,eintragen) {
-			$("#btn-first").removeClass('active');
-			$("#btn-first").show();
-			$("#btn-second").removeClass('active');
-			$("#btn-second").show();
-			$("#btn-full").removeClass('active');
-			$("#btn-full").show();
-			
-			$("#methodAnchor").html("");
-			$("#dateAnchor").html("");
-			$("#shiftAnchor").html("");
-			
-			
-			if (cellID.substr(0, 3) == "txt") {
-				// Es handelt sich um eine Textspalte
-				// Das machen wir später! TODO
-			} else {
-				// Es handelt sich um eine Benutzerspalte
-				if (eintragen) {
-					$("#methodAnchor").html("Eintragen");
-					//Es sollen nur Optionen angezeigt werden, welche zutreffen
-					if (typeof cellID.split("_")[2] != 'undefined') {
-						$("#halfshift-btngroup").hide();
-						var lastChar = cellID.charAt(cellID.length -1);
-						if (lastChar == "1") {
-							$("#btn-first").addClass('active');
-							$("#btn-full").hide();
-							$("#btn-second").hide();
-						}
-						if (lastChar == "2") {
-							$("#btn-second").addClass('active');
-							$("#btn-full").hide();
-							$("#btn-first").hide();
-						}
-					} else {
-						$("#btn-full").addClass('active');
-					}
-					$("#modalMenuLabel").html("Eintragen");
-					$("#btnDialogConfirm").html("Eintragen");
-					method = "in";
-					$("#halfshift-btngroup").show();
-				} else {
-					//Hier geht es jetzt ums austragen
-					$("#methodAnchor").html("Austragen");
-					$("#modalMenuLabel").html("Austragen");
-					$("#btnDialogConfirm").html("Austragen");
-					method = "out";
-					$("#halfshift-btngroup").hide();
-				}
-				var formatDate = new Date(cellID.substr(0,10));
-				$("#dateAnchor").html(formatDate.getDate() + "." + (formatDate.getMonth()+1) + "." + formatDate.getFullYear());
-				
-				//Finde den TableHeader zu der entsprechenden Schicht:
-				var $td = $("#"+cellID);
-				var $th = $td.closest('table').find('th').eq($td.index());
-				$("#shiftAnchor").html($th.html());
-						
-				$("#cellID").val(cellID);
-				$("#modalMenu").modal('show');
-			}
-		}
 });
+
+function activateAdminMode(activate) {
+
+	if (activate) {	
+		adminModeActive = true;
+		$("body").off('click','td[id^="txt_"]');
+		$("body").off('click',".tdsuccesslink, .tderrorlink");
+
+		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+			var cellID = "textfield_" + $(this).attr('id');
+			alert(cellID);
+			var newTextfield = $("<input type='text' id='"+cellID+"'></input>");
+		});
+	} else {
+		adminModeActive = false;
+		$("body").off('click','td[id^="txt_"]');
+		$("body").off('click',".tdsuccesslink, .tderrorlink");
+
+		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+			var cellID = $(this).attr('id');
+			var isNoWeekday = cellID.substr(0,3) != "dow";
+
+		
+			if (isNoWeekday) {
+				if ($(this).hasClass("tderrorlink")) {
+					openDialog(cellID,true);
+				} else {
+					openDialog(cellID,false);
+				}
+			}
+		});
+	}
+
+}
 
 function ajaxHandler() {
 	var username;
@@ -194,7 +176,7 @@ function ajaxHandler() {
 								$("#"+cellToEdit).text(username);
 							}
 						}
-					} else if (sel_shift == '2') {
+					} else if (sel_shift == '2') {cellID
 						if (halfshift == "2") {
 							var splittedID = cellID.split("_");
 							var celRoot = splittedID[0] + "_" + splittedID[1];
@@ -285,3 +267,66 @@ $("#modalMenu").modal('hide');
 $("#halfshift-btngroup").show();
 return false;
 }
+
+	
+	function openDialog(cellID,eintragen) {
+			$("#btn-first").removeClass('active');
+			$("#btn-first").show();
+			$("#btn-second").removeClass('active');
+			$("#btn-second").show();
+			$("#btn-full").removeClass('active');
+			$("#btn-full").show();
+			
+			$("#methodAnchor").html("");
+			$("#dateAnchor").html("");
+			$("#shiftAnchor").html("");
+			
+			
+			if (cellID.substr(0, 3) == "txt") {
+				// Es handelt sich um eine Textspalte
+				// Das machen wir später! TODO
+			} else {
+				// Es handelt sich um eine Benutzerspalte
+				if (eintragen) {
+					$("#methodAnchor").html("Eintragen");
+					//Es sollen nur Optionen angezeigt werden, welche zutreffen
+					if (typeof cellID.split("_")[2] != 'undefined') {
+						$("#halfshift-btngroup").hide();
+						var lastChar = cellID.charAt(cellID.length -1);
+						if (lastChar == "1") {
+							$("#btn-first").addClass('active');
+							$("#btn-full").hide();
+							$("#btn-second").hide();
+						}
+						if (lastChar == "2") {
+							$("#btn-second").addClass('active');
+							$("#btn-full").hide();
+							$("#btn-first").hide();
+						}
+					} else {
+						$("#btn-full").addClass('active');
+					}
+					$("#modalMenuLabel").html("Eintragen");
+					$("#btnDialogConfirm").html("Eintragen");
+					method = "in";
+					$("#halfshift-btngroup").show();
+				} else {
+					//Hier geht es jetzt ums austragen
+					$("#methodAnchor").html("Austragen");
+					$("#modalMenuLabel").html("Austragen");
+					$("#btnDialogConfirm").html("Austragen");
+					method = "out";
+					$("#halfshift-btngroup").hide();
+				}
+				var formatDate = new Date(cellID.substr(0,10));
+				$("#dateAnchor").html(formatDate.getDate() + "." + (formatDate.getMonth()+1) + "." + formatDate.getFullYear());
+				
+				//Finde den TableHeader zu der entsprechenden Schicht:
+				var $td = $("#"+cellID);
+				var $th = $td.closest('table').find('th').eq($td.index());
+				$("#shiftAnchor").html($th.html());
+						
+				$("#cellID").val(cellID);
+				$("#modalMenu").modal('show');
+			}
+		}

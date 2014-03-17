@@ -139,4 +139,19 @@ class UsersController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+	public function isAuthorized($user) {
+		if ($this->action == "edit") { 
+			if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+				//Admins dürfen alle Daten ändern
+				return true;
+			} else {
+				//normale Nutzer dürfen nur ihre eigenen Daten ändern
+				return $this->params['pass'][0] == AuthComponent::user('id');
+			}
+		}
+
+		//Das Anlegen, Anzeigen und Löschen von Benutzern steht nur Admins zur Verfügung
+		return parent::isAuthorized($user);
+	}
 }

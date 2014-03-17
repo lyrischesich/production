@@ -3,7 +3,7 @@
 <?php echo $this->element('actions',array(
 			'actions' => array(
 // 				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'Plan','action' => 'createPDF')),
-// 				'admin' => array('text' => 'Adminmodus', 'params' => array('id' => 'activateAdminMode')),
+ 				'admin' => array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor')),
 // 				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();')),
 				'prev' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $prevYear, $prevMonth)),
 				'next' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $nextYear, $nextMonth))
@@ -18,9 +18,9 @@
 	<!-- Header -->
 	<?php foreach ($columns as $column):?>
 		<?php if ($column['Column']['type'] == 2):?>
-			<th colspan="2"  <?php echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."'";?>><?php echo $column['Column']['name']; ?></th>
+			<th colspan="2"  <?php echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?>><?php echo $column['Column']['name']; ?></th>
 		<?php else:?>	
-			<th <?php  echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."'";?>><?php echo $column['Column']['name']; ?></th>
+			<th <?php  echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?>><?php echo $column['Column']['name']; ?></th>
 		<?php endif;?>
 	<?php endforeach;?>
 
