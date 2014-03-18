@@ -48,6 +48,7 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 			$("#debug-kit-toolbar:visible").hide();
 
 			$('#siteContainer').hide();
+			$("#siteContainer").find("h2").appendTo('body');
 			$(".table").appendTo('body');
 			$(".table").attr('border','1');
 			$("a").each(function() {
@@ -57,6 +58,7 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 				$(this).html($(this).html().replaceWith($(this).html() + " "));
 			});
 			$(".table").removeClass();
+
 		});
 	</script>
 	
