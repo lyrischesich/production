@@ -50,11 +50,24 @@ class StatisticController extends AppController {
 		$data = $this->ColumnsUser->find("all", array('recursive' => -1, 'conditions' => array('ColumnsUser.date LIKE ' => $date)));
 		
 		$this->analyseAndSetData($data);
+		$this->set('param1', $year);
+		$this->set('param2', $month);
 	}
 
-	public function interval() {
+	public function interval($from=-1, $to=-1) {
+		//Direkt übergebene Werte haben Vorrang vor POST-Parametern
+		if ($from != -1) $this->request->data['Date']['dateFrom'] = $from;
+		if ($to != -1) $this->request->data['Date']['dateTo'] = $to;
+		
 		//Inputvalidierung
-		$token = explode(". ", $this->request->data['Date']['dateFrom']);
+		if (!isset($this->request->data['Date']['dateFrom']) || !isset($this->request->data['Date']['dateTo'])) {
+			return $this->redirect(array('controller' => 'statistic', 'action' => 'index'));
+		}
+			
+		$this->request->data['Date']['dateFrom'] = str_replace(" ", "", $this->request->data['Date']['dateFrom']);
+		$this->request->data['Date']['dateTo'] = str_replace(" ", "", $this->request->data['Date']['dateTo']);
+		
+		$token = explode(".", $this->request->data['Date']['dateFrom']);
 		if (count($token) != 3 || !checkdate($token[1], $token[0], $token[2])) {
 			//Ungültiges Datum
 			//-> nur aktuellen Monat anzeigen
@@ -63,7 +76,7 @@ class StatisticController extends AppController {
 			$dateBegin = $token[2]."-".$token[1]."-".$token[0];
 		}
 
-		$token = explode(". ", $this->request->data['Date']['dateTo']);
+		$token = explode(".", $this->request->data['Date']['dateTo']);
 		if (count($token) != 3 || !checkdate($token[1], $token[0], $token[2])) {
 			//Ungültiges Datum
 			//-> nur aktuellen Monat anzeigen
@@ -92,6 +105,9 @@ class StatisticController extends AppController {
 
 		$this->set('pageTitle', "Statistik für den Zeitraum vom ".date('d. m. Y', strtotime($dateBegin))." bis zum ".date('d. m. Y', strtotime($dateEnd)));
 		$this->analyseAndSetData($data);
+		
+		$this->set('param1', date('d.m.Y', strtotime($dateBegin)));
+		$this->set('param2', date('d.m.Y', strtotime($dateEnd)));
 	}
 
 	private function analyseAndSetData($dataArray) {
@@ -130,7 +146,15 @@ class StatisticController extends AppController {
 		$this->set('data', $userList);
 	}
 	
-	public function createPDF() {
+	public function printversion($action=-1, $param1=-1, $param2=-1) {
+		$this->layout = "print";
 		
+		if ($action == "index") {
+			$this->index($param1, $param2);
+		} else if ($action == "interval") {
+			$this->interval(date('d.m.Y', strtotime($param1)), $param2);
+		} else {
+			return $this->redirect(array('controller' => 'statistic', 'action' => 'index'));
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php echo $this->element('actions',array(
 			'actions' => array(
-// 			'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'statistic','action' => 'createPDF')),
+			'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'statistic','action' => 'printversion', $this->params['action'], $param1, $param2)),
 			'previousMonth' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $previousYear, $previousMonth)),
 			'currentMonth' => array('text' => 'Aktueller Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y'), date('m'))),
 			'nextMonth' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $nextYear, $nextMonth)),			

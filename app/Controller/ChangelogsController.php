@@ -40,8 +40,8 @@ class ChangelogsController extends AppController {
 			$this->set('displayLess', true);
 		}
 	}
-
-
+	
+	
 /**
  * view method
  *

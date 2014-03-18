@@ -91,6 +91,8 @@ class PlanController extends AppController {
 		//Daten für Navigationslinks setzen
 		$datetime = new DateTime($year."-".$month."-14");
 		$this->set('headingDate', $datetime->format('m/Y'));
+		$this->set('displayingYear', $datetime->format('Y'));
+		$this->set('displayingMonth', $datetime->format('m'));
 		$datetime->modify("+1 month");
 		$this->set('nextYear', $datetime->format("Y"));
 		$this->set('nextMonth', $datetime->format("m"));
@@ -99,6 +101,11 @@ class PlanController extends AppController {
 		$this->set('prevMonth', $datetime->format("m"));
 	}
 
+	public function printversion($year=-1, $month=-1) {
+		$this->layout = "print";
+		$this->index($year, $month);
+	}
+	
 	private function sendEmergencyMail($date, $halfshift, $exceptOf, $shiftname) {
 		//auf Deutsch umstellen
 		setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');

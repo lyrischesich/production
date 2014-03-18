@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('ICal', 'Model');
 /**
  * Specialdates Controller
  *
@@ -57,53 +58,59 @@ class SpecialdatesController extends AppController {
 		}
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->Specialdate->exists($id)) {
-			throw new NotFoundException(__('Invalid specialdate'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Specialdate->save($this->request->data)) {
-				$this->Session->setFlash(__('The specialdate has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The specialdate could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Specialdate.' . $this->Specialdate->primaryKey => $id));
-			$this->request->data = $this->Specialdate->find('first', $options);
-		}
-	}
+	public function importVacations() {
+		$importyear = date('Y')+1;
+		$icalreader = new ICal('http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics');
+		$events = $icalreader->events();
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->Specialdate->id = $id;
-		if (!$this->Specialdate->exists()) {
-			throw new NotFoundException(__('Invalid specialdate'));
+		$tmpSpecialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('date LIKE ' => $importyear.'-__-__')));
+		$specialdates = array();
+		foreach ($tmpSpecialdates as $tmpSpecialdate) {
+			array_push($specialdates, $tmpSpecialdate['Specialdate']['date']);
 		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Specialdate->delete()) {
-			$this->Session->setFlash(__('The specialdate has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The specialdate could not be deleted. Please, try again.'));
+		
+		foreach ($events as $event) {
+			$timeBegin = $this->icalToUnixtime($event['DTSTART']);
+			$timeEnd = $this->icalToUnixtime($event['DTEND']);
+			
+			$datetime = new Datetime(date('Y-m-d', $timeBegin));
+			for ($i = $timeBegin;$i <= $timeEnd;$i+=DAY) {
+				
+				$dateString = $datetime->format('Y-m-d');
+				if (!in_array($dateString, $specialdates)) {
+					//Datum existiert noch nicht
+					if (!($datetime->format('N') >= 6)) {
+						//Kein Wochenende -> Specialdate eintragen, um das Datum zu deaktivieren
+						$this->Specialdate->create();
+						$this->Specialdate->save(array('Specialdate' => array('date' => $dateString)));
+					}
+				} else {
+					//Datum existiert bereits
+				}
+				
+				$datetime->modify("+1 day");
+			}
 		}
-		return $this->redirect(array('action' => 'index'));
+		
+		return true;
 	}
 	
-	//TODO ändern / Klasse löschen?
+	private function icalToUnixtime($ical) {
+		$year = substr($ical, 0, 4);
+		$month = substr($ical, 4, 2);
+		$day = substr($ical, 6, 2);
+		return strtotime($year."-".$month."-".$day);
+	}
+	
 	public function isAuthorized($user) {
-		return true;
+		if ($this->action == "importVacations") {
+			//Diese Methode ist zuständig für das Beschaffen und einfügen der Ferientermine
+			//des nächsten Jahres zuständig
+			//->Niemand darf diese Funkion über die URL aufrufen
+			//Stattdessen muss PERMISSION_TO_ACCESS_VACATION_IMPORT definiert und true sein
+			return defined("PERMISSION_TO_ACCESS_VACATION_IMPORT") && PERMISSION_TO_ACCESS_AUTOMAIL === true;
+		}
+		
+		return parent::isAuthorized($user);
 	}
 }

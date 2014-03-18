@@ -2,7 +2,7 @@
 
 <?php echo $this->element('actions',array(
 			'actions' => array(
-// 				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'Plan','action' => 'createPDF')),
+				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'plan','action' => 'printversion', $displayingYear, $displayingMonth)),
  				'admin' => array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor')),
 // 				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();')),
 				'prev' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $prevYear, $prevMonth)),

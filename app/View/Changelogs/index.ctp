@@ -39,7 +39,7 @@ echo $this->element('actions', array (
 	'format' => 'Seite {:page} von {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag {:start}, Ende bei Eintrag {:end}')
 	);
 	?>	</p>
-	<div class="paging">
+	<div id='paging-div' class="paging">
 	<?php
 		//echo $this->Paginator->prev('< ' . 'vorherige Seite', array(), null, array('class' => 'prev disabled'));
 		//echo $this->Paginator->numbers(array('separator' => ''));

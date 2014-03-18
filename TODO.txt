@@ -1,11 +1,10 @@
 //Muss-Kriterien
 /backup/index und /install/import: Abstände anpassen
-/contacts/only: Legende verschönern
+Legende verschönern
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
-Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
-Bei E-Mails: Was, wenn web.de nicht senden will?
-Sidebar immer mit runterscrollen lassen
-NavBar Collapsable machen			
+/contacts/mail: Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
+Sidebar: Falls möglich Verformung verhindern
+Bei E-Mails: Was, wenn web.de nicht senden will?			
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /statistic/interval: sollen nächster Monat etc. angezeigt werden?
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)

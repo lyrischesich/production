@@ -26,6 +26,11 @@ class ContactsController extends AppController {
 		$this->set('users',$results);
 	}
 	
+	public function printversion() {
+		$this->layout = "print";
+		$this->index();
+	}
+	
 	public function only($date=-1) {
 		$token = explode("-", $date);
 		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token[2]) != 2) {
@@ -173,6 +178,7 @@ class ContactsController extends AppController {
 	public function isAuthorized($user) {
 		//Jeder Benutzer darf die Kontaktliste aufrufen (auch die eingeschränkte)
 		//Jeder Benutzer darf die Mailfunktion nutzen
+		//Jeder Benutzer darf die Druckversion anschauen
 		return true;
 	}
 }

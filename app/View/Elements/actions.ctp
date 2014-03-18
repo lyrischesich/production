@@ -3,7 +3,7 @@
 		$("#navlist").affix();
 	});
 </script>
-<div class="span2">
+<div id='navlist-div' class="span2">
 	<div id="navlist" class="well sidebar-nav">
 		<ul class="nav nav-list">
 		<li class="nav-header">Aktionen</li>

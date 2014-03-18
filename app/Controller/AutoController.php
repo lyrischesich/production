@@ -30,5 +30,9 @@ class AutoController extends AppController {
 
 		$this->set('performedActions', $viewData);
 	}
+	
+	public function isAuthorized($user) {
+		return parent::isAuthorized($user);
+	}
 }
 ?>

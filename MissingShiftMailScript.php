@@ -1,8 +1,4 @@
 <?php
-//möglichen Anwender über vermeintlichen Fehler informieren
-//echo "ANMERKUNG: Wenn folgende Fehlermeldung zwei mal auftritt, ist das Programm korrekt durchlaufen:\nPHP Fatal error:  Call to a member function header() on a non-object in ".dirname(__FILE__)."/lib/Cake/Controller/Controller.php on line 774";
-
-
 //Weil das Plugin DebugKit sonst bugt
 define('FULL_BASE_URL', 'http://localhost');
 if (!defined('DS')) {

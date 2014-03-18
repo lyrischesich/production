@@ -1,1 +1,1 @@
-<?php require 'index.ctp'; ?>
+<?php require_once 'index.ctp'; ?>
