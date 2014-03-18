@@ -1,22 +1,10 @@
 <?php
 App::uses('AppController', 'Controller');
-
 class AutoController extends AppController {
 	
-	public function index($controller=-1, $action=-1, $filename=-1) {
-		if ($controller != -1 && $action != -1 && $filename != -1) {
-			$this->doTask($controller, $action);
-			
-			$handler = fopen(str_replace, "w")
-			$text = "Hallo Welt\n"; // Dateiinhalt
-			$dateiname = "test.txt"; // Name der Datei
-			// Datei öffnen,
-			// wenn nicht vorhanden dann wird die Datei erstellt.
-			$handler = fopen($dateiname , "a+");
-			// Dateiinhalt in die Datei schreiben
-			fwrite($handler , $text);
-			fclose($handler); // Datei schließen
-			
+	public function index($controller=-1, $action=-1, $description=-1) {
+		if ($controller != -1 && $action != -1 && $description != -1) {
+			$this->doTask($controller, $action, $description);			
 			return $this->redirect(array('controller' => 'auto', 'action' => 'index'));
 		}
 		
@@ -35,9 +23,9 @@ class AutoController extends AppController {
 		foreach ($filelist as $filename => $path) {
 			$contents = file($path);
 			$tmpArray['actionname'] = str_replace("_", " ", $filename);
-			$tmpArray['success'] = str_replace("\n", "", $contents[0]);
-			$tmpArray['controller'] = str_replace("\n", "", $contents[1]);
-			$tmpArray['action'] = str_replace("\n", "", $contents[2]);
+			$tmpArray['success'] = str_replace("\n", "", str_replace("\r\n", "", $contents[0]));
+			$tmpArray['controller'] = str_replace("\n", "", str_replace("\r\n", "", $contents[1]));
+			$tmpArray['action'] = str_replace("\n", "", str_replace("\r\n", "", $contents[2]));
 			$tmpArray['lastExecution'] = filemtime($path);
 
 			array_push($viewData, $tmpArray);
@@ -46,7 +34,7 @@ class AutoController extends AppController {
 		$this->set('performedActions', $viewData);
 	}
 	
-	private function doTask($controllerName, $actionName) {
+	private function doTask($controllerName, $actionName, $description) {
 		$cfgDebug = Configure::read('debug');
 		if (App::import('Controller', str_replace('Controller', '', $controllerName))) {
 			$controller = new $controllerName();
@@ -54,30 +42,37 @@ class AutoController extends AppController {
 				define('ROOT_PERMISSION', true);
 				Configure::write('debug', 0);
 				if (call_user_func(array($controller, $actionName))) {
-					$errorcode = 0;
+					//alles hat funktioniert
+					//muss von der aufgerufenen Methode selbst geloggt werden
 				} else {
 					//ein programminterner Fehler ist aufgetreten
-					$errorcode = 3;
+					//muss von der aufgerufenen Methode selbst geloggt werden
 				}
 			} else {
 				//der angegebene Controller besitzt die angegebene Methode nicht
-				$errorcode = 2;
+				AutoController::saveLog($description, 2, $controllerName, $actionName);
 			}
 		} else {
 			//der angegebene Controller wurde nicht gefunden
-			$errorcode = 1;
+			AutoController::saveLog($description, 1, $controllerName, $actionName);
 		}
 		
 		Configure::write('debug', $cfgDebug);
-		return $errorcode;
 	}
 	
 	public function isAuthorized($user) {
 		return parent::isAuthorized($user);
 	}
 
-	public static function log($actionname, $errorcode, $controller, $action) {
-		fopen();
+	public static function saveLog($actionname, $errorcode, $controller, $action) {
+		
+		$file = fopen(APP."lastruns".DS.$actionname, "w");
+		
+		fwrite($file, $errorcode."\r\n");
+		fwrite($file, $controller."\r\n");
+		fwrite($file, $action."\r\n");
+		
+		fclose($file);
 	}
 }
 ?>

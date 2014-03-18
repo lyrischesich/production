@@ -452,6 +452,7 @@ class PlanController extends AppController {
 	}
 	
 	public function sendMissingShiftMails(){
+	  try {
 		$firstDate = new DateTime('now');
 		$firstDate = $firstDate->modify("+".(8-date('N', time()))." days");
 		$tmpColumns = $this->Column->find('all', array('recursive' => -1));
@@ -586,6 +587,11 @@ class PlanController extends AppController {
 
 			$EMail->send();
 		}
+		
+		AutoController::saveLog('Plan-unvollständig-Mail', 0, 'PlanController', 'sendMissingShiftMails');
+	  } catch (Exception $e) {
+	  	AutoController::saveLog('Plan-unvollständig-Mail', 3, 'PlanController', 'sendMissingShiftMails');
+	  }
 	}
 
 	public function isAuthorized($user) {

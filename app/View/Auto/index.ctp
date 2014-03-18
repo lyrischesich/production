@@ -15,8 +15,8 @@ echo $this->element('actions', array('actions' => array()));
 		echo "<tr>";
 		echo "<td>".$performedAction['actionname']."</td>";
 		echo "<td>".date('d.m.Y H:i:s', $performedAction['lastExecution'])."</td>";
-		echo "<td>".($performedAction['success'] == "true" ? "erfolgreich" : "fehlgeschlagen")."</td>";
-		echo "<td>".$this->Html->link('jetzt starten', array('controller' => 'auto', 'action' => 'index', $performedAction['controller'], $performedAction['action']))."</td>";
+		echo "<td>".($performedAction['success'] == 0 ? "erfolgreich" : "fehlgeschlagen (Fehlercode " .$performedAction['success'].")")."</td>";
+		echo "<td>".$this->Html->link('jetzt starten', array('controller' => 'auto', 'action' => 'index', $performedAction['controller'], $performedAction['action'], str_replace('_', ' ', $performedAction['actionname'])))."</td>";
 		echo "</tr>";
 	}
   

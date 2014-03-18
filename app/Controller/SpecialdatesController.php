@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('AutoController', 'Controller');
 App::uses('ICal', 'Model');
 /**
  * Specialdates Controller
@@ -59,8 +60,15 @@ class SpecialdatesController extends AppController {
 	}
 
 	public function importVacations() {
+	  try {
 		$importyear = date('Y')+1;
-		$icalreader = new ICal('http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics');
+		$sourceURL = 'http://www.schulferien.org/iCal/Ferijen/icals/Ferien_Berlin_'.$importyear.'.ics';
+		if (!file_get_contents($sourceURL))
+			throw new Exception();
+			
+		$icalreader = new ICal($sourceURL);
+			
+		
 		$events = $icalreader->events();
 
 		$tmpSpecialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('date LIKE ' => $importyear.'-__-__')));
@@ -91,8 +99,10 @@ class SpecialdatesController extends AppController {
 				$datetime->modify("+1 day");
 			}
 		}
-		
-		return true;
+		AutoController::saveLog('Ferienimport', 0, 'SpecialdatesController', 'importVacations');
+	  } catch (Exception $e) {
+	  	AutoController::saveLog('Ferienimport', 3, 'SpecialdatesController', 'importVacations');
+	  }
 	}
 	
 	private function icalToUnixtime($ical) {
