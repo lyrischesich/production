@@ -44,30 +44,25 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 	?>
 	
 	<script type='text/javascript'>
-		window.onload = function() {
-			//var element = document.getElementById("navlist-div");
-			//if (element !== null) element.parentNode.removeChild(element);
+		$(document).ready(function() {
+			$("#debug-kit-toolbar:visible").hide();
 
-			//element = document.getElementById("debug-kit-toolbar");
-			//if (element !== null) element.parentNode.removeChild(element);
-
-			//element = document.getElementById("paging-div");
-			//if (element !== null) element.parentNode.removeChild(element);
-			
-			//$("html").not('table').remove();
-
-			$(".span9").removeClass();
-
-			//Links entfernen
-			$('a').each(function(index){
+			$('#siteContainer').hide();
+			$(".table").appendTo('body');
+			$(".table").attr('border','1');
+			$("a").each(function() {
 				$(this).replaceWith($(this).html());
+			});	
+			$("td").each(function() {
+				$(this).html($(this).html().replaceWith($(this).html() + " "));
 			});
-		};
+			$(".table").removeClass();
+		});
 	</script>
 	
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid" id="siteContainer">
 		<div class="row-fluid">	
 				<?php echo $this->Session->flash(); ?>
 				<?php echo $this->fetch('content'); ?>
