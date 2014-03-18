@@ -3,9 +3,19 @@ App::uses('AppController', 'Controller');
 
 class AutoController extends AppController {
 	
-	public function index($controller=-1, $action=-1) {
-		if ($controller != -1 && $action != -1) {
+	public function index($controller=-1, $action=-1, $filename=-1) {
+		if ($controller != -1 && $action != -1 && $filename != -1) {
 			$this->doTask($controller, $action);
+			
+			$handler = fopen(str_replace, "w")
+			$text = "Hallo Welt\n"; // Dateiinhalt
+			$dateiname = "test.txt"; // Name der Datei
+			// Datei öffnen,
+			// wenn nicht vorhanden dann wird die Datei erstellt.
+			$handler = fopen($dateiname , "a+");
+			// Dateiinhalt in die Datei schreiben
+			fwrite($handler , $text);
+			fclose($handler); // Datei schließen
 			
 			return $this->redirect(array('controller' => 'auto', 'action' => 'index'));
 		}
@@ -64,6 +74,10 @@ class AutoController extends AppController {
 	
 	public function isAuthorized($user) {
 		return parent::isAuthorized($user);
+	}
+
+	public static function log($actionname, $errorcode, $controller, $action) {
+		fopen();
 	}
 }
 ?>
