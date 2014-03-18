@@ -1,4 +1,4 @@
-<?php
+<?php 
 //Weil das Plugin DebugKit sonst bugt
 define('FULL_BASE_URL', 'http://localhost');
 if (!defined('DS')) {
@@ -50,12 +50,12 @@ if (!empty($failed)) {
 	trigger_error("CakePHP core could not be found. Check the value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php. It should point to the directory containing your " . DS . "cake core directory and your " . DS . "vendors root directory.", E_USER_ERROR);
 }
 
-echo "\nincluding PlanController ...";
-require_once 'app/Controller/PlanController.php';
-echo "\ncreating PlanController ...";
-$planController = new PlanController();
+echo "\nincluding SpecialdatesController ...";
+require_once 'app/Controller/SpecialdatesController.php';
+echo "\ncreating SpecialdatesController ...";
+$specialdatesController = new SpecialdatesController();
 echo "\nsetting permissions ...";
 define("ROOT_PERMISSION", true);
-echo "\nsending mails ...\n";
-$planController->sendMissingShiftMails();
+echo "\nimporting vacations ...\n";
+$specialdatesController->importVacations()
 ?>

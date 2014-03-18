@@ -107,8 +107,8 @@ class SpecialdatesController extends AppController {
 			//Diese Methode ist zuständig für das Beschaffen und einfügen der Ferientermine
 			//des nächsten Jahres zuständig
 			//->Niemand darf diese Funkion über die URL aufrufen
-			//Stattdessen muss PERMISSION_TO_ACCESS_VACATION_IMPORT definiert und true sein
-			return defined("PERMISSION_TO_ACCESS_VACATION_IMPORT") && PERMISSION_TO_ACCESS_AUTOMAIL === true;
+			//Stattdessen muss ROOT_PERMISSION definiert und true sein
+			return defined("ROOT_PERMISSION") && ROOT_PERMISSION === true;
 		}
 		
 		return parent::isAuthorized($user);

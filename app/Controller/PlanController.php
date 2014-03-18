@@ -593,8 +593,8 @@ class PlanController extends AppController {
 			//Diese Methode ist zuständig für das Generieren und Versenden der Mails
 			//bezüglich fehlender Dienste im Plan und wird zu gegebener Zeit automatisch aufgerufen
 			//->Niemand darf diese Funkion über die URL aufrufen
-			//Stattdessen muss PERMISSION_TO_ACCESS_AUTOMAIL definiert und true sein
-			return defined("PERMISSION_TO_ACCESS_AUTOMAIL") && PERMISSION_TO_ACCESS_AUTOMAIL === true;
+			//Stattdessen muss ROOT_PERMISSION definiert und true sein
+			return defined("ROOT_PERMISSION") && ROOT_PERMISSION === true;
 		}
 		
 		if ($this->action == "saveSpecialdate") {
