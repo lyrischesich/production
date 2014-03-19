@@ -8,12 +8,28 @@ Bei E-Mails: Was, wenn web.de nicht senden will?
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /statistic/interval: sollen nächster Monat etc. angezeigt werden?
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)
-/users: Sidebar-Bug fixen
+/users: Sidebar-Bug fixen (!!!)
+/plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
+/statistic: Jahresstatistik implementieren (Entweder Schuljahr oder Kalenderjahr)
+/users/edit: Eigenen Link in die navbar implementieren
+/users/edit: Eigenes Konto soll auch für Nicht-Admins zu bearbeiten sein
+IMPRESSUM einfügen mit folgenden Kontaktdaten:
+	- Tel: 0157 85 67 87 57
+	- E-Mail-Adresse: cafeteria-humboldtschule@web.de
+/mail: Automatisch generierte Mails sollen nicht mehr beantwortbar sein. Ein entsprechender Hinweis dazu sollte in der Mail zu finden sein. 
+/mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
+/mail: Rundmails sollen auf Wunsch auch an inaktive Mitarbeiter gesendet werden können (Checkbox einfügen).
 
 //Soll-Kriterien
-/statistic: Jahresstatistik implementieren
+/statistic: Eventuell sortierbar machen?
+/plan: Tooltips für die Schichten erstellen (Damit auch Mitarbeiter mit kleinerem Bildschirm sehen in welche Schicht sie sich eintragen)
 
 
 //Fragen an Frau Wagner
 Z?fle und Neu?
 Darf sich ein Nutzer austragen? Notfallmail bei T < ??? Tagen
+
+//Wichtig für Hr. Wagner:
+	
+	- Zugriffsrechte für die /auto-Datein müssen für den Webserver schreibbar sein
+	- Das obligatorische chown www-data -R app/tmp :)
