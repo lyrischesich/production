@@ -63,8 +63,12 @@ class SpecialdatesController extends AppController {
 	  try {
 		$importyear = date('Y')+1;
 		$sourceURL = 'http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics';
-		if (!file_get_contents($sourceURL))
+		$vacationHeaders = get_headers($sourceURL);
+		
+		if (strpos($vacationHeaders[0], ' 200 OK') === false || strpos($vacationHeaders[3], 'Location:') === 0) {
+			//Die gesuchte Datei existiert nicht
 			throw new Exception();
+		}
 			
 		$icalreader = new ICal($sourceURL);
 			
