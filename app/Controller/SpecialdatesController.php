@@ -62,7 +62,7 @@ class SpecialdatesController extends AppController {
 	public function importVacations() {
 	  try {
 		$importyear = date('Y')+1;
-		$sourceURL = 'http://www.schulferien.org/iCal/Ferijen/icals/Ferien_Berlin_'.$importyear.'.ics';
+		$sourceURL = 'http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics';
 		if (!file_get_contents($sourceURL))
 			throw new Exception();
 			

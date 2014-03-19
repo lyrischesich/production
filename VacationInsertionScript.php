@@ -50,12 +50,11 @@ if (!empty($failed)) {
 	trigger_error("CakePHP core could not be found. Check the value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php. It should point to the directory containing your " . DS . "cake core directory and your " . DS . "vendors root directory.", E_USER_ERROR);
 }
 
-echo "\nincluding SpecialdatesController ...";
-require_once 'app/Controller/SpecialdatesController.php';
-echo "\ncreating SpecialdatesController ...";
-$specialdatesController = new SpecialdatesController();
-echo "\nsetting permissions ...";
-define("ROOT_PERMISSION", true);
+echo "\nincluding AutoController ...";
+require_once 'app/Controller/AutoController.php';
+echo "\ncreating AutoController ...";
+$autoController = new autoController();
 echo "\nimporting vacations ...\n";
-$specialdatesController->importVacations()
+$autoController->index('SpecialdatesController', 'importVacations', 'Ferienimport');
+exit;
 ?>

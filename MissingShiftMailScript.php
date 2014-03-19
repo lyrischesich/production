@@ -50,12 +50,11 @@ if (!empty($failed)) {
 	trigger_error("CakePHP core could not be found. Check the value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php. It should point to the directory containing your " . DS . "cake core directory and your " . DS . "vendors root directory.", E_USER_ERROR);
 }
 
-echo "\nincluding PlanController ...";
-require_once 'app/Controller/PlanController.php';
-echo "\ncreating PlanController ...";
-$planController = new PlanController();
-echo "\nsetting permissions ...";
-define("ROOT_PERMISSION", true);
+echo "\nincluding AutoController ...";
+require_once 'app/Controller/AutoController.php';
+echo "\ncreating AutoController ...";
+$autoController = new AutoController();
 echo "\nsending mails ...\n";
-$planController->sendMissingShiftMails();
+$autoController->index('PlanController', 'sendMissingShiftMails', 'Plan-unvollständig-Mail');
+exit;
 ?>
