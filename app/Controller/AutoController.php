@@ -5,7 +5,7 @@ class AutoController extends AppController {
 	public function index($controller=-1, $action=-1, $description=-1) {
 		if ($controller != -1 && $action != -1 && $description != -1) {
 			$this->doTask($controller, $action, $description);			
-// 			return $this->redirect(array('controller' => 'auto', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'auto', 'action' => 'index'));
 		}
 		
 		$handle = opendir (APP.DS."lastruns");

@@ -35,4 +35,3 @@ foreach ($content as $line):
 endforeach;
 ?>
 <br>
-<p> Wenn Sie auf diese E-Mail antworten, so wird sie ausschließlich dem Absender zugestellt. </p>

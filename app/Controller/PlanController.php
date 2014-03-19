@@ -139,6 +139,8 @@ class PlanController extends AppController {
 				Das Cafeteria-Team
 				";
 		
+		$mailContent .= "<p>Hinweis: Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht darauf.</p>";
+		
 		$EMail = new CakeEmail();
 		$EMail->from(array($senderMail => $senderName));
 		$EMail->subject("Humboldt-Cafeteria - Dienst kurzfristig frei geworden");
@@ -570,7 +572,9 @@ class PlanController extends AppController {
 				}
 				$mailContent .= "</ul>";
 			}
-				
+
+			$mailContent .= "<p>Hinweis: Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht darauf.</p>";
+			
 			$EMail = new CakeEmail();
 			$EMail->from(array($senderMail => $senderName));
 			$EMail->to($usersArray[$userid]['mail']);

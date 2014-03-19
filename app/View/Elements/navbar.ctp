@@ -38,7 +38,9 @@
 				'Rundmail' => array('admin' => true, 'controller' => 'mail', 'action' => 'index'),
 				'Änderungsliste' => array('admin' => true, 'controller' => 'changelogs', 'action' => 'index'),
 				'Statistik' => array('admin' => true, 'controller' => 'statistic', 'action' => 'index'),
-				'Sicherung' => array('admin' => true, 'controller' => 'backup', 'action' => 'index'),				
+				'Kontoverwaltung' => array('admin' => false, 'controller' => 'users', 'action' => 'edit'),
+				'Sicherung' => array('admin' => true, 'controller' => 'backup', 'action' => 'index'),
+				'Auto-Verwaltung' => array('admin' => true, 'controller' => 'auto', 'action' => 'index'),				
 				'Spaltenverwaltung' => array('admin' => true, 'controller' => 'columns', 'action' => 'index'),
 			);
 ?>
