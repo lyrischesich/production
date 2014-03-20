@@ -56,6 +56,7 @@ function activateAdminMode(activate) {
 
 	if (activate) {	
 		adminModeActive = true;
+		alert("Adminmodus aktiviert");
 		$("body").off('click','td[id^="txt_"]');
 		$("body").off('click',".tdsuccesslink, .tderrorlink");
 
@@ -112,6 +113,13 @@ function onTextField(tdID) {
 							$td.addClass("tdsuccess");
 						}
 						$td.html(username);
+						
+					} else if (response == "210") {
+						var $td = (newTextField).parent();
+						$(newTextField).remove();
+						$td.removeClass();
+						$td.addClass("tderrorlink");
+						$td.html("");
 					} else {
 						alert("Eror: Unknown ResponseCode [" + response +"]");
 					}
@@ -186,7 +194,6 @@ function ajaxHandler() {
 						$("#"+cellID).addClass("tderrorlink");
 						
 					}
-
 				} else {
 					alert ("Unknown response code: " + response);
 				}
@@ -217,9 +224,10 @@ function ajaxHandler() {
 			error: function(response) {
 				alert ("Unbekannter Fehler");
 			}
-
+			
 		});
 	}
+	
 $("#btnDialogConfirm").button('reset');
 $("#modalMenu").modal('hide');
 $("#halfshift-btngroup").show();
