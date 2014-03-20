@@ -66,6 +66,7 @@ function activateAdminMode(activate) {
 	} else {
 		alert("Adminmodus deaktiviert");
 		adminModeActive = false;
+		$("input").remove();
 		$("body").off('click','td[id^="txt_"]');
 		$("body").off('click',".tdsuccesslink, .tderrorlink");
 
@@ -113,6 +114,11 @@ function onTextField(tdID) {
 							$td.addClass("tdsuccess");
 						}
 						$td.html(username);
+						$("body").off('click');
+						$("#"+cellID).off('keypress');
+						$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+							onTextField($(this).attr('id'));
+						});
 						
 					} else if (response == "210") {
 						var $td = (newTextField).parent();
@@ -120,18 +126,19 @@ function onTextField(tdID) {
 						$td.removeClass();
 						$td.addClass("tderrorlink");
 						$td.html("");
+						$("body").off('click');
+						$("#"+cellID).off('keypress');
+						$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+							onTextField($(this).attr('id'));
+						});
 					} else {
-						alert("Eror: Unknown ResponseCode [" + response +"]");
+						alert("Eror: Unknown ResponseCode [" + response +"]");						
 					}
 				},
 				error: function() {
-					alert("Ein unbekannter Fehler ist aufgetreten");
+					alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
+					activateAdminMode(false);
 				}
-			});
-			$("body").off('click');
-			$("#"+cellID).off('keypress');
-			$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
-				onTextField($(this).attr('id'));
 			});
 		}
 	});
