@@ -6217,8 +6217,12 @@ a.badge:focus {
 }
 
 /* Plan-Spalten-CSS */
-td.tdsuccess {
+td.tdsuccess, .tdsuccesschangeable {
 	background-color: #bad8a0;
+}
+
+td.tdsuccesschangeable:hover {
+	background-color: #468847;
 }
 
 td.tdwarning {
