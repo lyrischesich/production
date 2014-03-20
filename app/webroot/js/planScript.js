@@ -56,15 +56,17 @@ function activateAdminMode(activate) {
 
 	if (activate) {	
 		adminModeActive = true;
+		alert("Adminmodus aktiviert");
 		$("body").off('click','td[id^="txt_"]');
 		$("body").off('click',".tdsuccesslink, .tderrorlink");
 
 		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
 			var cellID = "textfield_" + $(this).attr('id');
-			alert(cellID);
 			var newTextfield = $("<input type='text' id='"+cellID+"'></input>");
+			$(this).html(newTextfield);
 		});
 	} else {
+		alert("Adminmodus deaktiviert");
 		adminModeActive = false;
 		$("body").off('click','td[id^="txt_"]');
 		$("body").off('click',".tdsuccesslink, .tderrorlink");
@@ -112,6 +114,7 @@ function ajaxHandler() {
 		}
 		var str = document.URL.split('plan');
 			var requestUrl = str[0] + "plan/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+		alert(requestUrl);
 			
 		if (username != "") requestUrl += username;
 		$.ajax( {
@@ -120,81 +123,12 @@ function ajaxHandler() {
 			data: "ajax=1",
 			success: function(response) {
 				if (response == "200") {
-					var sel_shift = cellID.split("_")[2];
-					if (typeof sel_shift == 'undefined') {
-						if (halfshift == "3") {
-							//Es gab vorher keine Halbschicht und es wird auf keine geben
-							$("#"+cellID).removeClass("tderrorlink");
-							$("#"+cellID).addClass("tdsuccesslink");
-							$("#"+cellID).text(username);
-						} else if (halfshift == "1") {
-							//Es gab vorher keine Halbschicht, jetzt wird die erste belegt
-							var newCellID = cellID + "_1";
-							var secondCellID = cellID + "_2";
-							$("#"+cellID).attr('id',newCellID);
-							$("#"+newCellID).attr('colspan',1);
-							$("#"+newCellID).removeClass("tderrorlink");
-							$("#"+newCellID).addClass("tdsuccesslink");
-							$("#"+newCellID).text(username);
-							
-							var scdCell = $("<td id='"+ secondCellID + "' class='tderrorlink' ></td>");
-							$("#"+newCellID).after(scdCell);
-						} else if (halfshift == "2") {
-							//Es gab vorher keine Halbschicht, jetzt wird die zweite belegt
-							var newCellID = cellID + "_1";
-							var secondCellID = cellID + "_2";
-							var cellString = "<td id='"+ secondCellID + "' class='tdsuccesslink' >"+username+"</td>";
-							var scdCell = $(cellString);
-							$("#"+cellID).attr('id',newCellID);
-							$("#"+newCellID).attr('colspan',1);
-							
-							$("#"+newCellID).after(scdCell);
-						}
-					} else if (sel_shift == '1') {
-						if (halfshift == "3") {
-							//Es gab vorher eine Halbschicht rechts, jetzt übernimmt einer die ganze
-							var splittedID = cellID.split("_");
-							var newCellID = splittedID[0] + "_" + splittedID[1];
-							var otherID = newCellID + "_2";
-							$("#"+cellID).remove();							
-							$("#"+otherID).attr('id',newCellID);
-							$("#"+newCellID).attr('colspan',2);
-						} else if (halfshift == "1") {
-							//Es gibt rechts eine Schicht und jetzt wird links eine eingefügt.
-							var splittedID = cellID.split("_");
-							var celRoot = splittedID[0] + "_" + splittedID[1];
-							var cellToComp = splittedID[0] + "_" + splittedID[1] + "_2";
-							var cellToEdit = splittedID[0] + "_" + splittedID[1] + "_1";
-							
-							if ($("#"+cellToComp).text() == username) {
-								$("#"+cellToEdit).remove();
-								$("#"+cellToComp).attr('colspan',2);
-								$("#"+cellToComp).attr('id',celRoot);
-							} else {
-								$("#"+cellToEdit).removeClass("tderrorlink");
-								$("#"+cellToEdit).addClass("tdsuccesslink");
-								$("#"+cellToEdit).text(username);
-							}
-						}
-					} else if (sel_shift == '2') {cellID
-						if (halfshift == "2") {
-							var splittedID = cellID.split("_");
-							var celRoot = splittedID[0] + "_" + splittedID[1];
-							var cellToComp = splittedID[0] + "_" + splittedID[1] + "_1";
-							var cellToEdit = splittedID[0] + "_" + splittedID[1] + "_2";
-							
-							if ($("#"+cellToComp).text() == username) {
-								$("#"+cellToEdit).remove();
-								$("#"+cellToComp).attr('colspan',2);
-								$("#"+cellToComp).attr('id',celRoot);
-							} else {
-								$("#"+cellToEdit).removeClass("tderrorlink");
-								$("#"+cellToEdit).addClass("tdsuccesslink");
-								$("#"+cellToEdit).text(username);
-							}
-						}
-					}
-
+				  if (username == loggedInAs) {
+					 $("#"+cellID).removeClass();
+					 $("#"+cellID).addClass("tdsuccesslink");
+					 $("#"+cellID).text(username);
+				  }
+						
 				} else if (response == "210") {
 					var splitted_id = cellID.split("_");
 					var sel_shift = splitted_id[2];
