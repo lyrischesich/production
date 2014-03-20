@@ -56,37 +56,11 @@ function activateAdminMode(activate) {
 
 	if (activate) {	
 		adminModeActive = true;
-		alert("Adminmodus aktiviert");
 		$("body").off('click','td[id^="txt_"]');
 		$("body").off('click',".tdsuccesslink, .tderrorlink");
 
 		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
-			var cellID = "textfield_" + $(this).attr('id');
-			var newTextField = $("<input type='text' id='"+cellID+"'></input>");
-			$(this).html(newTextField);
-			$("body").off('click',".tdsuccesslink, .tderrorlink");
-			$("#"+cellID).focus();
-			$("#"+cellID).on('keypress',function(event) {
-				var keycode = (event.keyCode ? event.keyCode : event.which);
-				if (keycode == 13) {
-					var str = cellID.split("_");
-					var username = $("#"+cellID).val();
-					var requestUrl = document.URL.split('plan')[0] + "plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
-					
-					$.ajax({
-						type: 'POST',
-						url: requestUrl,
-						data: 'ajax=1',
-						success: function(response) {
-							if (response == "200") {
-								var $td = (newTextField).parent();
-								$(newTextField).remove();
-								
-							}
-						}
-					});
-				}
-			});
+			onTextField($(this).attr('id'));
 		});
 	} else {
 		alert("Adminmodus deaktiviert");
@@ -111,6 +85,49 @@ function activateAdminMode(activate) {
 
 }
 
+function onTextField(tdID) {
+	var cellID = "textfield_" + $("#"+tdID).attr('id');
+	var newTextField = $("<input type='text' id='"+cellID+"'></input>");
+	$("#"+tdID).html(newTextField);
+	$("body").off('click',".tdsuccesslink, .tderrorlink");
+	$("#"+cellID).focus();
+	$("#"+cellID).on('keypress',function(event) {
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if (keycode == 13) {
+			var str = cellID.split("_");
+			var username = $("#"+cellID).val();
+			var requestUrl = document.URL.split('plan')[0] + "plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
+			$.ajax({
+				type: 'POST',
+				url: requestUrl,
+				data: 'ajax=1',
+				success: function(response) {
+					if (response == "200") {
+						var $td = (newTextField).parent();
+						$(newTextField).remove();
+						$td.removeClass();
+						if (username == loggedInAs) {
+							$td.addClass("tdsuccesslink");
+						} else {
+							$td.addClass("tdsuccess");
+						}
+						$td.html(username);
+					} else {
+						alert("Eror: Unknown ResponseCode [" + response +"]");
+					}
+				},
+				error: function() {
+					alert("Ein unbekannter Fehler ist aufgetreten");
+				}
+			});
+			$("body").off('click');
+			$("#"+cellID).off('keypress');
+			$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+				onTextField($(this).attr('id'));
+			});
+		}
+	});
+}
 function ajaxHandler() {
 	var username;
 
@@ -137,7 +154,6 @@ function ajaxHandler() {
 		}
 		var str = document.URL.split('plan');
 			var requestUrl = str[0] + "plan/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
-		alert(requestUrl);
 			
 		if (username != "") requestUrl += username;
 		$.ajax( {
@@ -161,29 +177,14 @@ function ajaxHandler() {
 						$("#"+cellID).removeClass("tdsuccesslink");
 						$("#"+cellID).addClass("tderrorlink");
 					} else if (sel_shift == "1") {
-						var otherCellID = splitted_id[0] + "_" + splitted_id[1] + "_2";
-						if ($("#"+otherCellID).hasClass("tderrorlink")) {
-							var newCellID = splitted_id[0] + "_" + splitted_id[1];
-							$("#"+cellID).remove();
-							$("#"+otherCellID).attr('id',newCellID);
-							$("#"+newCellID).attr('colspan',2);
-						} else {
-							$("#"+cellID).text("");
-							$("#"+cellID).removeClass("tdsuccesslink");
-							$("#"+cellID).addClass("tderrorlink");
-						}
+						$("#"+cellID).text("");
+						$("#"+cellID).removeClass("tdsuccesslink");
+						$("#"+cellID).addClass("tderrorlink");
 					} else if (sel_shift == "2") {
-						var otherCellID = splitted_id[0] + "_" + splitted_id[1] + "_1";
-						if ($("#"+otherCellID).hasClass("tderrorlink")) {
-							var newCellID = splitted_id[0] + "_" + splitted_id[1];
-							$("#"+otherCellID).attr('colspan',"2");
-							$("#"+otherCellID).attr('id',newCellID);
-							$("#"+cellID).remove();
-						} else {
-							$("#"+cellID).text("");
-							$("#"+cellID).removeClass("tdsuccesslink");
-							$("#"+cellID).addClass("tderrorlink");
-						}
+						$("#"+cellID).text("");
+						$("#"+cellID).removeClass("tdsuccesslink");
+						$("#"+cellID).addClass("tderrorlink");
+						
 					}
 
 				} else {
