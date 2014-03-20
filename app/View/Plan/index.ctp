@@ -1,14 +1,19 @@
 <?php echo $this->Html->script('planScript.js'); ?>
 
-<?php echo $this->element('actions',array(
-			'actions' => array(
-				'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'plan','action' => 'printversion', $displayingYear, $displayingMonth)),
- 				'admin' => array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor')),
+<?php
+$actions = array();
+if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+$actions['print'] = array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'plan','action' => 'printversion', $displayingYear, $displayingMonth));
+$actions['admin'] = array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor'));
+}
+
 // 				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();')),
-				'prev' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $prevYear, $prevMonth)),
-				'next' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $nextYear, $nextMonth))
-				
-		)));
+$actions['prev'] = array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $prevYear, $prevMonth));
+$actions['next'] = array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $nextYear, $nextMonth));
+
+ echo $this->element('actions',array(
+			'actions' => $actions				
+		));
 ?>
 <h2>Cafeteriaplan <?php echo $headingDate; ?></h2>
 <br />	
@@ -56,7 +61,7 @@
 
 			echo "<tr id='".$key."' class='".$type."Day'>";
 		
-		$dateIsInFuture = strtotime($key) >= time();
+		$dateIsInFuture = strtotime($key)+DAY >= time();
 		//Komplette, aktive Tage grün, die nicht kompletten, aktiven Rot 
 		if ($result['complete'] && $type=="active") {
 			$class = $success;
