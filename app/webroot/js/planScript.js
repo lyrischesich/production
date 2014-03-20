@@ -28,14 +28,13 @@ $(document).ready(function() {
 	
 	$("#halfshift-btngroup").hide();
 	
-	//Alles für obligated Cells
-	$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+	$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
 
 		
 		if (isNoWeekday) {
-			if ($(this).hasClass("tderrorlink")) {
+			if ($(this).hasClass("tderrorlink") || $(this).hasClass("tdnonobligatedlink")) {
 				openDialog(cellID,true);
 			} else {
 				openDialog(cellID,false);
@@ -70,28 +69,27 @@ function activateAdminMode(activate) {
 				}
 			}
 		});
-		$("body").off('click','td[id^="txt_"]');
-		$("body").off('click',".tdsuccesslink, .tderrorlink");
-		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
+		$("body").off('click');
+		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 			onTextField($(this).attr('id'));
 		});
 	} else {
 		alert("Adminmodus deaktiviert");
 		adminModeActive = false;
-		$("input").remove();
+		$("input:not([type=hidden])").remove();
 		$("body").off('click','td[id^="txt_"]');
-		$("body").off('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable");
+		$("body").off('click');
 		$(".tdsuccesschangeable").each(function() {
 			$(this).removeClass();
 			$(this).addClass("tdsuccess");
 		});
-		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligated, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
 			var cellID = $(this).attr('id');
 			var isNoWeekday = cellID.substr(0,3) != "dow";
 
 		
 			if (isNoWeekday) {
-				if ($(this).hasClass("tderrorlink")) {
+				if ($(this).hasClass("tderrorlink") || $(this).hasClass("tdnonobligatedlink")) {
 					openDialog(cellID,true);
 				} else {
 					openDialog(cellID,false);
@@ -135,7 +133,8 @@ function onTextField(tdID) {
 	var cellID = "textfield_" + $("#"+tdID).attr('id');
 	var newTextField = $("<input type='text' id='"+cellID+"'></input>");
 	$("#"+tdID).html(newTextField);
-	$("body").off('click',".tdsuccesslink, .tderrorlink");
+//	$("body").off('click',".tdsuccesslink, .tderrorlink");
+	$("body").off('click');
 	$("#"+cellID).focus();
 	$("#"+cellID).on('keypress',function(event) {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -151,27 +150,41 @@ function onTextField(tdID) {
 					if (response == "200") {
 						var $td = (newTextField).parent();
 						$(newTextField).remove();
-						$td.removeClass();
-						if (username == loggedInAs) {
-							$td.addClass("tdsuccesslink");
+						if ($td.attr('class').substr(0,14) == "tdnonobligated") {
+								$td.removeClass();
+							if (username == loggedInAs) {
+								$td.addClass("tdnonobligatedbyuser");
+							} else {
+								$td.addClass("tdnonobligated");
+							}
 						} else {
-							$td.addClass("tdsuccess");
+							$td.removeClass();
+							if (username == loggedInAs) {
+								$td.addClass("tdsuccesslink");
+							} else {
+								$td.addClass("tdsuccesschangeable");
+							}
 						}
 						$td.html(username);
 						$("body").off('click');
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 							onTextField($(this).attr('id'));
 						});
 					} else if (response == "210") {
 						var $td = (newTextField).parent();
 						$(newTextField).remove();
-						$td.removeClass();
-						$td.addClass("tderrorlink");
+						if ($td.attr('class').substr(0,14) == "tdnonobligated") {
+							$td.removeClass();
+							$td.addClass("tdnonobligatedlink");
+						} else {
+							$td.removeClass();
+							$td.addClass("tderrorlink");
+						}
 						$td.html("");
 						$("body").off('click');
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 							onTextField($(this).attr('id'));
 						});
 					} else {
@@ -189,7 +202,7 @@ function onTextField(tdID) {
 		}
 	});
 }
-function ajaxHandler() {
+function ajaxHandler(cellID) {
 	var username;
 
 	$("#btnDialogConfirm").button('loading');
@@ -223,30 +236,24 @@ function ajaxHandler() {
 			data: "ajax=1",
 			success: function(response) {
 				if (response == "200") {
-				  if (username == loggedInAs) {
+					if ($("#"+cellID).hasClass("tdnonobligatedlink")) {
+						 $("#"+cellID).removeClass();
+						 $("#"+cellID).addClass("tdnonobligatedbyuser");
+					} else {
 					 $("#"+cellID).removeClass();
-					 $("#"+cellID).addClass("tdsuccesslink");
-					 $("#"+cellID).text(username);
-				  }
-						
-				} else if (response == "210") {
-					var splitted_id = cellID.split("_");
-					var sel_shift = splitted_id[2];
-					
-					if (typeof sel_shift == 'undefined') {
-						$("#"+cellID).text("");
-						$("#"+cellID).removeClass("tdsuccesslink");
-						$("#"+cellID).addClass("tderrorlink");
-					} else if (sel_shift == "1") {
-						$("#"+cellID).text("");
-						$("#"+cellID).removeClass("tdsuccesslink");
-						$("#"+cellID).addClass("tderrorlink");
-					} else if (sel_shift == "2") {
-						$("#"+cellID).text("");
-						$("#"+cellID).removeClass("tdsuccesslink");
-						$("#"+cellID).addClass("tderrorlink");
-						
+						$("#"+cellID).addClass("tdsuccesslink");
 					}
+					 $("#"+cellID).text(username);
+				} else if (response == "210") {
+					var newClass;
+					if ($("#"+cellID).hasClass("tdnonobligatedbyuser")) {
+						 newClass = "tdnonobligatedlink";
+					} else {
+						newClass = "tderrorlink"
+					}
+					$("#"+cellID).text("");
+					$("#"+cellID).removeClass();
+					$("#"+cellID).addClass(newClass);
 				} else {
 					alert ("Unknown response code: " + response);
 				}
@@ -322,7 +329,7 @@ return false;
 				
 				//Finde den TableHeader zu der entsprechenden Schicht:
 				var $td = $("#"+cellID);
-				var $th = $td.closest('table').find('th').eq($td.index());
+				var $th = $td.closest('table').find('th').eq($td.index()+2);
 				$("#shiftAnchor").html($th.html());
 						
 				$("#cellID").val(cellID);

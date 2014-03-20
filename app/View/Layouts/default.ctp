@@ -53,10 +53,11 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		</div>
 		<hr>
 		<footer>
-			<p><i><a href="http://www.humboldtschule-berlin.de">Humboldt-Gymnasium Berlin-Tegel</a></i></p>
-			<p><b>Impressum:</b></p>
-			<p>Tel: 0157 85 67 87 57</p>
-			<p>E-Mail-Adresse: cafeteria-humboldtschule@web.de </p>
+			<p><i><a href="http://www.humboldtschule-berlin.de">Humboldt-Gymnasium Berlin-Tegel</a></i><br />
+			<b>Kontakt:</b> <br />
+			Tel: 0157 85 67 87 57 <br/>
+			E-Mail-Adresse: cafeteria-humboldtschule@web.de <br/>
+			</p>
 		</footer>
 	</div>
 </body>
