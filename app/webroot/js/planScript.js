@@ -84,7 +84,7 @@ function activateAdminMode(activate) {
 			$(this).removeClass();
 			$(this).addClass("tdsuccess");
 		});
-		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligated, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
+		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
 			var cellID = $(this).attr('id');
 			var isNoWeekday = cellID.substr(0,3) != "dow";
 
