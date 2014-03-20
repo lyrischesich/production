@@ -29,13 +29,13 @@ $(document).ready(function() {
 	$("#halfshift-btngroup").hide();
 	
 	//Alles für obligated Cells
-	$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+	$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
 
 		
 		if (isNoWeekday) {
-			if ($(this).hasClass("tderrorlink")) {
+			if ($(this).hasClass("tderrorlink") || $(this).hasClass('tdnonobligatedlink')) {
 				openDialog(cellID,true);
 			} else {
 				openDialog(cellID,false);
@@ -71,8 +71,8 @@ function activateAdminMode(activate) {
 			}
 		});
 		$("body").off('click','td[id^="txt_"]');
-		$("body").off('click',".tdsuccesslink, .tderrorlink");
-		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
+		$("body").off('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink, .tdnonobligatedbyuser");
+		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 			onTextField($(this).attr('id'));
 		});
 	} else {
@@ -80,7 +80,7 @@ function activateAdminMode(activate) {
 		adminModeActive = false;
 		$("input").remove();
 		$("body").off('click','td[id^="txt_"]');
-		$("body").off('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable");
+		$("body").off('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedbyuser, .tdnonobligatedlink");
 		$(".tdsuccesschangeable").each(function() {
 			$(this).removeClass();
 			$(this).addClass("tdsuccess");
@@ -135,7 +135,7 @@ function onTextField(tdID) {
 	var cellID = "textfield_" + $("#"+tdID).attr('id');
 	var newTextField = $("<input type='text' id='"+cellID+"'></input>");
 	$("#"+tdID).html(newTextField);
-	$("body").off('click',".tdsuccesslink, .tderrorlink");
+	$("body").off('click',".tdsuccesslink, .tderrorlink, .tdnonobligated, .tdnonobligatedbyuser, .tdnonobligatedlink");
 	$("#"+cellID).focus();
 	$("#"+cellID).on('keypress',function(event) {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -151,27 +151,43 @@ function onTextField(tdID) {
 					if (response == "200") {
 						var $td = (newTextField).parent();
 						$(newTextField).remove();
+						if ($td.hasClass('tdnonobligated') || $td.hasClass('tdnonobligatedbyuser')) {
 						$td.removeClass();
-						if (username == loggedInAs) {
-							$td.addClass("tdsuccesslink");
+							if (username == loggedInAs) {
+								$td.addClass("tdnonobligatedbyuser");
+							} else {
+								$td.addClass("tdnonobligated");
+							}
 						} else {
-							$td.addClass("tdsuccess");
+							if (username == loggedInAs) {
+								$td.addClass("tdsuccesslink");
+							} else {
+								$td.addClass("tdsuccess");
+							}
 						}
 						$td.html(username);
 						$("body").off('click');
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 							onTextField($(this).attr('id'));
 						});
 					} else if (response == "210") {
 						var $td = (newTextField).parent();
 						$(newTextField).remove();
-						$td.removeClass();
-						$td.addClass("tderrorlink");
+						if ($td.hasClass('tdnonobligated') || $td.hasClass('tdnonobligatedbyuser')) {
+							$td.removeClass();
+							$td.addClass("tdnonobligated");
+						} else if ($td.hasClass('tdnonobligatedlink')) {
+							$td.removeClass();
+							$td.addClass("tdnonobligatedlink");
+						} else {
+							$td.removeClass();
+							$td.addClass("tderrorlink");
+						}
 						$td.html("");
 						$("body").off('click');
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 							onTextField($(this).attr('id'));
 						});
 					} else {
@@ -224,29 +240,27 @@ function ajaxHandler() {
 			success: function(response) {
 				if (response == "200") {
 				  if (username == loggedInAs) {
+					 if ($("#"+cellID).attr('class').substr(0,14) == "tdnonobligated") {
+						 var newClass = "tdnonobligatedbyuser";
+					 }  else {
+						 var newClass = "tdsuccesslink";
+					 }
 					 $("#"+cellID).removeClass();
-					 $("#"+cellID).addClass("tdsuccesslink");
+					 $("#"+cellID).addClass(newClass);
 					 $("#"+cellID).text(username);
 				  }
 						
 				} else if (response == "210") {
 					var splitted_id = cellID.split("_");
 					var sel_shift = splitted_id[2];
-					
-					if (typeof sel_shift == 'undefined') {
-						$("#"+cellID).text("");
-						$("#"+cellID).removeClass("tdsuccesslink");
-						$("#"+cellID).addClass("tderrorlink");
-					} else if (sel_shift == "1") {
-						$("#"+cellID).text("");
-						$("#"+cellID).removeClass("tdsuccesslink");
-						$("#"+cellID).addClass("tderrorlink");
-					} else if (sel_shift == "2") {
-						$("#"+cellID).text("");
-						$("#"+cellID).removeClass("tdsuccesslink");
-						$("#"+cellID).addClass("tderrorlink");
-						
-					}
+					if ($("#"+cellID).attr('class').substr(0,14) == "tdnonobligated") {
+						 var newClass = "tdnonobligatedlink";
+					 }  else {
+						 var newClass = "tderrorlink";
+					 }
+					$("#"+cellID).text("");
+					$("#"+cellID).removeClass();
+					$("#"+cellID).addClass(newClass);
 				} else {
 					alert ("Unknown response code: " + response);
 				}
