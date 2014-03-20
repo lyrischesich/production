@@ -85,13 +85,13 @@ function activateAdminMode(activate) {
 			$(this).removeClass();
 			$(this).addClass("tdsuccess");
 		});
-		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+		$("body").on('click',".tdsuccesslink, .tderrorlink,.tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 			var cellID = $(this).attr('id');
 			var isNoWeekday = cellID.substr(0,3) != "dow";
 
 		
 			if (isNoWeekday) {
-				if ($(this).hasClass("tderrorlink")) {
+				if ($(this).hasClass("tderrorlink") || $(this).hasClass('tdnonobligatedlink')) {
 					openDialog(cellID,true);
 				} else {
 					openDialog(cellID,false);
@@ -336,7 +336,7 @@ return false;
 				
 				//Finde den TableHeader zu der entsprechenden Schicht:
 				var $td = $("#"+cellID);
-				var $th = $td.closest('table').find('th').eq($td.index());
+				var $th = $td.closest('table').find('th').eq($td.index()+2);
 				$("#shiftAnchor").html($th.html());
 						
 				$("#cellID").val(cellID);
