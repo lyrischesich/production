@@ -8,6 +8,7 @@ $actions['admin'] = array('text' => 'Adminmodus', 'htmlattributes' => array('id'
 }
 
 // 				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();')),
+$actions['new'] = array('text' => 'Neues Design', 'params' => array('controller' => 'plan', 'action' => 'old', $displayingYear, $displayingMonth));
 $actions['prev'] = array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'old', $prevYear, $prevMonth));
 $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'old', $nextYear, $nextMonth));
 

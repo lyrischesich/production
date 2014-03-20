@@ -14,16 +14,25 @@ class Plan extends AppModel {
 		if ($date == -1) return false;
 		$count = 0;
 		
+		$columns = new Column();
+		$columns = $columns->find('all', array('recursive' => -1, 'conditions' => array('Column.obligated' => 1)));
+		$obligatedColumns = array();
+		foreach ($columns as $column) {
+			array_push($obligatedColumns, $column['Column']['id']);
+		}
+		
 		$columnsUsers = new ColumnsUser();
 		$columnsUsers = $columnsUsers->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date)));
 		foreach ($columnsUsers as $columnsUser) {
-			$count += ($columnsUser['ColumnsUser']['half_shift'] == 3) ? 2 : 1;
+			if (in_array($columnsUser['ColumnsUser']['column_id'], $obligatedColumns))
+				$count += ($columnsUser['ColumnsUser']['half_shift'] == 3) ? 2 : 1;
 		}
 		
 		$comments = new Comment();
 		$comments = $comments->find('all', array('recursive' => -1, 'conditions' => array('Comment.date' => $date)));
 		foreach ($comments as $coment) {
-			$count++;
+			if (in_array($comment['Comment']['column_id'], $obligatedColumns))
+				$count++;
 		}
 		
 		return $count == $this->getExpectedEntryCountPerDay();
