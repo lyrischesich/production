@@ -157,10 +157,11 @@ class ContactsController extends AppController {
 						'senderName' => $senderName,
 						'senderMail' => $senderMail,
 						'content' => $this->request->data['Mail']['content'],
-						'subject' => $this->request->data['Mail']['subject']
+						'subject' => $this->request->data['Mail']['subject'],
+						'allowReply' => true
 						));
 				if ($EMail->send()) {
-					$this->Session->setFlash('Die Email wurde erfolgreich abgeschickt.','alert-box',array('class' => 'alert alert-success'));
+					$this->Session->setFlash('Die E-Mail wurde erfolgreich abgeschickt.','alert-box',array('class' => 'alert alert-success'));
 					$this->redirect(array('action' => 'index'));
 				} else {
 					$this->Session->setFlash('Es ist ein Fehler aufgetreten.','alert-box',array('class' => 'alert-error'));

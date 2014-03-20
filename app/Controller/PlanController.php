@@ -24,6 +24,44 @@ class PlanController extends AppController {
 		return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
 	}
 	
+	public function availableUsers($name='', $date=-1, $halfshift=-1) {
+		if ($this->RequestHandler->isAjax()) {
+			$this->autoRender = $this->layout = false;
+			Configure::write('debug', '0');
+			
+			if (!$this->check_date($date)) {
+				echo "false";
+				exit;
+			}
+			
+			if (!in_array($halfshift, array(1, 2, 3))) {
+				echo "false";
+				exit;
+			}
+			
+			$weekend = date('N', strtotime($date)) >= 6;
+			//auf Deutsch umstellen
+			setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
+			$dow = strtolower(strftime('%a', strtotime($date)));
+			
+			$userList = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.username LIKE ' => '%'.$name.'%')));
+			
+			
+			$users = array();
+			foreach ($userList as $user) {
+				if ($weekend)
+					$users[$user['User']['username']] = true;
+				else
+					$users[$user['User']['username']] = ($halfshift == 3) ? $user['User'][$dow] != 'N': in_array($user['User'][$dow], array($halfshift, 'H', 'G'));
+			}
+			
+			echo json_encode($users);
+			exit;
+		}
+		
+		return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
+	}
+	
 	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
@@ -217,8 +255,6 @@ class PlanController extends AppController {
 				Das Cafeteria-Team
 				";
 		
-		$mailContent .= "<p>Hinweis: Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht darauf.</p>";
-		
 		$EMail = new CakeEmail();
 		$EMail->from(array($senderMail => $senderName));
 		$EMail->subject("Humboldt-Cafeteria - Dienst kurzfristig frei geworden");
@@ -229,7 +265,8 @@ class PlanController extends AppController {
 				'senderName' => $senderName,
 				'senderMail' => $senderMail,
 				'content' => $mailContent,
-				'subject' => "Humboldt-Cafeteria - nächste Woche unvollständig"
+				'subject' => "Humboldt-Cafeteria - nächste Woche unvollständig",
+				'allowReply' => false
 		));
 		
 		$bcc = array();
@@ -665,8 +702,6 @@ class PlanController extends AppController {
 				}
 				$mailContent .= "</ul>";
 			}
-
-			$mailContent .= "<p>Hinweis: Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht darauf.</p>";
 			
 			$EMail = new CakeEmail();
 			$EMail->from(array($senderMail => $senderName));
@@ -679,7 +714,8 @@ class PlanController extends AppController {
 					'senderName' => $senderName,
 					'senderMail' => $senderMail,
 					'content' => $mailContent,
-					'subject' => "Humboldt-Cafeteria - nächste Woche unvollständig"
+					'subject' => "Humboldt-Cafeteria - nächste Woche unvollständig",
+					'allowReply' => false
 			));
 
 			$EMail->send();
@@ -700,12 +736,17 @@ class PlanController extends AppController {
 			return defined("ROOT_PERMISSION") && ROOT_PERMISSION === true;
 		}
 		
+		if ($this->action == "availableUsers") {
+			//Nur Administratoren kriegen eine Liste von Benutzern vorgesetzt, die sie eintragen können
+			return parent::isAuthorized($user);
+		}
+		
 		if ($this->action == "saveSpecialdate") {
 			//Nur Administratoren dürfen Specialdates eintragen
 			return parent::isAuthorized($user);
 		}
 		
-		//Alle angemeldeten Benutzer dürfen den Plan einsehen und sich ein- und austragen
+		//Alle angemeldeten Benutzer dürfen den Plan einsehen und sich ein- und austragen und ein Datum auf Vollständigkeit prüfen
 		return true;
 	}
 }

@@ -31,7 +31,8 @@ class MailController extends AppController {
 					'senderName' => $senderName,
 					'senderMail' => $senderMail,
 					'content' => $this->request->data['Mail']['content'],
-					'subject' => $this->request->data['Mail']['subject']
+					'subject' => $this->request->data['Mail']['subject'],
+					'allowReply' => true
 			));
 			if ($EMail->send()) {
 				$this->Session->setFlash('Die Rundmail wurde erfolgreich abgeschickt.', 'alert-box', array('class' => 'alert-success'));

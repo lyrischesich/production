@@ -35,3 +35,9 @@ foreach ($content as $line):
 endforeach;
 ?>
 <br>
+<?php 
+if (isset($allowReply) && $allowReply)
+	echo "<p>Wenn Sie auf diese E-Mail antworten, so wird sie ausschließlich dem Absender zugestellt.</p>";
+else
+	echo "<p>Diese E-Mail wurde automatisch generiert. Bitte antworten Sie nicht darauf.</p>"	
+?>
