@@ -300,13 +300,26 @@ class PlanController extends AppController {
 		} else {
 
 			//Benutzerschicht soll gelöscht werden
-			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $halfshift)));
+			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => array($halfshift, 3))));
 			if (count($aColumnsUser) != 1) {
 				echo "Dienst ist bereits leer";// "Dienst bereits leer.";
 				//evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
 				exit;
 			}
 			
+			if (count($aColumnsUser) == 1 && $halfshift != 3 && $aColumnsUser['ColumnsUser']['half_shift'] == 3) {
+				$savearray = array(
+					'ColumnsUser' => array(
+						'id' => $aColumnsUser['ColumnsUser']['id'],
+						'half_shift' => (3-$halfshift)
+					)
+				);
+
+				$this->ColumnsUser->create();
+				$this->ColumnsUser->save($savearray);
+				
+			}
+
 			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) ))) {
 				echo "Keine Berechtigung zum Löschen";
 				exit;

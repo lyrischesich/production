@@ -62,8 +62,31 @@ function activateAdminMode(activate) {
 
 		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
 			var cellID = "textfield_" + $(this).attr('id');
-			var newTextfield = $("<input type='text' id='"+cellID+"'></input>");
-			$(this).html(newTextfield);
+			var newTextField = $("<input type='text' id='"+cellID+"'></input>");
+			$(this).html(newTextField);
+			$("body").off('click',".tdsuccesslink, .tderrorlink");
+			$("#"+cellID).focus();
+			$("#"+cellID).on('keypress',function(event) {
+				var keycode = (event.keyCode ? event.keyCode : event.which);
+				if (keycode == 13) {
+					var str = cellID.split("_");
+					var username = $("#"+cellID).val();
+					var requestUrl = document.URL.split('plan')[0] + "plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
+					
+					$.ajax({
+						type: 'POST',
+						url: requestUrl,
+						data: 'ajax=1',
+						success: function(response) {
+							if (response == "200") {
+								var $td = (newTextField).parent();
+								$(newTextField).remove();
+								
+							}
+						}
+					});
+				}
+			});
 		});
 	} else {
 		alert("Adminmodus deaktiviert");

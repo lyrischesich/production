@@ -3,8 +3,6 @@
 	'save changes' => array('text' => 'Änderungen speichern', 'htmlattributes' => array('onClick' =>"document.forms['UserIndexForm'].submit();")),
 	'reset changes' => array('text' => 'Änderungen zurücksetzen', 'params' => array('controller' => 'Users', 'action' => 'index'))
 ))); ?>
-</div>
-<div class="span9">
 	<?php echo $this->Form->create('User'); ?>
 	<h2><?php echo 'Benutzerverwaltung'; ?></h2>
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered">
@@ -47,4 +45,5 @@
 		echo $this->Paginator->pagination(array('div' => 'pagination'));
 	?>
 	<!--</div>   -->
+	</div>
 </div>

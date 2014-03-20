@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
+		var navListWidth = $("#navlist").css('width');
+		$("#navlist").css('width',navListWidth);
 		$("#navlist").affix();
 	});
 </script>

@@ -2,22 +2,23 @@
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
 		<legend><?php echo 'Benutzer editieren'; ?></legend>
-	<table>
-	<tr>
-		<td>	<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> </td>
-		<td>	<?php echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));?> </td>
-		<td>	<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?> </td>
-	</tr>
-	<tr>
+	<form>
+		<fieldset>
+			<legend><b>Benutzerinformationen:</b><legend>
+				<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> 
+				<?php echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));?> 
+				<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?>
+		</fieldset>
+	</form>
+	<fieldset>
 	<td>		<?php echo $this->Form->input('password', array('label' => array('text' =>'Passwort'), 'value'=>""));?> </td>
 	<td>		<?php echo $this->Form->input("password2", array('label' => array('text' =>'Passwort wiederholen')));?> </td>
-	</tr>
-	<tr>
+	</fieldset>
+	<fieldset>
 		<td>	<?php echo $this->Form->input('tel1', array('label' => array('text' =>'Telefonnummer 1')));?> </td>
 		<td>	<?php echo $this->Form->input('tel2', array('label' => array('text' =>'Telefonnummer 2')));?> </td>
 		<td>	<?php echo $this->Form->input('mail', array('label' => array('text' =>'E-Mail Adresse'))); ?> </td>
-	</tr>
-	</table>
+	</fieldset>
 	
 
 	<?php

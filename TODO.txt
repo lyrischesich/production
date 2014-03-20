@@ -3,15 +3,10 @@
 Legende verschönern
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 /contacts/mail: Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
-Sidebar: Falls möglich Verformung verhindern
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)
-/users: Sidebar-Bug fixen (!!!)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /statistic: Jahresstatistik implementieren (Entweder Schuljahr oder Kalenderjahr)
-IMPRESSUM einfügen mit folgenden Kontaktdaten:
-	- Tel: 0157 85 67 87 57
-	- E-Mail-Adresse: cafeteria-humboldtschule@web.de 
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
 /mail: Rundmails sollen auf Wunsch auch an inaktive Mitarbeiter gesendet werden können (Checkbox einfügen).
 
