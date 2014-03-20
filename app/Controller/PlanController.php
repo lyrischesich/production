@@ -141,6 +141,7 @@ class PlanController extends AppController {
 	}
 	
 	public function old($year=-1, $month=-1) {
+		return $this->redirect(array('controller' => 'plan', 'action' => 'index', $year, $month));
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
 			$month = -1;

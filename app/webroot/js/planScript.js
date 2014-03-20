@@ -28,6 +28,7 @@ $(document).ready(function() {
 	
 	$("#halfshift-btngroup").hide();
 	
+
 	$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
