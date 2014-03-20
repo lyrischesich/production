@@ -12,7 +12,8 @@ $(document).ready(function() {
 	
 	loggedInAs = $("#loggedInUserAnchor").html();
 
-	$("#adminLinkAnchor").on('click',function() {
+	$("#adminLinkAnchor").on('click',function(event) {
+		event.preventDefault();
 		activateAdminMode(!adminModeActive);
 	});
 	
@@ -53,14 +54,25 @@ $(document).ready(function() {
 });
 
 function activateAdminMode(activate) {
-
+	var today = new Date();
+	
 	if (activate) {	
 		adminModeActive = true;
 		alert("Adminmodus aktiviert");
+		var today = new Date();
+		$("td").each(function() {
+			var cellID = $(this).attr("id");
+			if (typeof cellID != "undefined") {
+				var cellDate = new Date(cellID.split('_')[0]);
+				if (cellDate > today && $("#"+cellID).hasClass("tdsuccess")) {
+					$("#"+cellID).removeClass();
+					$("#"+cellID).addClass("tdsuccesschangeable");
+				}
+			}
+		});
 		$("body").off('click','td[id^="txt_"]');
 		$("body").off('click',".tdsuccesslink, .tderrorlink");
-
-		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
 			onTextField($(this).attr('id'));
 		});
 	} else {
@@ -68,8 +80,11 @@ function activateAdminMode(activate) {
 		adminModeActive = false;
 		$("input").remove();
 		$("body").off('click','td[id^="txt_"]');
-		$("body").off('click',".tdsuccesslink, .tderrorlink");
-
+		$("body").off('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable");
+		$(".tdsuccesschangeable").each(function() {
+			$(this).removeClass();
+			$(this).addClass("tdsuccess");
+		});
 		$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
 			var cellID = $(this).attr('id');
 			var isNoWeekday = cellID.substr(0,3) != "dow";
@@ -87,7 +102,36 @@ function activateAdminMode(activate) {
 
 }
 
+function checkIfDateIsComplete(date) {
+	
+	var str = document.URL.split("plan");
+	var validationUrl = str[0] + "plan/datecomplete/" + date;
+
+	$.ajax( {
+		type: 'POST',
+		data: "ajax=1",
+		url: validationUrl,
+		error: function(response) {
+			alert("Ein Fehler ist aufgetreten. Bitte laden sie die Seite erneut.");
+		},
+		success: function(response) {
+			$("#dow_"+date).removeClass();
+			if (response == "true") {
+				$("#dow_"+date).addClass("tdsuccess");
+			} else {
+				$("#dow_"+date).addClass("tderrorlink");
+			}
+		}
+			
+	});
+}
+
 function onTextField(tdID) {
+	if (tdID.split("_")[0] == "dow") {
+		//Wochentagsfelder sollen nicht editierbar sein
+		return false;
+	}
+	
 	var cellID = "textfield_" + $("#"+tdID).attr('id');
 	var newTextField = $("<input type='text' id='"+cellID+"'></input>");
 	$("#"+tdID).html(newTextField);
@@ -116,10 +160,9 @@ function onTextField(tdID) {
 						$td.html(username);
 						$("body").off('click');
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
 							onTextField($(this).attr('id'));
 						});
-						
 					} else if (response == "210") {
 						var $td = (newTextField).parent();
 						$(newTextField).remove();
@@ -128,7 +171,7 @@ function onTextField(tdID) {
 						$td.html("");
 						$("body").off('click');
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink",function() {
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable",function() {
 							onTextField($(this).attr('id'));
 						});
 					} else {
@@ -138,6 +181,9 @@ function onTextField(tdID) {
 				error: function() {
 					alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
 					activateAdminMode(false);
+				},
+				complete: function() {
+					checkIfDateIsComplete(str[1]);
 				}
 			});
 		}
@@ -204,32 +250,12 @@ function ajaxHandler() {
 				} else {
 					alert ("Unknown response code: " + response);
 				}
-				
-				//Es wurde in jedem Fall eine Änderung vorgenommen (Egal ob erfolgreich oder nicht), daher wird der Wochentag auf vollständigkeit überprüft
-				
-					var validationUrl = str[0] + "plan/datecomplete/" + date;
-
-				
-				$.ajax( {
-					type: 'POST',
-					data: "ajax=1",
-					url: validationUrl,
-					error: function(response) {
-						alert("Ein Fehler ist aufgetreten. Bitte laden sie die Seite erneut.");
-					},
-					success: function(response) {
-						$("#dow_"+date).removeClass();
-						if (response == "true") {
-							$("#dow_"+date).addClass("tdsuccess");
-						} else {
-							$("#dow_"+date).addClass("tderrorlink");
-						}
-					}
-						
-				});
 			},
 			error: function(response) {
 				alert ("Unbekannter Fehler");
+			},
+			complete: function() {
+				checkIfDateIsComplete(date);
 			}
 			
 		});
@@ -301,5 +327,5 @@ return false;
 						
 				$("#cellID").val(cellID);
 				$("#modalMenu").modal('show');
-			}
-		}
+	}
+}
