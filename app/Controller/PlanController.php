@@ -316,7 +316,9 @@ class PlanController extends AppController {
 				);
 
 				$this->ColumnsUser->create();
-				$this->ColumnsUser->save($savearray);
+				if ($this->ColumnsUser->save($savearray)) {
+					$cheatMode = true;
+				}
 				
 			}
 
@@ -325,7 +327,7 @@ class PlanController extends AppController {
 				exit;
 			}
 			
-			if ($this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
+			if (isset($cheatMode) || $this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
 				//Erfolgreich->Eintragen in Changelog
 				$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $aColumnsUser['ColumnsUser']['user_id'])));
 				$changelogArray = array(
