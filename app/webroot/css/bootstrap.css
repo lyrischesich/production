@@ -6247,7 +6247,7 @@ td.tdsuccesslink:hover {
 }
 
 td.tdnonobligated,td.tdnonobligatedlink {
-	background-color: #fcf8e3;
+	background-color: #f9f1c7;
 }
 
 
@@ -6257,5 +6257,5 @@ td.tdnonobligatedlink:hover,td.tdnonobligatedbyuser:hover {
 }
 
 td.tdnonobligatedbyuser {
-	background-color: #d9edf7;
+	background-color: #bce8f1;
 }
