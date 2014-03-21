@@ -25,18 +25,19 @@ $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('control
 	<!-- Header -->
 	<?php foreach ($columns as $column):?>
 		<?php if ($column['Column']['type'] == 1):?>
-			<th rowspan="2" <?php  echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?>><?php echo $column['Column']['name']; ?></th>
+			<th rowspan="2" <?php  echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?> id="<?php echo 'header_'.$column['Column']['id']; ?>"><?php echo $column['Column']['name']; ?></th>
 		<?php endif;?>
 	<?php endforeach;?>
 	<th colspan="<?php echo $userColumnCount; ?>">Frühschicht</th>
 	<th colspan="<?php echo $userColumnCount; ?>">Spätschicht</th>
 </tr>
 <tr>	
-<?php for($i = 0;$i < 2;$i++) { ?>
+
+<?php $columnCounter = 1; for($i = 0;$i < 2;$i++) { ?>
 		<?php foreach ($columns as $column):?>
 		<?php if ($column['Column']['type'] == 2):?>
-			<th <?php echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?>><?php echo $column['Column']['name']; ?></th>
-		<?php endif;?>		
+			<th <?php echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?> id="<?php echo 'header_'.$column['Column']['id'].'_'.($i+1); ?>"><?php echo ($i == 1 && $column['Column']['obligated']) ? $columnCounter : $column['Column']['name']; ?></th>
+		<?php if ($i == 1 && $column['Column']['obligated'] == 1) $columnCounter++; endif;?>		
 		<?php endforeach;?>
 <?php } ?>	
 </tr>	
@@ -96,10 +97,10 @@ $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('control
 				//Wenn ja, dann gebe "einfach" die Bemerkung aus
 				if (isset($result[$column['Column']['id']])) {
 					if ($column['Column']['obligated']) $classString = $success;
-					echo "<td id='txt_".$key."' $classString>".$result[$column['Column']['id']]."</td>";
+					echo "<td id='txt_".$key."_".$column['Column']['id']."' $classString>".$result[$column['Column']['id']]."</td>";
 				} else {
 					if ($column['Column']['obligated'] && $type == "active") $classString = $error;
-					echo "<td id='txt_".$key."' $classString></td>";
+					echo "<td id='txt_".$key."_".$column['Column']['id']."' $classString></td>";
 				}								
 			} else if ($column['Column']['type'] == 1 && $i == 2) {
 				//Nichts tun, da Textspalten keine Unterteilung in zwei Schichten haben

@@ -6,7 +6,8 @@ class MailController extends AppController {
 	
 	public function index(){
 		if ($this->request->is('POST')) {
-			$conditions = array('User.leave_date' => null, 'User.mail !=' => '');
+			$conditions = array('User.mail !=' => '');
+			if (!$this->request->data['Mail']['sendToAll']) $conditions['User.leave_date'] = null;
 			$activeUsersWithEmail = $this->User->find('all', array(
 					'conditions' => $conditions
 			));
@@ -32,11 +33,13 @@ class MailController extends AppController {
 					'senderMail' => $senderMail,
 					'content' => $this->request->data['Mail']['content'],
 					'subject' => $this->request->data['Mail']['subject'],
-					'allowReply' => true
+					'allowReply' => $this->request->data['Mail']['allowReply']
 			));
-			if ($EMail->send()) {
+debug($EMail);
+//$EMail->send()
+			if (true) {
 				$this->Session->setFlash('Die Rundmail wurde erfolgreich abgeschickt.', 'alert-box', array('class' => 'alert-success'));
-				$this->redirect(array('action' => 'index'));
+				//$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash('Beim Senden ist ein Fehler aufgetreten.', 'alert-box', array('class' => 'alert-error'));
 			}

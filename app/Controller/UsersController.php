@@ -147,7 +147,7 @@ class UsersController extends AppController {
 				return true;
 			} else {
 				//normale Nutzer dürfen nur ihre eigenen Daten ändern
-				return $this->params['pass'][0] == AuthComponent::user('id');
+				return !isset($this->params['pass'][0]) || $this->params['pass'][0] == AuthComponent::user('id');
 			}
 		}
 

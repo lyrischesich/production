@@ -33,6 +33,22 @@
 					 ),
 			'class' => 'well form-horizontal')
 			)); ?>
+		<?php echo $this->Form->input('sendToAll',array(
+				'div' => 'control-group',
+				'class' => 'input-xxlarge',
+				'label' => array(
+						'text' => 'auch an inaktive Mitarbeiter'
+					),
+				'type' => 'checkbox'
+				));?>
+		<?php echo $this->Form->input('allowReply',array(
+				'div' => 'control-group',
+				'class' => 'input-xxlarge',
+				'label' => array(
+						'text' => 'Antwort zulassen'
+					),
+				'type' => 'checkbox'
+				));?>
 		<?php echo $this->Form->input('subject',array(
 				'placeholder' => 'Betreff eingeben',
 				'div' => 'control-group',

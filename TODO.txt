@@ -8,11 +8,11 @@ Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /plan: Überarbeiten des Dialogs beim Eintragen (Wieder richtige Schichten anzeigen etc.)
 /plan: Textspalten implementieren
-/statistic: Jahresstatistik implementieren (Entweder Schuljahr oder Kalenderjahr)
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
 /mail: Rundmails sollen auf Wunsch auch an inaktive Mitarbeiter gesendet werden können (Checkbox einfügen).
 
 //Soll-Kriterien
+Actions in den Controller verlagern
 /statistic: Eventuell sortierbar machen?
 /plan: Tooltips für die Schichten erstellen (Damit auch Mitarbeiter mit kleinerem Bildschirm sehen in welche Schicht sie sich eintragen)
 

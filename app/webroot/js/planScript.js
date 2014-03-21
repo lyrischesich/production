@@ -45,13 +45,14 @@ $(document).ready(function() {
 
 	//Alles für Textspalten
 	$("body").on('click','td[id^="txt_"]',function() {
-		alert("Not implemented yet!");
+		onTextField($(this).attr('id'));
 	});
 
 
 	//Eventhandler für den Bestätigenknopf im regulären austragen Dialog
 	$("#btnDialogConfirm").on('click',ajaxHandler);
 });
+
 
 function activateAdminMode(activate) {
 	var today = new Date();
@@ -74,6 +75,9 @@ function activateAdminMode(activate) {
 		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 			onTextField($(this).attr('id'));
 		});
+		$("body").on('click','td[id^="txt_"]',function() {
+			onTextField($(this).attr('id'));
+		});
 	} else {
 		alert("Adminmodus deaktiviert");
 		adminModeActive = false;
@@ -83,6 +87,9 @@ function activateAdminMode(activate) {
 		$(".tdsuccesschangeable").each(function() {
 			$(this).removeClass();
 			$(this).addClass("tdsuccess");
+		});
+		$("body").on('click','td[id^="txt_"]',function() {
+			onTextField($(this).attr('id'));
 		});
 		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
 			var cellID = $(this).attr('id');
@@ -141,67 +148,106 @@ function onTextField(tdID) {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
 		if (keycode == 13) {
 			var str = cellID.split("_");
-			var username = $("#"+cellID).val();
-			var requestUrl = document.URL.split('plan')[0] + "plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
-			$.ajax({
-				type: 'POST',
-				url: requestUrl,
-				data: 'ajax=1',
-				success: function(response) {
-					if (response == "200") {
-						var $td = (newTextField).parent();
-						$(newTextField).remove();
-						if ($td.attr('class').substr(0,14) == "tdnonobligated") {
+			if (str[1] != "txt") {
+				var username = $("#"+cellID).val();
+				var requestUrl = document.URL.split('plan')[0] + "plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
+				$.ajax({
+					type: 'POST',
+					url: requestUrl,
+					data: 'ajax=1',
+					success: function(response) {
+						if (response == "200") {
+							var $td = (newTextField).parent();
+							$(newTextField).remove();
+							if ($td.attr('class').substr(0,14) == "tdnonobligated") {
+									$td.removeClass();
+								if (username == loggedInAs) {
+									$td.addClass("tdnonobligatedbyuser");
+								} else {
+									$td.addClass("tdnonobligated");
+								}alert(response);
+							} else {
 								$td.removeClass();
-							if (username == loggedInAs) {
-								$td.addClass("tdnonobligatedbyuser");
-							} else {
-								$td.addClass("tdnonobligated");
+								if (username == loggedInAs) {
+									$td.addClass("tdsuccesslink");
+								} else {
+									$td.addClass("tdsuccesschangeable");
+								}
 							}
-						} else {
-							$td.removeClass();
-							if (username == loggedInAs) {
-								$td.addClass("tdsuccesslink");
+							$td.html(username);
+							$("body").off('click');
+							$("#"+cellID).off('keypress');
+							$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+								onTextField($(this).attr('id'));
+							});
+							$("body").on('click','td[id^="txt_"]',function() {
+								onTextField($(this).attr('id'));
+							});
+						} else if (response == "210") {
+							var $td = (newTextField).parent();
+							$(newTextField).remove();
+							if ($td.attr('class').substr(0,14) == "tdnonobligated") {
+								$td.removeClass();
+								$td.addClass("tdnonobligatedlink");
 							} else {
-								$td.addClass("tdsuccesschangeable");
+								$td.removeClass();
+								$td.addClass("tderrorlink");
 							}
-						}
-						$td.html(username);
-						$("body").off('click');
-						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
-							onTextField($(this).attr('id'));
-						});
-					} else if (response == "210") {
-						var $td = (newTextField).parent();
-						$(newTextField).remove();
-						if ($td.attr('class').substr(0,14) == "tdnonobligated") {
-							$td.removeClass();
-							$td.addClass("tdnonobligatedlink");
+							$td.html("");
+							$("body").off('click');
+							$("#"+cellID).off('keypress');
+							$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+								onTextField($(this).attr('id'));
+							});
+							$("body").on('click','td[id^="txt_"]',function() {
+								onTextField($(this).attr('id'));
+							});
 						} else {
-							$td.removeClass();
-							$td.addClass("tderrorlink");
+							alert("Eror: Unknown ResponseCode [" + response +"]");						
 						}
-						$td.html("");
-						$("body").off('click');
-						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
-							onTextField($(this).attr('id'));
-						});
-					} else {
-						alert("Eror: Unknown ResponseCode [" + response +"]");						
+					},
+					error: function() {
+						alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
+						activateAdminMode(false);
+					},
+					complete: function() {
+						checkIfDateIsComplete(str[1]);
 					}
-				},
-				error: function() {
-					alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
-					activateAdminMode(false);
-				},
-				complete: function() {
-					checkIfDateIsComplete(str[1]);
+					});
+				} else {
+					var content = $("#"+cellID).val();
+					var requestUrl = document.URL.split('plan')[0] + "plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content + "/";
+					$.ajax( {
+						type: 'POST',
+						url: requestUrl,
+						content: 'ajax=1',
+						success: function(response) {
+							if (response == "200") {
+								var $td = $(newTextField).parent();
+								$(newTextField).remove();
+								$td.html(content);
+								
+							}
+							$("body").off('click');
+							$("#"+cellID).off('keypress');
+							$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+								onTextField($(this).attr('id'));
+							});
+							$("body").on('click','td[id^="txt_"]',function() {
+									onTextField($(this).attr('id'));
+							});
+						},
+						error: function(response) {
+							alert("Ein unbekannter Fehler ist aufgetreten. Der Adminmodus wurde deaktiviert");
+							activateAdminMode(false);
+						},
+						complete: function() {
+							checkIfDateIsComplete(str[2]);
+						}
+					});
 				}
-			});
-		}
-	});
+			}
+		});
 }
 function ajaxHandler(cellID) {
 	var username;

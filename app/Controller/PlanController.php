@@ -473,27 +473,30 @@ class PlanController extends AppController {
 			echo "200"; //Alles okay
 			exit;
 		} else {
-			echo "Fehler beim Eintragen.";
+			echo "500";
 			exit;
 		}
 		
 	}
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
+
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || $message === -1 || $message == null) {
-			echo "Beim Eintragen ist ein Fehler aufgetreten.";
+			echo "500";
 			exit;
 		}
 		
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
-		if ($column['Column']['type'] != 1)
-			echo "Beim Eintragen ist ein Fehler aufgetreten.";
+		if ($column['Column']['type'] != 1) {
+			echo "500";
 			exit;
-		
-		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin')))
+		}
+
+		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
 			echo "Zugriff verweigert.";
 			exit;
-		
+		}
+
 		$data = $this->Comment->find('first', array('recursive' => -1, 'conditions' => array('Comment.date' => $date, 'Comment.column_id' => $columnid)));
 		if (trim($message) == "") {
 			//Der Eintrag soll gelöscht werden			
@@ -515,7 +518,7 @@ class PlanController extends AppController {
 					);
 					$this->Changelog->save($changelogArray);
 				} else {
-					echo "Beim Eintragen ist ein Fehler aufgetreten.";
+					echo "500";
 					exit;
 				}
 			}
@@ -535,7 +538,7 @@ class PlanController extends AppController {
 				$savearray = $data;
 				$savearray['Comment']['message'] = $message;
 			}
-			
+
 			if ($this->Comment->save($savearray)) {
 				//Erfolgreich->in Changelog eintragen
 				$changelogArray = array(
@@ -548,8 +551,10 @@ class PlanController extends AppController {
 						)
 				);
 				$this->Changelog->save($changelogArray);
+				echo "200";
+				exit;
 			} else {
-				echo "Beim Eintragen ist ein Fehler aufgetreten";
+				echo "500";
 				exit;
 			}
 		}
@@ -562,7 +567,7 @@ class PlanController extends AppController {
 	
 	public function saveSpecialdate($date=-1) {		
 		if ($this->check_date($date) !== true) {
-			return "Beim Eintragen ist ein Fehler aufgetreten.";
+			return "500";
 		}
 
 		if ($this->Specialdate->exists($date)) {
@@ -570,7 +575,7 @@ class PlanController extends AppController {
 			if ($this->Specialdate->delete($date)) {
 				//Erfolgreich
 			} else {
-				return "Beim Austragen ist ein Fehler aufgetreten.";
+				return "510";
 			}
 		} else {
 			//Datum ist noch nicht eingetragen -> eintragen
@@ -578,7 +583,7 @@ class PlanController extends AppController {
 			if ($this->Specialdate->save($savearray)) {
 				//Erfolgreich
 			} else {
-				return "Beim Eintragen ist ein Fehler aufgetreten.";
+				return "500";
 			}
 		}
 		
