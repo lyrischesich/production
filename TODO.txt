@@ -3,13 +3,13 @@
 Legende verschönern
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 /contacts/mail: Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
+Navbar: Position statisch machen
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /plan: Überarbeiten des Dialogs beim Eintragen (Wieder richtige Schichten anzeigen etc.)
 /plan: Textspalten implementieren
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
-/mail: Rundmails sollen auf Wunsch auch an inaktive Mitarbeiter gesendet werden können (Checkbox einfügen).
 
 //Soll-Kriterien
 Actions in den Controller verlagern

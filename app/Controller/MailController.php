@@ -35,11 +35,10 @@ class MailController extends AppController {
 					'subject' => $this->request->data['Mail']['subject'],
 					'allowReply' => $this->request->data['Mail']['allowReply']
 			));
-debug($EMail);
-//$EMail->send()
-			if (true) {
+
+			if ($EMail->send()) {
 				$this->Session->setFlash('Die Rundmail wurde erfolgreich abgeschickt.', 'alert-box', array('class' => 'alert-success'));
-				//$this->redirect(array('action' => 'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash('Beim Senden ist ein Fehler aufgetreten.', 'alert-box', array('class' => 'alert-error'));
 			}
