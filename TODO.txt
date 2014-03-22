@@ -10,11 +10,11 @@ Navbar: Position statisch machen
 /plan: Überarbeiten des Dialogs beim Eintragen (Wieder richtige Schichten anzeigen etc.)
 /plan: Textspalten implementieren
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
+Datenbank: Changelog: value_-Attribute auf VARCHAR(200) umstellen
 
 //Soll-Kriterien
 Actions in den Controller verlagern
 /statistic: Eventuell sortierbar machen?
-/plan: Tooltips für die Schichten erstellen (Damit auch Mitarbeiter mit kleinerem Bildschirm sehen in welche Schicht sie sich eintragen)
 
 
 //Fragen an Frau Wagner

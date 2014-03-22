@@ -33,11 +33,15 @@ $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('control
 </tr>
 <tr>	
 
-<?php $columnCounter = 1; for($i = 0;$i < 2;$i++) { ?>
+<?php 
+ $columnCounter = 1;
+ $userColumnHeadings = array();
+ for($i = 1;$i <= 2;$i++) { ?>
 		<?php foreach ($columns as $column):?>
 		<?php if ($column['Column']['type'] == 2):?>
-			<th <?php echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?> id="<?php echo 'header_'.$column['Column']['id'].'_'.($i+1); ?>"><?php echo ($i == 1 && $column['Column']['obligated']) ? $columnCounter : $column['Column']['name']; ?></th>
-		<?php if ($i == 1 && $column['Column']['obligated'] == 1) $columnCounter++; endif;?>		
+			<?php $userColumnHeadings[$i][$column['Column']['id']] = ($i == 2 && $column['Column']['obligated']) ? $columnCounter : $column['Column']['name']; ?>
+			<th <?php echo "obligated='".(($column['Column']['obligated']) ? "true" : "false")."' admin='".(($column['Column']['req_admin']) ? "true" : "false")."'";?> id="<?php echo 'header_'.$column['Column']['id'].'_'.($i+1); ?>"><?php echo $userColumnHeadings[$i][$column['Column']['id']]; ?></th>
+		<?php if ($i == 2 && $column['Column']['obligated'] == 1) $columnCounter++; endif;?>		
 		<?php endforeach;?>
 <?php } ?>	
 </tr>	
@@ -97,10 +101,10 @@ $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('control
 				//Wenn ja, dann gebe "einfach" die Bemerkung aus
 				if (isset($result[$column['Column']['id']])) {
 					if ($column['Column']['obligated']) $classString = $success;
-					echo "<td id='txt_".$key."_".$column['Column']['id']."' $classString>".$result[$column['Column']['id']]."</td>";
+					echo "<td id='txt_".$key."_".$column['Column']['id']."' title='".$column['Column']['name']."' $classString>".$result[$column['Column']['id']]."</td>";
 				} else {
 					if ($column['Column']['obligated'] && $type == "active") $classString = $error;
-					echo "<td id='txt_".$key."_".$column['Column']['id']."' $classString></td>";
+					echo "<td id='txt_".$key."_".$column['Column']['id']."' title='".$column['Column']['name']."' $classString></td>";
 				}								
 			} else if ($column['Column']['type'] == 1 && $i == 2) {
 				//Nichts tun, da Textspalten keine Unterteilung in zwei Schichten haben
@@ -122,14 +126,14 @@ $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('control
 					//Halbschicht ist belegt
 						if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']][$i]['userid'] == AuthComponent::user('id')) ? $successlink : $success;
 						else $classString = ($dateIsInFuture && $userIsAuthorized && $result[$column['Column']['id']][$i]['userid'] == AuthComponent::user('id')) ? $nonobligatedlink : $nonobligated;
-						echo "<td id='".$key."_".$column['Column']['id']."_".$i."' $classString>".$result[$column['Column']['id']][$i]['username']."</td>"; 
+						echo "<td id='".$key."_".$column['Column']['id']."_".$i."' title='".($i == 1 ? 'Frühschicht' : 'Spätschicht')." ".$userColumnHeadings[$i][$column['Column']['id']]."' $classString>".$result[$column['Column']['id']][$i]['username']."</td>"; 
 				} else {
 					//Noch gar kein Dienst wurde belegt
 					
 					//Oder es hat sich einfach noch niemand Eingetragen
 					if ($column['Column']['obligated']) $classString = ($dateIsInFuture && $userIsAuthorized) ? $errorlink : $error;
 					else $classString = ($dateIsInFuture && $userIsAuthorized) ? $nonobligatedlink : $nonobligated;
-					echo "<td id='".$key."_".$column['Column']['id']."_".$i."' $classString></td>";
+					echo "<td id='".$key."_".$column['Column']['id']."_".$i."' title='".($i == 1 ? 'Frühschicht' : 'Spätschicht')." ".$userColumnHeadings[$i][$column['Column']['id']]."' $classString></td>";
 				}
 			}
 
