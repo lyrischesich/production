@@ -485,7 +485,7 @@ class PlanController extends AppController {
 			echo "500";
 			exit;
 		}
-		
+
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
 		if ($column['Column']['type'] != 1) {
 			echo "500";

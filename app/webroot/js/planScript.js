@@ -65,7 +65,7 @@ function activateAdminMode(activate) {
 			var cellID = $(this).attr("id");
 			if (typeof cellID != "undefined") {
 				var cellDate = new Date(cellID.split('_')[0]);
-				if (cellDate > today && $("#"+cellID).hasClass("tdsuccess")) {
+				if (cellDate >= today && $("#"+cellID).hasClass("tdsuccess")) {
 					$("#"+cellID).removeClass();
 					$("#"+cellID).addClass("tdsuccesschangeable");
 				}
@@ -136,6 +136,14 @@ function onTextField(tdID) {
 	if (tdID.split("_")[0] == "dow") {
 		//Wochentagsfelder sollen nicht editierbar sein
 		return false;
+	}
+	
+	//Daten die bereits Vergangen sind sollen nicht mehr editiert werden dürfen
+	var today = new Date();
+	if(tdID.match("txt_*")) {
+		if (today >= new Date(tdID.split("_")[1])) return false;
+	} else {
+		if (today >= new Date(tdID.split("_")[0])) return false;
 	}
 	
 	var $th = $("#"+tdID).closest('table').find('th').eq($("#"+tdID).index());
