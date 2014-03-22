@@ -236,11 +236,13 @@ function onTextField(tdID) {
 						url: requestUrl,
 						content: 'ajax=1',
 						success: function(response) {
-							if (response == "200") {
+							if (response == "200" || response == "210") {
 								var $td = $(newTextField).parent();
 								$(newTextField).remove();
 								$td.html(content);
-								
+							} else if (response == "403") {
+								alert("Sie verfügen nicht über ausreichende Berechtigung für Operation! Der Adminmodus wurde deaktiviert.")
+								activateAdminMode(false);
 							} else {
 								alert ("Unknown Response Code: ["+response+"]");
 							}
@@ -258,13 +260,16 @@ function onTextField(tdID) {
 							activateAdminMode(false);
 						},
 						complete: function() {
-							checkIfDateIsComplete(str[2]);
+							if ($("#"+str[2]).attr('class') == "activeDay") {
+								checkIfDateIsComplete(str[2]);	
 						}
-					});
-				}
+					}
+				});
 			}
-		});
+		}
+	});
 }
+
 function ajaxHandler(cellID) {
 	var username;
 

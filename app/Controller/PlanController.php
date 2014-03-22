@@ -481,7 +481,7 @@ class PlanController extends AppController {
 
 	public function saveTextEntry($date=-1, $columnid=-1, $message="") {
 
-		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || $message === -1 || $message == null) {			
+		if ($this->check_date($date) !== true || !$this->Column->exists($columnid)) {			
 			echo "500";
 			exit;
 		}
@@ -493,7 +493,7 @@ class PlanController extends AppController {
 		}
 
 		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
-			echo "Zugriff verweigert.";
+			echo "403";
 			exit;
 		}
 
@@ -517,6 +517,8 @@ class PlanController extends AppController {
 						)
 					);
 					$this->Changelog->save($changelogArray);
+					echo "210";
+					exit;
 				} else {
 					echo "500";
 					exit;
