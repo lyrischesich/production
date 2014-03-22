@@ -230,7 +230,7 @@ function onTextField(tdID) {
 				} else {
 					$("#"+cellID).attr('disabled',true);
 					var content = $("#"+cellID).val();
-					var requestUrl = document.URL.split('plan')[0] + "plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content + "/";
+					var requestUrl = document.URL.split('plan')[0] + "plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content;
 					$.ajax( {
 						type: 'POST',
 						url: requestUrl,

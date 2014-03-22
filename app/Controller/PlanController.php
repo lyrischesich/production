@@ -479,9 +479,9 @@ class PlanController extends AppController {
 		
 	}
 
-	public function saveTextEntry($date=-1, $columnid=-1, $message=-1) {
+	public function saveTextEntry($date=-1, $columnid=-1, $message="") {
 
-		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || $message === -1 || $message == null) {
+		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || $message === -1 || $message == null) {			
 			echo "500";
 			exit;
 		}
