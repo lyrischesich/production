@@ -46,6 +46,9 @@ class PagesController extends AppController {
  *	or MissingViewException in debug mode.
  */
 	public function display() {
+		if (!AuthComponent::user('id')) return $this->redirect(array('controller' => 'login', 'action' => 'index'));
+		else return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
+		
 		$path = func_get_args();
 
 		$count = count($path);
@@ -73,5 +76,10 @@ class PagesController extends AppController {
 			}
 			throw new NotFoundException();
 		}
+	}
+	
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allow('display');
 	}
 }

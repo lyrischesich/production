@@ -44,7 +44,7 @@ class PlanController extends AppController {
 			setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
 			$dow = strtolower(strftime('%a', strtotime($date)));
 			
-			$userList = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.username LIKE ' => '%'.$name.'%')));
+			$userList = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.username LIKE ' => '%'.$name.'%', 'User.leave_date' => null)));
 			
 			
 			$users = array();
@@ -292,9 +292,7 @@ class PlanController extends AppController {
 		return true;
 	}
 
-	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username="") {
-		if ($username == "") $username = "";
-		
+	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username="") {		
 		if ($this->RequestHandler->isAjax()) {
 			$this->autoRender = $this->layout =  false;
 			Configure::write('debug','0');
@@ -414,13 +412,15 @@ class PlanController extends AppController {
 					$changelogArray = array(
 						'Changelog' => array(
 							'for_date' => $date,
+							'change_date' => date('Y-m-d h:i:s'),
 							'value_before' => (isset($userinfo['User']['username'])) ? $userinfo['User']['username'] : "",
 							'value_after' => "",
 							'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
 							'user_did' => AuthComponent::user('username')
 						)
 					);
-					$this->Changelog->clear();
+					$this->Changelog->create();
+					$this->Changelog->save($changelogArray);
 				}
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
