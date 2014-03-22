@@ -138,6 +138,11 @@ function onTextField(tdID) {
 		return false;
 	}
 	
+	var $th = $("#"+tdID).closest('table').find('th').eq($("#"+tdID).index());
+	//Adminfelder sollen nur im Adminmodus bearbeitbar sein!
+	if ($th.attr('admin') == "true") {
+		if (!adminModeActive) return false;
+	}
 	var cellID = "textfield_" + $("#"+tdID).attr('id');
 	var newTextField = $("<input type='text' id='"+cellID+"'></input>");
 	$("#"+tdID).html(newTextField);
@@ -215,6 +220,7 @@ function onTextField(tdID) {
 					}
 					});
 				} else {
+					$("#"+cellID).attr('disabled',true);
 					var content = $("#"+cellID).val();
 					var requestUrl = document.URL.split('plan')[0] + "plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content + "/";
 					$.ajax( {
@@ -227,6 +233,8 @@ function onTextField(tdID) {
 								$(newTextField).remove();
 								$td.html(content);
 								
+							} else {
+								alert ("Unknown Response Code: ["+response+"]");
 							}
 							$("body").off('click');
 							$("#"+cellID).off('keypress');
