@@ -194,8 +194,8 @@ CREATE TABLE IF NOT EXISTS `changelogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `for_date` date NOT NULL,
   `change_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `value_before` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `value_after` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `value_before` varchar(200) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
+  `value_after` varchar(200) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
   `column_name` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
   `user_did` varchar(50) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -314,9 +314,10 @@ ALTER TABLE `comments`
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */";
 		
 		$sql = explode(';', $sql);
-		foreach ($sql as $sqlString)
+		foreach ($sql as $sqlString) {
 			mysql_query($sqlString);
-
+		}
+		
 		mysql_close();
 	}
 }

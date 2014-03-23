@@ -336,10 +336,16 @@ class PlanController extends AppController {
 		} else {
 
 			//Benutzerschicht soll gelöscht werden
-			$aColumnsUser = $this->ColumnsUser->find('first', array('required' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => array($halfshift, 3))));
+			$aColumnsUser = $this->ColumnsUser->find('first', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => array($halfshift, 3))));
+			
 			if (count($aColumnsUser) != 1) {
 				echo "Dienst ist bereits leer";// "Dienst bereits leer.";
 				//evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
+				exit;
+			}
+			
+			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) ))) {
+				echo "Keine Berechtigung zum Löschen";
 				exit;
 			}
 			
@@ -357,11 +363,6 @@ class PlanController extends AppController {
 				}
 				
 			}
-
-			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) ))) {
-				echo "Keine Berechtigung zum Löschen";
-				exit;
-			}
 			
 			if (isset($cheatMode) || $this->ColumnsUser->delete($aColumnsUser['ColumnsUser']['id'])) {
 				//Erfolgreich->Eintragen in Changelog
@@ -369,6 +370,7 @@ class PlanController extends AppController {
 				$changelogArray = array(
 						'Changelog'	=> array(
 								'for_date' => $date,
+								'change_date' => date('Y-m-d H:i:s'),
 								'value_before' => $userinfo['User']['username'],
 								'value_after' => "",
 								'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
@@ -400,33 +402,40 @@ class PlanController extends AppController {
 		}
 		
 		$columnsUsers = $this->ColumnsUser->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => $notAllowedShifts)));
-		if (count($columnsUsers) > 0) {
+		if (count($columnsUsers) == 1) {
 			//Es gibt bereits Einträge, die sich mit diesem überschneiden würden
 			//Diese dürfen nur mit Adminrechten überschrieben werden
 			if (AuthComponent::user('id') && AuthComponent::user('admin')) {
 				//Benutzer hat Adminrechte->Bisherige Einträge löschen
-				foreach ($columnsUsers as $columnsUser) {
+				$columnsUser = $columnsUsers[0];
+				if ($columnsUser['ColumnsUser']['half_shift'] == 3) {
+					//Jemand hat einen ganzen Dienst eingetragen
+					//->Auf den anderen halben Dienst herabsetzen
+					$savearray = array();
+					$savearray['ColumnsUser']['id'] = $columnsUser['ColumnsUser']['id'];
+					$savearray['ColumnsUser']['half_shift'] = (3-$halfshift);
+					$this->ColumnsUser->create();
+					$this->ColumnsUser->save($savearray);
+				} else {
+					//Vorheriger Nutzer hat nur einen halben Dienst belegt
+					//->Löschen
 					$this->ColumnsUser->delete($columnsUser['ColumnsUser']['id']);
-					//In den Changelog eintragen
-					$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $columnsUser['ColumnsUser']['user_id'])));
-					$changelogArray = array(
-						'Changelog' => array(
-							'for_date' => $date,
-							'change_date' => date('Y-m-d h:i:s'),
-							'value_before' => (isset($userinfo['User']['username'])) ? $userinfo['User']['username'] : "",
-							'value_after' => "",
-							'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
-							'user_did' => AuthComponent::user('username')
-						)
-					);
-					$this->Changelog->create();
-					$this->Changelog->save($changelogArray);
 				}
+				
+				//Benutzernamen für den Changelogeintrag speichern
+				$userinfo = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $columnsUser['ColumnsUser']['user_id'])));
+				$userBefore = (isset($userinfo['User']['username'])) ? $userinfo['User']['username'] : "";
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
 				echo "Keine Berechtigung.";
 				exit;
 			}
+		} else if (count($columnsUsers) > 0) {
+			//Es soll mehr als ein Eintrag überschrieben werden
+			//Das ist nach dem neuen Planschema nicht möglich, da Halbschichten immer getrennt werden
+			//->Fehler
+			echo "Das kann nicht sein";
+			exit; 
 		}
 
 		//Wird das Skript hier noch ausgeführt, so sind alle Berechtigungen gegeben->Eintragen
@@ -462,13 +471,14 @@ class PlanController extends AppController {
 			$changelogArray = array(
 					'Changelog'	=> array(
 							'for_date' => $date,
-							'value_before' => "",
+							'change_date' => date('Y-m-d H:i:s'),
+							'value_before' => (isset($userBefore)) ? $userBefore : "",
 							'value_after' => $username,
 							'column_name' => $column['Column']['name'].( ($halfshift==3) ? "" : "_".$halfshift),
 							'user_did' => AuthComponent::user('username')
 					)
 			);
-			$this->Changelog->clear();
+			$this->Changelog->create();
 			$this->Changelog->save($changelogArray);
 			echo "200"; //Alles okay
 			exit;
@@ -510,12 +520,14 @@ class PlanController extends AppController {
 					$changelogArray = array(
 						'Changelog'	=> array(
 								'for_date' => $date,
+								'change_date' => date('Y-m-d H:i:s'),
 								'value_before' => $data['Comment']['message'],
 								'value_after' => "",
 								'column_name' => $column['Column']['name'],
 								'user_did' => AuthComponent::user('username')
 						)
 					);
+					$this->Changelog->create();
 					$this->Changelog->save($changelogArray);
 					echo "210";
 					exit;
@@ -546,12 +558,14 @@ class PlanController extends AppController {
 				$changelogArray = array(
 						'Changelog'	=> array(
 								'for_date' => $date,
+								'change_date' => date('Y-m-d H:i:s'),
 								'value_before' => ($data == array()) ? "" : $data['Comment']['message'],
 								'value_after' => $message,
 								'column_name' => $column['Column']['name'],
 								'user_did' => AuthComponent::user('username')
 						)
 				);
+				
 				$this->Changelog->save($changelogArray);
 				echo "200";
 				exit;
@@ -560,11 +574,6 @@ class PlanController extends AppController {
 				exit;
 			}
 		}
-	}
-
-	public function savetest() {
-		debug($this->saveUserEntry('2014-03-20', 2, 3, ""));
-		$this->saveUserEntry('2014-03-20', 2, 3, "Löser");
 	}
 	
 	public function saveSpecialdate($date=-1) {		
@@ -587,8 +596,7 @@ class PlanController extends AppController {
 			} else {
 				return "500";
 			}
-		}
-		
+		}		
 	}
 	
 	public function sendMissingShiftMails(){

@@ -10,12 +10,16 @@ Navbar: Position statisch machen
 /plan: Überarbeiten des Dialogs beim Eintragen (Wieder richtige Schichten anzeigen etc.)
 /plan: Textspalten implementieren
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
-Datenbank: Changelog: value_-Attribute auf VARCHAR(200) umstellen
+/plan/saveUserEntry: Adminmodus löscht ganze Schicht, auch wenn nur halbe eingetragen wird
 
 //Soll-Kriterien
-Actions in den Controller verlagern
+actions in den Controller verlagern
 /statistic: Eventuell sortierbar machen?
-
+/statistic: Prüfen, inwiefern Specialdates gerade berücksichtigt werden
+Debugger-Accounts für Lehrer?
+Ferienimport testen
+Adminmodus kann nicht an aktuellem Tag Änderungen vornehmen?
+PlanController->saveSpecialdate(): return? und fehlende Bestätigung
 
 //Fragen an Frau Wagner
 Z?fle und Neu?
