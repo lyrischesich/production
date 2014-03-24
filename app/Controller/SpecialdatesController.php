@@ -67,15 +67,17 @@ class SpecialdatesController extends AppController {
 		
 		if (strpos($vacationHeaders[0], ' 200 OK') === false || strpos($vacationHeaders[3], 'Location:') === 0) {
 			//Die gesuchte Datei existiert nicht
+			echo "testest";
+			echo (isset($vacationHeaders) ? "true" : "false");
 			throw new Exception();
 		}
 			
 		$icalreader = new ICal($sourceURL);
-			
+
 		
 		$events = $icalreader->events();
 
-		$tmpSpecialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('date LIKE ' => $importyear.'-__-__')));
+		$tmpSpecialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('Specialdate.date LIKE ' => $importyear.'-__-__')));
 		$specialdates = array();
 		foreach ($tmpSpecialdates as $tmpSpecialdate) {
 			array_push($specialdates, $tmpSpecialdate['Specialdate']['date']);
@@ -105,6 +107,7 @@ class SpecialdatesController extends AppController {
 		}
 		AutoController::saveLog('Ferienimport', 0, 'SpecialdatesController', 'importVacations');
 	  } catch (Exception $e) {
+		
 	  	AutoController::saveLog('Ferienimport', 3, 'SpecialdatesController', 'importVacations');
 	  }
 	}
@@ -118,7 +121,7 @@ class SpecialdatesController extends AppController {
 	
 	public function isAuthorized($user) {
 		if ($this->action == "importVacations") {
-			//Diese Methode ist zuständig für das Beschaffen und einfügen der Ferientermine
+			//Diese Methode ist für das Beschaffen und Einfügen der Ferientermine
 			//des nächsten Jahres zuständig
 			//->Niemand darf diese Funkion über die URL aufrufen
 			//Stattdessen muss ROOT_PERMISSION definiert und true sein

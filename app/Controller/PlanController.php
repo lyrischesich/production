@@ -299,7 +299,7 @@ class PlanController extends AppController {
 		}
 		
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid) || !in_array($halfshift, array(1, 2, 3))) {
-			echo "Beim Eintragen ist ein Fehler aufgetreten.";
+			echo "500";
 			exit;
 		}
 		
@@ -310,7 +310,7 @@ class PlanController extends AppController {
 		}
 		
 		if ($column['Column']['req_admin'] && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
-			echo "Zugriff verweigert.";
+			echo "403";
 			exit;
 		}
 		
@@ -323,12 +323,12 @@ class PlanController extends AppController {
 		
 		if ($username != "") {
 			if ($username != AuthComponent::user('username') && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
-				echo "Mieser fieser Hacker!";
+				echo "404";
 				exit;
 			}
 			//Existiert der angegebene Benutzer?
 			if ($this->User->find('count', array('recursive' => -1, 'conditions' => array('User.username' => $username))) != 1) {
-				echo "Benutzer nicht gefunden";
+				echo "404";
 				exit;
 			} else {
 				$userdata = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.username' => $username)));
@@ -339,13 +339,13 @@ class PlanController extends AppController {
 			$aColumnsUser = $this->ColumnsUser->find('first', array('recursive' => -1, 'conditions' => array('ColumnsUser.date' => $date, 'ColumnsUser.column_id' => $columnid, 'ColumnsUser.half_shift' => array($halfshift, 3))));
 			
 			if (count($aColumnsUser) != 1) {
-				echo "Dienst ist bereits leer";// "Dienst bereits leer.";
+				echo "404";// "Dienst bereits leer.";
 				//evtl. "Spielereien", muss nicht unbedingt gleich Fehler anzeigen
 				exit;
 			}
 			
 			if (!(((AuthComponent::user('id') && AuthComponent::user('admin')) || (AuthComponent::user('id') == $aColumnsUser['ColumnsUser']['user_id']) ))) {
-				echo "Keine Berechtigung zum Löschen";
+				echo "403";
 				exit;
 			}
 			
@@ -427,14 +427,14 @@ class PlanController extends AppController {
 				$userBefore = (isset($userinfo['User']['username'])) ? $userinfo['User']['username'] : "";
 			} else {
 				//Benutzer hat keine Adminrechte->Fehler
-				echo "Keine Berechtigung.";
+				echo "403";
 				exit;
 			}
 		} else if (count($columnsUsers) > 0) {
 			//Es soll mehr als ein Eintrag überschrieben werden
 			//Das ist nach dem neuen Planschema nicht möglich, da Halbschichten immer getrennt werden
 			//->Fehler
-			echo "Das kann nicht sein";
+			echo "404";
 			exit; 
 		}
 

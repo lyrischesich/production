@@ -24,7 +24,7 @@
 			<?php echo $this->Form->postLink(' Löschen', array('action' => 'delete', $user['User']['id']), null, __('Wollen Sie wirklich den Benutzer "%s" löschen?', $user['User']['username'])); ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+<?php	 endforeach; ?>
 	</table>
 	
 	<?php 

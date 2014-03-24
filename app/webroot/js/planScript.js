@@ -1,7 +1,7 @@
 /**
  * Plan-Script: Kann einfach alles
  * 
- * @author Johannes Graeger
+ * @author Johannes Gräger
  */
 	
 var method;
@@ -27,8 +27,20 @@ $(document).ready(function() {
 	});
 	
 	$("#halfshift-btngroup").hide();
-	
 
+/*	$("td").each(function() {
+		var cellID = $(this).attr('id');
+		if (typeof cellID != "undefined"){
+			if (cellID.split("_")[2] == "1") {
+				if(typeof $(this).next('td').attr('id') != "undefined") {
+					if ($(this).next('td').attr('id').split('_')[2] == "2") {
+						$(this).css("border-right","3px solid");	
+					}
+				}
+			}
+		}
+	});
+*/
 	$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
@@ -65,7 +77,7 @@ function activateAdminMode(activate) {
 			var cellID = $(this).attr("id");
 			if (typeof cellID != "undefined") {
 				var cellDate = new Date(cellID.split('_')[0]);
-				if (cellDate >= today && $("#"+cellID).hasClass("tdsuccess")) {
+				if (cellDate.getDate() >= today.getDate() && $("#"+cellID).hasClass("tdsuccess")) {
 					$("#"+cellID).removeClass();
 					$("#"+cellID).addClass("tdsuccesschangeable");
 				}
@@ -141,9 +153,9 @@ function onTextField(tdID) {
 	//Daten die bereits Vergangen sind sollen nicht mehr editiert werden dürfen
 	var today = new Date();
 	if(tdID.match("txt_*")) {
-		if (today >= new Date(tdID.split("_")[1])) return false;
+		if (today.getDate() > new Date(tdID.split("_")[1]).getDate()) return false;
 	} else {
-		if (today >= new Date(tdID.split("_")[0])) return false;
+		if (today.getDate() > new Date(tdID.split("_")[0]).getDate()) return false;
 	}
 	
 	var $th = $("#"+tdID).closest('table').find('th').eq($("#"+tdID).index());

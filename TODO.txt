@@ -7,10 +7,9 @@ Navbar: Position statisch machen
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
-/plan: Überarbeiten des Dialogs beim Eintragen (Wieder richtige Schichten anzeigen etc.)
-/plan: Textspalten implementieren
+/plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
+/plan: Möglichkeit zum hinzufügen eines Specialdates geben
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
-/plan/saveUserEntry: Adminmodus löscht ganze Schicht, auch wenn nur halbe eingetragen wird
 
 //Soll-Kriterien
 actions in den Controller verlagern
@@ -18,7 +17,6 @@ actions in den Controller verlagern
 /statistic: Prüfen, inwiefern Specialdates gerade berücksichtigt werden
 Debugger-Accounts für Lehrer?
 Ferienimport testen
-Adminmodus kann nicht an aktuellem Tag Änderungen vornehmen?
 PlanController->saveSpecialdate(): return? und fehlende Bestätigung
 
 //Fragen an Frau Wagner

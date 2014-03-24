@@ -8,6 +8,12 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
+public $paginate = array(
+			
+			'limit' => 25,
+			'order' => array('User.lname' => 'asc')
+	);
+
 /**
  * Components
  *
@@ -50,27 +56,17 @@ class UsersController extends AppController {
 			}
 		}
 
-		$this->User->recursive = 0;
+		$this->User->recursive = -1;
+		$entryCount = $this->User->find('count', array('recursive' => -1));
+		$this->paginate['maxLimit'] = $entryCount;
+		$this->paginate['limit'] = $entryCount;
+		$this->paginate['recursive'] = -1;
+		$this->Paginator->settings = $this->paginate;
 		$this->set('users', $this->Paginator->paginate());
 	}
 
 	public function beforeRender() {
 		$this->set('enumValues',$this->User->getEnumValues('mo'));
-	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-		$this->set('user', $this->User->find('first', $options));
 	}
 
 /**
@@ -106,7 +102,7 @@ class UsersController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash('Die Änderungen wurden gespeichert.');
+				$this->Session->setFlash('Die Änderungen wurden gespeichert.', "alert-box", array("class" => 'alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash('Die Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es noch einmal.');
