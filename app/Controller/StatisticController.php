@@ -1,6 +1,6 @@
 <?php
 class StatisticController extends AppController {
-	public $uses = array('User', 'ColumnsUser');
+	public $uses = array('User', 'ColumnsUser', 'Specialdate');
 	public $helpers = array('Form');
 
 	public function index($year=-1, $month=-1) {
@@ -113,7 +113,7 @@ class StatisticController extends AppController {
 	private function analyseAndSetData($dataArray) {
 
 		$userList = array();
-		$users = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.leave_date' => null)));
+		$users = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.leave_date' => null, 'User.admin != ' => 2)));
 		//Alle aktiven Benutzer müssen in der Statistik drinstehen
 		foreach ($users as $user) {
 			$userList[$user['User']['id']] = array('username' => $user['User']['username']);
@@ -124,13 +124,16 @@ class StatisticController extends AppController {
 		}
 
 		foreach ($dataArray as $data) {
+			if ($this->Specialdate->exists($data['ColumnsUser']['date']))
+				continue;
+			
 			if (!array_key_exists($data['ColumnsUser']['user_id'], $userList)) {
 				$userdata = $this->User->find('first', array('recursive' => -1, 'conditions' => array('User.id' => $data['ColumnsUser']['user_id'])));
 				$userList[$data['ColumnsUser']['user_id']] = array('username' => $userdata['User']['username']);
 				$userList[$data['ColumnsUser']['user_id']]['H']  = 0;
 				$userList[$data['ColumnsUser']['user_id']]['G']  = 0;
 				$userList[$data['ColumnsUser']['user_id']]['ges']  = 0;
-				$userList[$data['ColumnsUser']['user_id']]['active']  = $userdata['User']['leave_date'] == null;
+				$userList[$data['ColumnsUser']['user_id']]['active']  = $userdata['User']['leave_date'] == null && $userdata['User']['admin'] != 2;
 			}
 
 			$halfshift = $data['ColumnsUser']['half_shift'];

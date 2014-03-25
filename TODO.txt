@@ -8,14 +8,12 @@ Navbar: Position statisch machen
 /users: Registrierung und Änderungs-Formular schön machen (irgendwie)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
-/plan: Möglichkeit zum hinzufügen eines Specialdates geben
+/plan: Möglichkeit zum Hinzufügen eines Specialdates geben
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
 
 //Soll-Kriterien
 actions in den Controller verlagern
 /statistic: Eventuell sortierbar machen?
-/statistic: Prüfen, inwiefern Specialdates gerade berücksichtigt werden
-Debugger-Accounts für Lehrer?
 Ferienimport testen
 PlanController->saveSpecialdate(): return? und fehlende Bestätigung
 
