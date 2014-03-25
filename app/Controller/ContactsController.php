@@ -7,14 +7,19 @@ class ContactsController extends AppController {
 	public $paginate = array(
 			'fields' => array('User.lname','User.fname','User.tel1','User.tel2','User.mail','User.mo','User.di','User.mi','User.do','User.fr','User.leave_date'),
 			'limit' => 25,
-			'conditions' => array('User.leave_date' => null),
+			'conditions' => array('User.leave_date' => null, 'User.admin != ' => 2),
 			'order' => array('User.lname' => 'asc'),
 	);
 
 	public function index() {
+		$this->User->recursive = -1;
+		$entryCount = $this->User->find('count', array('recursive' => -1));
+		$this->paginate['maxLimit'] = $entryCount;
+		$this->paginate['limit'] = $entryCount;
+		$this->paginate['recursive'] = -1;
 		$this->Paginator->settings = $this->paginate;
-			
 		$results = $this->Paginator->paginate();
+
 		foreach ($results as &$result) {
 			//Hier wird die CSS-Klasse f�r die jeweiligen Tage in das Array eingebunden
 			$result['User']['mo'] = $this->addStyle($result['User']['mo']);
