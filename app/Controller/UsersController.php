@@ -125,7 +125,7 @@ public $paginate = array(
 	public function delete($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
+			throw new NotFoundException('Benutzer nicht gefunden');
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->User->delete()) {
