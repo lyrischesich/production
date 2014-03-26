@@ -686,7 +686,7 @@ class PlanController extends AppController {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	/**
 	 * Markiert ein Datum als Specialdate bzw. hebt dessen Markierung auf.
 	 * 
@@ -694,10 +694,8 @@ class PlanController extends AppController {
 	 * @author aloeser
 	 * @return void
 	 */
-	public function saveSpecialdate($date=-1) {		
-=======
 	public function saveSpecialdate($date=-1) {	
->>>>>>> branch 'master' of https://github.com/NeuInstalliesiererCorporation/Cafeteria.git
+
 		if ($this->check_date($date) !== true) {
 			echo "500";
 			exit;
