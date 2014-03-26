@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-inverse" id="ourNavbar">
 	<div class="navbar-inner">
 		<div class="container-fluid">
 		<a class="brand" href="/Cafeteria">Cafeteria-Planer</a>

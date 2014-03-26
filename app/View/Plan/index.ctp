@@ -143,7 +143,7 @@ $actions['next'] = array('text' => 'Nächster Monat', 'params' => array('control
 		</tr>
 	<?php endforeach; ?>
 </table>
- 
+
 <!-- Modal -->
 <div id="modalMenu" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalMenuLabel" aria-hidden="true">
   <div class="modal-header">
