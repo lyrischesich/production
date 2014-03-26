@@ -576,7 +576,7 @@ class PlanController extends AppController {
 		}
 	}
 	
-	public function saveSpecialdate($date=-1) {		
+	public function saveSpecialdate($date=-1) {	
 		if ($this->check_date($date) !== true) {
 			echo "500";
 			exit;
