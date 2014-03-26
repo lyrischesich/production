@@ -578,23 +578,28 @@ class PlanController extends AppController {
 	
 	public function saveSpecialdate($date=-1) {		
 		if ($this->check_date($date) !== true) {
-			return "500";
+			echo "500";
+			exit;
 		}
 
 		if ($this->Specialdate->exists($date)) {
 			//Datum ist bereits Specialdate -> löschen
 			if ($this->Specialdate->delete($date)) {
-				//Erfolgreich
+				echo "210";
+				exit;
 			} else {
-				return "510";
+				echo "510";
+				exit;
 			}
 		} else {
 			//Datum ist noch nicht eingetragen -> eintragen
 			$savearray['Specialdate']['date'] = $date;
 			if ($this->Specialdate->save($savearray)) {
-				//Erfolgreich
+				echo "200";
+				exit;
 			} else {
-				return "500";
+				echo "500";
+				exit;
 			}
 		}		
 	}
