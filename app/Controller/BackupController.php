@@ -1,11 +1,32 @@
 <?php
 App::uses('DatabaseManager', 'Model');
-
+/**
+ * Der BackupController bietet die Möglichkeit, den Datenbankzustand zu einem bestimmten Zeitpunkt zu sichern.
+ * Des Weiteren wird die Möglichkeit geboten, einen gesicherten Zustand wiederherzustellen.
+ * 
+ * @author aloeser
+ */
 class BackupController extends AppController {
 	
+	/**
+	 * Dieser Controller benutzt kein Model
+	 */
 	public $uses = false;
+
+	/**
+	 * Benutzte Komponenten
+	 */
 	public $components = array('Session');
 	
+	/**
+	 * Die Funktion index() hat überwiegend eine Darstellungsfunktion. Sie ermittelt webserverspezifische
+	 * Konstanten wie upload_max_filesize und stellt diese der index.ctp zur Verfügung.
+	 * Handelt es sich um einen POST-Request, so wird zusätzlich noch versucht, eine früheren Datenbankzustand wiederherzustellen.
+	 * 
+	 * @see DatabaseManager::import()
+	 * @author aloeser
+	 * @return void
+	 */
 	public function index() {
 		$maxUploadSize = ini_get('upload_max_filesize');
 		$maxUploadSizeString = $this->getMaxUploadSizeDisplayFormat($maxUploadSize);
@@ -37,19 +58,40 @@ class BackupController extends AppController {
 		}
 	}
 	
+	/**
+	 * Dient zum Export der aktuellen Datenbank.
+	 * Setzt den notwendigen Inhalt (den [verschlüsselten] Datenbankdump) für die export.ctp
+	 * 
+	 * @see DatabaseManager::export()
+	 * @author aloeser
+	 * @return void
+	 */
 	public function export() {
-		//Das ganze "Drumherum" abschalten, damit nur der SQL-Dump in die Datei geschrieben wird
 		$this->layout = null;
 		$dump = DatabaseManager::export();
 		$this->set('dump', $dump);
 	}
 	
+	/**
+	 * Ermittelt, ob der Benutzer eine bestimmte Aktion durchführen darf und gibt dementsprechend true oder false zurück.
+	 * 
+	 * @param user - der Benutzer
+	 * @author aloeser
+	 * @return boolean
+	 */
 	public function isAuthorized($user) {
 		return parent::isAuthorized($user);
 	}
 	
-	//Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
-	//und kann hier exakt so verwendet werden
+	/*
+	 * Ermittelt die absolute Byteanzahl, die eine hochgeladene Datei haben darf, und gibt diese zurück
+	 * 
+	 * Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
+	 * und kann hier ohne weitere Anpassungen direkt verwendet werden
+	 * 
+	 * @param val - eine Dateigrößenangabe im Format von ini_get('upload_max_filesize')
+	 * @return int
+	 */
 	private function return_bytes($val) {
 		$val = trim($val);
 		$last = strtolower($val[strlen($val)-1]);
@@ -66,7 +108,13 @@ class BackupController extends AppController {
 		return $val;
 	}
 	
-	
+	/*
+	 * Ermittelt einen String, der die absolute Byteanzahl, die eine hochgeladene Datei haben darf,
+	 * repräsentiert und gibt diesen zurück
+	 * 
+	 * @param origVal - eine Dateigrößenangabe im Format von ini_get('upload_max_filesize')
+	 * @return string
+	 */
 	private function getMaxUploadSizeDisplayFormat($origValue) {
 		$val = trim($origValue);
 		$last = strtolower($val[strlen($val)-1]);
