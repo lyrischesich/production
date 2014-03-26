@@ -45,7 +45,6 @@ $(document).ready(function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
 
-		
 		if (isNoWeekday) {
 			if ($(this).hasClass("tderrorlink") || $(this).hasClass("tdnonobligatedlink")) {
 				openDialog(cellID,true);
@@ -54,6 +53,8 @@ $(document).ready(function() {
 			}
 		}
 	});
+	
+
 
 	//Alles für Textspalten
 	$("body").on('click','td[id^="txt_"]',function() {
@@ -152,6 +153,7 @@ function onTextField(tdID) {
 	
 	//Daten die bereits Vergangen sind sollen nicht mehr editiert werden dürfen
 	var today = new Date();
+	var oldValue = $("#"+tdID).html();
 	if(tdID.match("txt_*")) {
 		if (today.getDate() > new Date(tdID.split("_")[1]).getDate()) return false;
 	} else {
@@ -190,7 +192,8 @@ function onTextField(tdID) {
 									$td.addClass("tdnonobligatedbyuser");
 								} else {
 									$td.addClass("tdnonobligated");
-								}alert(response);
+								}
+								alert(response);
 							} else {
 								$td.removeClass();
 								if (username == loggedInAs) {
@@ -278,6 +281,15 @@ function onTextField(tdID) {
 					}
 				});
 			}
+		} else if (keycode == 27) {
+			newTextField.remove();
+			$("#"+tdID).html(oldValue);	
+			$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+				onTextField($(this).attr('id'));
+			});
+			$("body").on('click','td[id^="txt_"]',function() {
+				onTextField($(this).attr('id'));
+			});
 		}
 	});
 }
