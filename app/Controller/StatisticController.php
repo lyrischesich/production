@@ -3,6 +3,16 @@ class StatisticController extends AppController {
 	public $uses = array('User', 'ColumnsUser', 'Specialdate');
 	public $helpers = array('Form');
 
+	/**
+	 * Ermittelt die Daten für $month im Jahr $year.
+	 * Standardmäßig und bei ungültigen Werten von $month oder $year wird der vergangene Monat angezeigt.
+	 * 
+	 * @param year - das Jahr für die Statistik (vierstellig)
+	 * @param month - der Monat (zweistellig)
+	 * @see StatisticController::analyseAndSetData()
+	 * @author aloeser
+	 * @return void
+	 */
 	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
@@ -54,6 +64,15 @@ class StatisticController extends AppController {
 		$this->set('param2', $month);
 	}
 
+	/**
+	 * Ermittelt die Daten von $from bis $to.
+	 *
+	 * @param from - das Startdatum (inklusive)
+	 * @param to - das Enddatum (inklusive)
+	 * @see StatisticController::analyseAndSetData()
+	 * @author aloeser
+	 * @return void
+	 */
 	public function interval($from=-1, $to=-1) {
 		//Direkt übergebene Werte haben Vorrang vor POST-Parametern
 		if ($from != -1) $this->request->data['Date']['dateFrom'] = $from;
@@ -110,6 +129,13 @@ class StatisticController extends AppController {
 		$this->set('param2', date('d.m.Y', strtotime($dateEnd)));
 	}
 
+	/**
+	 * Ermittelt anhand der Planbelegung ($dataArray) eine Statistik und stellt sie dem View zur Verfügung.
+	 * 
+	 * @param dataArray
+	 * @author aloeser
+	 * @return void
+	 */
 	private function analyseAndSetData($dataArray) {
 
 		$userList = array();
@@ -149,6 +175,13 @@ class StatisticController extends AppController {
 		$this->set('data', $userList);
 	}
 	
+	/**
+	 * Zeigt die Druckversion der Statistik an.
+	 * 
+	 * @param action - gibt an, ob die Intervalstatistik oder die Monatsstatistik gewählt wurde
+	 * @param param1 - der erste Parameter
+	 * @param param2 - der zweite Parameter
+	 */
 	public function printversion($action=-1, $param1=-1, $param2=-1) {
 		$this->layout = "print";
 		

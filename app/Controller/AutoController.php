@@ -1,11 +1,31 @@
 <?php
 App::uses('AppController', 'Controller');
+/**
+ * Zu der Website gehören unter anderem auch einige automatisch ausgeführte Skripte.
+ * Diese führen Logbuch; Speicherort der Logs ist APP.DS.'lastruns' .
+ * Der AutoController hat die Funktion, die Logs in geeigneter Funktion anzuzeigen.
+ * Zusätzlich wird Benutzern die Möglichkeit geboten, das entsprechende Skript manuell ausführen zu lassen.
+ * @author aloeser
+ */
 class AutoController extends AppController {
-	
+
+	/**
+	 * Ermittelt anhand der Dateien in APP.DS.'lastruns', welche Aktionen ausgeführt wurden
+	 * und stellt die Daten der index.ctp zur Verfügung.
+	 * 
+	 * Sind alle Parameter gesetzt, so wird versucht, die eine gewöhnlicherweise automatisch ausgeführte Funktion manuell auszuführen.
+	 * Die Funktion wird dabei durch die Parameter angegeben.
+	 * 
+	 * @param controller - der Name des Controller, der die Funktion enthält
+	 * @param action - der Name der Funktion
+	 * @param description - der Name der ausgeführten Aktion
+	 * @author aloeser
+	 * @return void
+	 */
 	public function index($controller=-1, $action=-1, $description=-1) {
 		if ($controller != -1 && $action != -1 && $description != -1) {
 			$this->doTask($controller, $action, $description);			
-			//return $this->redirect(array('controller' => 'auto', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'auto', 'action' => 'index'));
 		}
 		
 		$handle = opendir (APP.DS."lastruns");
@@ -34,6 +54,21 @@ class AutoController extends AppController {
 		$this->set('performedActions', $viewData);
 	}
 	
+	/**
+	 * Übernimmt die manuelle Ausführung der durch die Parameter angegebenen Methode. 
+	 * Dafür wird die Konstante ROOT_PERMISSION als true definiert. Dies ist notwendig, um die Funktion überhaupt ausführen zu dürfen.
+	 * So kann ein direktes Aufrufen über die URL verhindert werden.
+	 * 
+	 * doTask() loggt Fehler, wenn der Controller oder die Funktion nicht gefunden wurde.
+	 * Es übernimmt NICHT das Loggen, ob die aufgerufene Methode fehlerfrei durchlaufen wurde.
+	 * Diese Verantwortung liegt bei der Methode selbst.
+	 * 
+	 * @param controller - der Name des Controller, der die Funktion enthält
+	 * @param action - der Name der Funktion
+	 * @param description - der Name der ausgeführten Aktion
+	 * @author aloeser
+	 * @return void
+	 */
 	private function doTask($controllerName, $actionName, $description) {
 		$cfgDebug = Configure::read('debug');
 		if (App::import('Controller', str_replace('Controller', '', $controllerName))) {
@@ -56,7 +91,6 @@ class AutoController extends AppController {
 			//der angegebene Controller wurde nicht gefunden
 			AutoController::saveLog($description, 1, $controllerName, $actionName);
 		}
-		
 		Configure::write('debug', $cfgDebug);
 	}
 	
@@ -64,6 +98,27 @@ class AutoController extends AppController {
 		return parent::isAuthorized($user);
 	}
 
+	/**
+	 * Speichert einen Logeintrag im Verzeichnis APP.DS.'lastruns' .
+	 * Zu einem Logeintrag gehören folgende Informationen:
+	 * <ul>
+	 * <li>Name der ausgeführten Aktion - wird durch den Dateinamen dargestellt</li>
+	 * <li>Zeitpunkt der letzten Ausführung - wird durch das Änderungsdatum dargestellt</li>
+	 * <li>Ergebnis der Ausführung - steht in der ersten Zeile</li>
+	 * <li>Name des Controllers, in dem die Funktion enthalten ist - steht in der zweiten Zeile</li>
+	 * <li>Name der Funktion - steht in der dritten Zeile</li>
+	 * </ul>
+	 * 
+	 * Vorherige Logs werden dabei überschrieben.
+	 * 
+	 * @param actionname - der Name der ausgeführten Aktion
+	 * @param errorcode - der Fehlerstatus der Aktion
+	 * @param controller - der Name des Controller, der die Funktion enthält
+	 * @param action - der Name der Funktion
+	 * 
+	 * @author aloeser
+	 * @return void
+	 */
 	public static function saveLog($actionname, $errorcode, $controller, $action) {
 		
 		$file = fopen(APP."lastruns".DS.$actionname, "w");

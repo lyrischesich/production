@@ -38,7 +38,8 @@ class PagesController extends AppController {
 	public $uses = array();
 
 /**
- * Displays a view
+ * Diese Funktion wird aufgerufen, wenn ein Zugriff auf / erfolgt.
+ * Um Fehlermeldungen zu vermeiden, erfolgt eine Umleitung auf /plan, wenn der Benutzer eingeloggt ist, andernfalls wird auf /login umgeleitet.
  *
  * @param mixed What page to display
  * @return void

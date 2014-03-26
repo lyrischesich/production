@@ -176,6 +176,10 @@ class User extends AppModel {
 	}
 	
 	function notEqualToField($array, $field) {
+		if ($this->data[$this->alias]['admin'] == 0)
+			return true;
+		
+		//Nur Administratoren dürfen ihren Vornamen nicht als Passwort wählen
 		return !$this->equalToField($array, $field);
 	}
 

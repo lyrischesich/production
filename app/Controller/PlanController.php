@@ -1,11 +1,27 @@
 <?php
 App::uses('AppController', 'Controller');
+/**
+ * Der PlanController übernimmt sämtliche Interaktionen, die den Plan betreffen.
+ * Weiterhin stellt er Funktionen zur Verfügung, die zur dynamischen Darstellung des Plans wichtig sind.
+ * Damit ist die Veränderung des Plans durch JavaScript gemeint.
+ * 
+ * @author aloeser
+ */
 class PlanController extends AppController {
 	
  	public $uses = array('Specialdate','User', 'Column', 'Plan', 'Comment', 'ColumnsUser', 'Changelog');
 	public $helpers = array('Js','Time');
 	public $components = array('Paginator','Session','RequestHandler');
 
+	/**
+	 * Überprüft, ob das Datum $date vollständig belegt ist.
+	 * Hierbei handelt es sich um eine Funktion, die zur korrekten Manipulation des Plans durch JavaScript notwendig ist.
+	 * Wurde etwas im Plan ein- oder ausgetragen, muss der entsprechende Tag erneut auf Vollständigkeit geprüft werden.
+	 * 
+	 * @param date - das zu prüfende Datum
+	 * @author aloeser
+	 * @return void
+	 */
 	public function datecomplete($date=-1) {
 		if ($this->RequestHandler->isAjax()) {
 			$this->autoRender = $this->layout = false;
@@ -24,6 +40,17 @@ class PlanController extends AppController {
 		return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
 	}
 	
+	/**
+	 * Diese Funktion gibt alle aktiven Benutzer zurück, die den String $name im Benutzernamen haben.
+	 * Diese Funktion wird im Adminmodus verwendet, um eine Liste möglicher Benutzer anzuzeigen.
+	 * Das Ergebnis wird durch echo json_encode() an JavaScript übergeben.
+	 * 
+	 * @param name
+	 * @param date
+	 * @param halfshift
+	 * @author aloeser
+	 * @return void
+	 */
 	public function availableUsers($name='', $date=-1, $halfshift=-1) {
 		if ($this->RequestHandler->isAjax()) {
 			$this->autoRender = $this->layout = false;
@@ -44,7 +71,7 @@ class PlanController extends AppController {
 			setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
 			$dow = strtolower(strftime('%a', strtotime($date)));
 			
-			$userList = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.username LIKE ' => '%'.$name.'%', 'User.leave_date' => null)));
+			$userList = $this->User->find('all', array('recursive' => -1, 'conditions' => array('User.username LIKE ' => '%'.$name.'%', 'User.leave_date' => null, 'User.admin !=' => 2)));
 			
 			
 			$users = array();
@@ -62,6 +89,24 @@ class PlanController extends AppController {
 		return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
 	}
 	
+	/**
+	 * Stellt die notwendigen Daten bereit, um den Plan für den Monat $month im Jahr $year anzuzeigen.
+	 * Hier werden alle Daten ermittelt und hinzugefügt, die nicht direkt im Plan stehen.
+	 * Dazu zählen unter anderem:
+	 * <ul>
+	 * <li>Specialdates</li>
+	 * <li>Benutzernamen</li>
+	 * <li>die Spalten des Plans</li>
+	 * <li>Wochentage und Wochenende</li>
+	 * </ul>
+	 * 
+	 * Sollte $year oder $month ungültig oder nicht gesetzt sein, so wird immer der aktuelle Monat angezeigt.
+	 *  
+	 * @param year - das gewählte Jahr, vierstellig
+	 * @param month - der gewählte Monat, zweistellig
+	 * @author aloeser
+	 * @return void
+	 */
 	public function index($year=-1, $month=-1) {
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
@@ -87,16 +132,13 @@ class PlanController extends AppController {
 	
 		$results = $this->Plan->getPlanData($month, $year);
 	
+		//Specialdates markieren
 		$specialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('Specialdate.date LIKE ' => $year.'-'.$month.'-__')));
-	
-	
 		foreach ($specialdates as $specialdate) {
 			$results[$specialdate['Specialdate']['date']]['specialdate'] = null;
 		}
 	
-		//auf Deutsch umstellen
-		setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
-	
+		//Zuordnung Id -> Benutzername herstellen
 		$users = $this->User->find('all', array('recursive' => -1));
 		$userslist = array();
 		foreach ($users as $user) {
@@ -111,6 +153,8 @@ class PlanController extends AppController {
 		}
 		$this->set('userColumnCount', count($userColumns));
 		
+		//auf Deutsch umstellen
+		setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
 		//Wochentag(dow=DayOfWeek) und Wochenende angeben
 		foreach (array_keys($results) as $date) {
 			$results[$date]['dow'] = strftime('%a', strtotime($date));
@@ -140,6 +184,17 @@ class PlanController extends AppController {
 		$this->set('prevMonth', $datetime->format("m"));
 	}
 	
+	/**
+	 * old() liefert die zur Darstellung des Plans notwendigen Daten.
+	 * Im Wesentlichen tut diese Funktion das selbe wie index(), allerdings ist sie noch auf das alte Schema des Plans ausgerichtet und sollte daher nicht mehr benutzt werden.
+	 * Die alte Version des Plans wird nur soweit unterstützt, wie sie bis zum 19. März 2014 bereits implementiert war und ist deshalb nicht abrufbar.
+	 * 
+	 * @deprecated
+	 * @param year - das gewählte Jahr, vierstellig
+	 * @param month - der gewählte Monat, zweistellig
+	 * @author aloeser
+	 * @return void
+	 */
 	public function old($year=-1, $month=-1) {
 		return $this->redirect(array('controller' => 'plan', 'action' => 'index', $year, $month));
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
@@ -218,11 +273,29 @@ class PlanController extends AppController {
 		$this->set('prevMonth', $datetime->format("m"));
 	}
 
+	/**
+	 * Zeigt die Druckversion des Plans an
+	 * 
+	 * @param year - das gewählte Jahr, vierstellig
+	 * @param month - der gewählte Monat, zweistellig
+	 * @see PlanController::index()
+	 * @author aloeser
+	 * @return void
+	 */
 	public function printversion($year=-1, $month=-1) {
 		$this->layout = "print";
 		$this->index($year, $month);
 	}
 	
+	/**
+	 * Sendet eine Notfallmail an alle aktiven Nutzer außer denjenigen mit der ID $exceptOf,
+	 * die am $date in der $halfshift $shiftname Zeit hätten, um kurzfristig einzuspringen.
+	 * 
+	 * @param date - gibt an, an welchem Tag ein Dienst kurzfristig freigeworden ist
+	 * @param halfshift - gibt die Halbschicht an, in der der Dienst freigeworden ist
+	 * @param exceptOf - die Benutzerid, die keine E-Mail erhalten soll, weil sie sich ausgetragen hat
+	 * @param shiftname - Name des Dienstes
+	 */
 	private function sendEmergencyMail($date, $halfshift, $exceptOf, $shiftname) {
 		//auf Deutsch umstellen
 		setlocale (LC_TIME, 'de_DE@euro', 'de_DE', 'de', 'ge', 'de_DE.utf8');
@@ -230,6 +303,7 @@ class PlanController extends AppController {
 		
 		$conditionArray = array(
 				'User.leave_date' => null,
+				'User.admin != ' => 2,
 				'User.id != ' => $exceptOf,
 				'User.mail != ' => ''
 		);
@@ -279,19 +353,43 @@ class PlanController extends AppController {
 		$EMail->send();
 	}
 	
-	private function check_date($date=-1) {
+	/**
+	 * Überprüft, ob ein String einem Datum in Format 'Y-m-d' entspricht (syntaktisch und semantisch).
+	 * Durch den Parameter $mustBeInFuture kann angegeben werden, ob das Datum in der Zukunft liegen muss.
+	 * 
+	 * @param date - das zu überprüfende Datum
+	 * @param mustBeInFuture - gibt an, ob das Datum >= das aktuelle Datum sein muss
+	 * @author aloeser
+	 * @return string|boolean
+	 */
+	private function check_date($date=-1, $mustBeInFuture) {
 		$token = explode("-", $date);
 		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token	[2]) != 2) {
 			//Ungültiges Datum
 			//-> nur normal Anzeigen, ohne Einschränkungen
 			return "Ungültige Werte.";
-		} else if (strtotime($date)+DAY < time()) {
+		} else if ($mustBeInFuture && strtotime($date)+DAY < time()) {
 			return "Datum bereits vorbei.";
 		}
 
 		return true;
 	}
 
+	/**
+	 * Diese Methode ist für das Speichern und Löschen von Benutzereinträgen im Plan zuständig.
+	 * Dabei erfolgt sämtliche Autorisierung innerhalb dieser Methode.
+	 * Das "Umschalten" zwischen halben und ganzen Diensten, wenn sich ein Nutzer ein- bzw. austrägt und die andere Halbschicht auch belegt hat, wird von dieser Funktion automatisch übernommen.
+	 * 
+	 * Ist $username nicht gesetzt bzw. '', so wird versucht, den Benutzereintrag an der durch die anderen Parameter beschriebenen Stelle zu löschen.
+	 * 
+	 * 
+	 * @param date - das Datum, für das der Benutzer eingetragen wird
+	 * @param columnid - die Spalten-ID, in die der Benutzer eingetragen wird
+	 * @param halfshift - die Halbschicht, in die sich eingetragen wird
+	 * @param username - der Name des einzutragenden Benutzers
+	 * @author aloeser
+	 * @return void
+	 */
 	public function saveUserEntry($date=-1, $columnid=-1, $halfshift=-1, $username="") {		
 		if ($this->RequestHandler->isAjax()) {
 			$this->autoRender = $this->layout =  false;
@@ -489,6 +587,18 @@ class PlanController extends AppController {
 		
 	}
 
+	/**
+	 * Diese Methode ist für das Speichern und Löschen von Texteinträgen im Plan zuständig.
+	 * Dabei erfolgt sämtliche Autorisierung innerhalb dieser Methode.
+	 *
+	 * Ist $message = '', so wird versucht, den Texteintrag an der durch die anderen Parameter beschriebenen Stelle zu löschen.
+	 *
+	 * @param date - das Datum, für das der Benutzer eingetragen wird
+	 * @param columnid - die Spalten-ID, in die der Benutzer eingetragen wird
+	 * @param message - der einzutragende Text
+	 * @author aloeser
+	 * @return void
+	 */
 	public function saveTextEntry($date=-1, $columnid=-1, $message="") {
 
 		if ($this->check_date($date) !== true || !$this->Column->exists($columnid)) {			
@@ -576,6 +686,13 @@ class PlanController extends AppController {
 		}
 	}
 	
+	/**
+	 * Markiert ein Datum als Specialdate bzw. hebt dessen Markierung auf.
+	 * 
+	 * @param date - das Datum
+	 * @author aloeser
+	 * @return void
+	 */
 	public function saveSpecialdate($date=-1) {		
 		if ($this->check_date($date) !== true) {
 			echo "500";
@@ -604,6 +721,15 @@ class PlanController extends AppController {
 		}		
 	}
 	
+	/**
+	 * Hierbei handelt es sich um eine Funktion, die über die URL nicht aufgerufen werden kann.
+	 * Stattdessen wird sie vom AutoController aufgerufen, wenn die automatisierten Plan-unvollständig-Rundmails verschickt werden sollen.
+	 * Diese Rundmails sind auf jeden Benutzer spezifisch zugeschnitten und enthalten nur Dienste, an denen der Benutzer auch einspringen könnte.
+	 * Benutzer, die in der nächsten Woche gar nicht einspringen könnten, würden dementsprechend gar keine Mail erhalten.
+	 *
+	 * @author aloeser
+	 * @return void
+	 */
 	public function sendMissingShiftMails(){
 	  try {
 		$firstDate = new DateTime('now');
@@ -629,7 +755,7 @@ class PlanController extends AppController {
 			$firstDate->modify("+1 day");
 		}
 		
-		$users = $this->User->find("all", array("recursive" => -1, "conditions" => array("User.mail != " => "", "User.leave_date" => null)));
+		$users = $this->User->find("all", array("recursive" => -1, "conditions" => array("User.mail != " => "", "User.leave_date" => null, 'User.admin != ' => 2)));
 		
 		$workableUsers = array();
 

@@ -1,11 +1,23 @@
 <?php
 App::uses("User", "Model");
 App::uses("DatabaseManager", "Model");
+/**
+ * Der InstallController stellt verschiedene Optionen zur Installation zur Verfügung.
+ * Wurde eine Option gewählt, führt der InstallController die Installation durch.
+ * @author aloeser
+ */
 class InstallController extends AppController {
 	
 	public $uses = array('User');
 	public $components = array('Session');
 	
+	/**
+	 * Ermittelt die maximale Dateigröße beim Upload und stellt sie der index.ctp bereit.
+	 * Lädt eventuelle Validierungsfehler von InstallController::create(), um sie anzuzeigen.
+	 * 
+	 * @author aloeser
+	 * @return void
+	 */
 	public function index() {
 		$maxUploadSize = ini_get('upload_max_filesize');
 		$this->set('maxUploadSizeString', $this->getMaxUploadSizeDisplayFormat($maxUploadSize));
@@ -17,6 +29,15 @@ class InstallController extends AppController {
 		$this->Session->delete('InstallByCreateValidationErrors');
 	}
 	
+	/**
+	 * Installation erfolgt durch den Import eines Datenbankdumps
+	 * Es wird geprüft, ob die Datei korrekt hochgeladen wurde.
+	 * Gegebenfalls wird sie an DatabaseManager::import() weitergegeben.
+	 * 
+	 * @see DatabaseManager::import()
+	 * @author aloeser
+	 * @return void
+	 */
 	public function import() {		
 		if ($this->request->is('post')) {
 			$maxUploadSize = ini_get('upload_max_filesize');
@@ -51,6 +72,13 @@ class InstallController extends AppController {
 		return $this->redirect(array('controller' => 'install', 'action' => 'index'));
 	}
 	
+	/**
+	 * Installation erfolgt durch die Erstellung einer neuen, leeren Datenbank.
+	 * Einziger Eintrag in dieser Datenbank ist der eine Benutzer, der in dem Formular angegeben wurde.
+	 * 
+	 * @author aloeser
+	 * @return void
+	 */
 	public function create() {
 		
 		if ($this->request->is('post')) {
@@ -74,9 +102,10 @@ class InstallController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 	
+	/**
+	 * Wenn bereits Benutzer in der Datenbank eingetragen sind, dürfen nicht einmal mehr Administratoren die Installation aufrufen.
+	 */
 	public function beforeFilter() {
-		//Wenn bereits Benutzer in der Datenbank eingetragen sind, keinen Zugriff mehr erlauben
-		//TODO Nicht hier machen?
 		$this->loadModel("User");
 		if ($this->User->find('count') > 0) {
 			return;
@@ -90,8 +119,15 @@ class InstallController extends AppController {
 		return false; 
 	}
 	
-	//Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
-	//und kann hier exakt so verwendet werden
+	/**
+	 * Ermittelt die absolute Byteanzahl, die eine hochgeladene Datei haben darf, und gibt diese zurück
+	 * 
+	 * Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
+	 * und kann hier ohne weitere Anpassungen direkt verwendet werden
+	 * 
+	 * @param val - eine Dateigrößenangabe im Format von ini_get('upload_max_filesize')
+	 * @return int
+	 */
 	private function return_bytes($val) {
 		$val = trim($val);
 		$last = strtolower($val[strlen($val)-1]);
@@ -108,7 +144,13 @@ class InstallController extends AppController {
 		return $val;
 	}
 	
-	
+	/**
+	 * Ermittelt einen String, der die absolute Byteanzahl, die eine hochgeladene Datei haben darf,
+	 * repräsentiert und gibt diesen zurück
+	 *
+	 * @param origVal - eine Dateigrößenangabe im Format von ini_get('upload_max_filesize')
+	 * @return string
+	 */
 	private function getMaxUploadSizeDisplayFormat($origValue) {
 		$val = trim($origValue);
 		$last = strtolower($val[strlen($val)-1]);
@@ -121,5 +163,4 @@ class InstallController extends AppController {
 		return $val;
 	}
 }
-
 ?>
