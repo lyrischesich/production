@@ -1,5 +1,5 @@
 <?php echo $this->element('actions',array(
-		'actions' => array()
+		'actions' => $actions
 ));?>
 
 <script type="text/javascript">

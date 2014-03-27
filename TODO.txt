@@ -2,17 +2,14 @@
 /backup/index und /install/import: Abstände anpassen
 Legende verschönern
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
-/contacts/mail: Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /users: Registrierung schön machen (irgendwie)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
 /plan: Beim Austragen innerhalb der Zeitspanne eine Warnung anzeigen
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
-/plan: Specialdates Bug fixen
 
 //Soll-Kriterien
-actions in den Controller verlagern
 /statistic: Eventuell sortierbar machen?
 Ferienimport funktioniert nur teilweise
 

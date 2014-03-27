@@ -29,6 +29,12 @@ class ContactsController extends AppController {
 			$result['User']['fr'] = $this->addStyle($result['User']['fr']);
 		}
 		$this->set('users',$results);
+		
+		$actionArray = array(
+			'sendMail' => array('text' => 'E-Mail verschicken','params' => array('controller' => 'contacts','action' => 'mail')),
+			'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'contacts', 'action' => 'printversion'))
+		);
+		$this->set('actions', $actionArray);
 	}
 	
 	public function printversion() {
@@ -179,6 +185,17 @@ class ContactsController extends AppController {
 				$this->Session->setFlash($string, 'alert-box',array('class' => 'alert alert-block alert-error'));
 			}
 		}
+		
+		$actions = array(
+				'back' => array('text' => 'Zur Telefonliste','params' => array('controller' => 'contacts','action' => 'index'))
+		);
+		
+		//Nur für Admins sichtbar:
+		if ($this->isAdmin()) {
+			$actions['mailToAll'] = array('text' => 'Rundmail verschicken', 'params' => array('controller' => 'mail', 'action' => 'index'));
+		}
+		
+		$this->set('actions', $actions);
 	}
 
 	public function isAuthorized($user) {

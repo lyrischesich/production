@@ -52,6 +52,8 @@ class MailController extends AppController {
 				$this->Session->setFlash('Beim Senden ist ein Fehler aufgetreten.', 'alert-box', array('class' => 'alert-error'));
 			}
 		}
+		
+		$this->set('actions', array());
 	}
 	
 	public function isAuthorized($user) {

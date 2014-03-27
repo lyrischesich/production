@@ -1,16 +1,6 @@
 <?php echo $this->Html->script('planScript.js'); ?>
 
 <?php
-$actions = array();
-if (AuthComponent::user('id') && AuthComponent::user('admin')) {
-$actions['print'] = array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'plan','action' => 'printversion', $displayingYear, $displayingMonth));
-$actions['admin'] = array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor'));
-}
-
-// 				'legend' => array('text' => 'Hilfe anzeigen', 'params' => array('id' => 'help', 'onClick' => 'showHelp();')),
-// $actions['classic'] = array('text' => 'Klassisches Design', 'params' => array('controller' => 'plan', 'action' => 'old', $displayingYear, $displayingMonth));
-$actions['prev'] = array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $prevYear, $prevMonth));
-$actions['next'] = array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $nextYear, $nextMonth));
 
  echo $this->element('actions',array(
 			'actions' => $actions				

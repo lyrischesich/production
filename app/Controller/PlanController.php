@@ -170,18 +170,23 @@ class PlanController extends AppController {
 		}
 	
 		$this->set('results', $results);
-	
+
+		
+		$actions = array();
+		if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+			$actions['print'] = array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'plan','action' => 'printversion', $year, $month));
+			$actions['admin'] = array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor'));
+		}	
+		
 		//Daten für Navigationslinks setzen
 		$datetime = new DateTime($year."-".$month."-14");
 		$this->set('headingDate', $datetime->format('m/Y'));
-		$this->set('displayingYear', $datetime->format('Y'));
-		$this->set('displayingMonth', $datetime->format('m'));
-		$datetime->modify("+1 month");
-		$this->set('nextYear', $datetime->format("Y"));
-		$this->set('nextMonth', $datetime->format("m"));
-		$datetime->modify("-2 month");
-		$this->set('prevYear', $datetime->format("Y"));
-		$this->set('prevMonth', $datetime->format("m"));
+		
+		$datetime->modify("-1 month");
+		$actions['prev'] = array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $datetime->format('Y'), $datetime->format('m')));
+		$datetime->modify("+2 months");
+		$actions['next'] = array('text' => 'Nächster Monat', 'params' => array('controller' => 'plan', 'action' => 'index', $datetime->format('Y'), $datetime->format('m')));
+		$this->set('actions', $actions);
 	}
 	
 	/**

@@ -1,8 +1,5 @@
 <?php echo $this->element('actions',array(
-		'actions' => array(
-			'sendMail' => array('text' => 'E-Mail verschicken','params' => array('controller' => 'contacts','action' => 'mail')),
-			'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'contacts', 'action' => 'printversion'))
-		)));
+		'actions' => $actions));
 ?>
 	<h2>Telefonliste</h2>
 	<table cellpadding="0" cellspacing="0" class="table table-bordered" id="contactlist">

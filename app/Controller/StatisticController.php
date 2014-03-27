@@ -62,6 +62,17 @@ class StatisticController extends AppController {
 		$this->analyseAndSetData($data);
 		$this->set('param1', $year);
 		$this->set('param2', $month);
+		
+		$actions = array(
+				'actions' => array(
+						'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'statistic','action' => 'printversion', $this->params['action'], $year, $month)),
+						'previousMonth' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $previousYear, $previousMonth)),
+						'currentMonth' => array('text' => 'Aktueller Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y'), date('m'))),
+						'nextMonth' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $nextYear, $nextMonth)),
+						'lastYear' => array('text' => 'Statistik für das letzte Jahr', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y')-1)),
+						'interval' => array('text' => 'Statistik für Zeitraum', 'htmlattributes' => array('onClick' => '$("#StatisticIntervalFormDiv").dialog({title: "Zeitraum festlegen",modal: true});'))
+		));
+		$this->set('actions', $actions);
 	}
 
 	/**

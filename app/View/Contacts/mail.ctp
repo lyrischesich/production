@@ -1,12 +1,4 @@
 <?php 
-$actions = array(
-	'back' => array('text' => 'Zur Telefonliste','params' => array('controller' => 'contacts','action' => 'index'))
-);
-
-//Nur für Admins sichtbar:
-if (AuthComponent::user('id') && AuthComponent::user('admin')) {
-	$actions['mailToAll'] = array('text' => 'Rundmail verschicken', 'params' => array('controller' => 'mail', 'action' => 'index'));
-}
 
 echo $this->element('actions',array(
 		'actions' => $actions 

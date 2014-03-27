@@ -10,7 +10,6 @@ class Plan extends AppModel {
 	public $useTable = false; 
 	
 	public function isDateComplete($date=-1) {
-		//TODO check_date verfügbar machen
 		if ($date == -1) return false;
 		$count = 0;
 		
