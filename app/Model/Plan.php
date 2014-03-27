@@ -5,10 +5,24 @@ App::uses('ColumnsUser', 'Model');
 App::uses('Comment', 'Model');
 App::uses('Column', 'Model');
 
+/**
+ * Der Plan hat die Aufgabe, sämtliche vorhandenen Daten aus der Datenbank bereitzustellen,
+ * die zur Darstellung eines bestimmten Monats notwendig sind.
+ * @author aloeser
+ */
 class Plan extends AppModel {
 	
 	public $useTable = false; 
 	
+	/**
+	 * Gibt an, ob ein Datum komplett belegt ist.
+	 * Dabei gilt die Regel: Anzahl gefundener Einträge für das Datum = erwartete Anzahl an Einträgen.
+	 * 
+	 * @see Plan::getExpectedEntryCountPerDay()
+	 * @param date - das zu prüfende Datum
+	 * @return boolean
+	 * @author aloeser
+	 */
 	public function isDateComplete($date=-1) {
 		if ($date == -1) return false;
 		$count = 0;
@@ -37,6 +51,14 @@ class Plan extends AppModel {
 		return $count == $this->getExpectedEntryCountPerDay();
 	}
 	
+	/**
+	 * Stellt die rohen Daten aus der Datenbank bereit, die zur Darstellung des $month im Jahr $year benötigt werden.
+	 * 
+	 * @param month - der anzuzeigende Monat
+	 * @param year - das anzuzeigende Jahr
+	 * @author aloeser
+	 * @return array
+	 */
 	public function getPlanData($month=-1, $year=-1) {		
 		if (!is_numeric($month) || !is_numeric($year) || strlen($month) != 2 || strlen($year) != 4) {
 			//Falsches Format => wie keine Daten
@@ -127,8 +149,14 @@ class Plan extends AppModel {
 		return $plan;
 	}
 	
+	/**
+	 * Ermittelt die Anzahl der Einträge im Plan, die bei einem vollständig belegten Tag zu erwarten sind.
+	 * Formel zur Berechnung: Anzahl an obligated-Textspalten + 2*Anzahl an obligated-Benutzerspalten
+	 * 
+	 * @return int
+	 * @author aloeser
+	 */
 	private function getExpectedEntryCountPerDay() {
-		//Ermittelt die Anzahl der Einträge im Plan, die bei einem vollständig belegten Tag zu erwarten sind
 		$count = 0;
 		
 		$columns = new Column();
@@ -148,6 +176,13 @@ class Plan extends AppModel {
 		return $count;
 	}
 	
+	/**
+	 * Ermittelt die fehlenden Schichten am $date
+	 * 
+	 * @param date - das Datum, für das die fehlenden Schichten ermittelt werden sollen
+	 * @author aloeser
+	 * @return array
+	 */
 	public function getMissingShifts($date) {
 		$columns = new Column();
 		$columns = $columns->find('all', array('recursive' => -1, 'conditions' => array('Column.obligated' => 1)));
