@@ -33,9 +33,9 @@
 			&nbsp;|&nbsp;
 			<?php echo $this->Form->postLink('Löschen', array('action' => 'delete', $column['Column']['id']), null, 'Wollen Sie wirklich die Spalte "'.$column['Column']['name'].'" löschen?'); ?>
 			&nbsp;|&nbsp;
-			<i class="icon-arrow-up" id="up_<?php echo $column['Column']['id'];?>"></i>
+			<i class="icon-large icon-upload" id="up_<?php echo $column['Column']['id'];?>"></i>
 			&nbsp;
-			<i class="icon-arrow-down" id="down_<?php $column['Column']['id'];?>"></i>
+			<i class="icon-large icon-download" id="down_<?php $column['Column']['id'];?>"></i>
 		</td>
 	</tr>
 
