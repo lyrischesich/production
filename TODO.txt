@@ -3,7 +3,6 @@
 Legende verschönern
 Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 /contacts/mail: Bei E-Mails: Was, wenn der Absender keine Mail angegeben hat?
-Navbar: Position statisch machen
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /users: Registrierung schön machen (irgendwie)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
