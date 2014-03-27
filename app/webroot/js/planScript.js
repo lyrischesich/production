@@ -273,7 +273,6 @@ function onTextField(tdID) {
 								} else {
 									$td.addClass("tdnonobligated");
 								}
-								alert(response);
 							} else {
 								$td.removeClass();
 								if (username == loggedInAs) {
