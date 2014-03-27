@@ -201,7 +201,6 @@ function activateAdminMode(activate) {
 }
 
 function checkIfDateIsComplete(date) {
-	
 	var str = document.URL.split("plan");
 	var validationUrl = str[0] + "plan/datecomplete/" + date;
 
@@ -318,7 +317,7 @@ function onTextField(tdID) {
 						activateAdminMode(false);
 					},
 					complete: function() {
-						checkIfDateIsComplete(str[1]);
+						checkIfDateIsComplete(str[0]);
 					}
 					});
 				} else {
@@ -328,11 +327,19 @@ function onTextField(tdID) {
 					$.ajax( {
 						type: 'POST',
 						url: requestUrl,
+						async: false,
 						content: 'ajax=1',
 						success: function(response) {
 							if (response == "200" || response == "210") {
 								var $td = $(newTextField).parent();
 								$(newTextField).remove();
+								if ($td.hasClass('tderror')) {
+									$td.removeClass();
+									$td.addClass('tdsuccess');
+								} else if ($td.hasClass('tdsuccess')) {
+									$td.removeClass();
+									$td.addClass('tderror');
+								}
 								$td.html(content);
 							} else if (response == "403") {
 								alert("Sie verfügen nicht über ausreichende Berechtigung für Operation! Der Adminmodus wurde deaktiviert.")
@@ -348,16 +355,12 @@ function onTextField(tdID) {
 							$("body").on('click','td[id^="txt_"]',function() {
 									onTextField($(this).attr('id'));
 							});
+							checkIfDateIsComplete(str[2]);	
 						},
 						error: function(response) {
 							alert("Ein unbekannter Fehler ist aufgetreten. Der Adminmodus wurde deaktiviert");
 							activateAdminMode(false);
-						},
-						complete: function() {
-							if ($("#"+str[2]).attr('class') == "activeDay") {
-								checkIfDateIsComplete(str[2]);	
 						}
-					}
 				});
 			}
 		} else if (keycode == 27) {
