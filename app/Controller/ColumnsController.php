@@ -8,6 +8,50 @@ App::uses('AppController', 'Controller');
 class ColumnsController extends AppController {
 
 	public $components = array('Paginator', 'Session');
+	
+	/**
+	 * Tauscht die Position der Spalten $id1 und $id2 im Plan.
+	 * 
+	 * @param id1 - die Id der ersten Spalte
+	 * @param id2 - die Id der zweiten Spalte
+	 * @author aloeser
+	 * @return void
+	 */
+	public function switchOrder($id1, $id2) {
+		if (!$this->Column->exists($id1) || !$this->Column->exists($id2)) {
+			//Spalte nicht gefunden
+			echo "500";
+			exit;
+		}
+		
+		$column1 = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $id1)));
+		$column2 = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $id2)));
+		
+		try {
+			$savearray = array(
+					'Column' => array(
+							'id' => $id1, 
+							'order' => $column2['Column']['order']
+					)					
+			); 
+			$this->Column->create();
+			$this->Column->save($savearray);
+			
+			$savearray = array(
+					'Column' => array(
+							'id' => $id2,
+							'order' => $column1['Column']['order']
+					)
+			);
+			$this->Column->create();
+			$this->Column->save(array('Column' => array('id' => $id2, 'order' => $column1['Column']['order'])));
+			echo "200";
+			exit;
+		} catch (Exception $e) {
+			echo "500";
+			exit;
+		}
+	}
 
 /**
  * 
