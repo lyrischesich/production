@@ -144,9 +144,9 @@
     <div class="alert alert-block" id="sevenDayWarning">
   		<button type="button" class="close" data-dismiss="alert">&times;</button>
   		<h4>Achtung!</h4>
-  		Sie sind im Begriff sich aus einem Dienst auszutragen, welcher innerhalb der 7-Tages-Frist liegt. 
-  		Wenn sie sich aus diesem Dienst austragen, dann wird eine E-Mail an alle Mitarbeiter versendet, welche innerhalb
-  		dieser Frist Zeit haben.
+  		Sie sind im Begriff, Sich aus einem Dienst auszutragen, welcher innerhalb der 7-Tage-Frist liegt. 
+  		Wenn Sie Sich aus diesem Dienst austragen, dann wird eine E-Mail an alle anderen Mitarbeiter versendet, 
+  		die ihre Schicht übernehmen könnten.
   	</div>
   	<p id="eintragenText">Sie sind im Begriff folgendes auszuführen:<br/>
   		Operation: <i id="methodAnchor"></i> <br />
