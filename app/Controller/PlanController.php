@@ -483,7 +483,7 @@ class PlanController extends AppController {
 				$this->Changelog->save($changelogArray);
 				
 				//Bei zu kurzer Differenz zum aktuellen Datum Notfallmail verschicken
-				if (strtotime($date)-time()-7*DAY + DAY < 0) {
+				if (strtotime($date)-time()-7*DAY < 0) {
 					$this->sendEmergencyMail($date, $halfshift, $aColumnsUser['ColumnsUser']['user_id'], ($halfshift == 3) ? " der ganze Dienst ".$column['Column']['name'] : "die ".$halfshift.". Schicht ".$column['Column']['name']);
 				}
 				
