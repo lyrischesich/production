@@ -13,7 +13,7 @@ $(document).ready(function() {
 		var $selectedTr = $(this).parent().parent();
 		var $trAbove = $selectedTr.next();
 		if (typeof $trAbove.attr('id') == 'undefined') {
-			alert("Diese Spalte kann nicht weiter nach oben verschoben werden");
+			alert("Diese Spalte kann nicht weiter nach unten verschoben werden");
 		} else {
 			switchColumns($selectedTr.attr('id'), $trAbove.attr('id'));
 		}
