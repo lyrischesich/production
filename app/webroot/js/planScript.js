@@ -69,6 +69,10 @@ $(document).ready(function() {
 function submitSpecialDate(date) {
 	var splittedDate  = date.split(".");
 	var dateForSubmit = splittedDate[2].substr(0,4) + "-" + splittedDate[1] + "-" + splittedDate[0];
+
+	if (new Date(dateForSubmit) < new Date()) {
+		return false;
+	}
 	
 	var submitUrl = document.URL.split("plan")[0] + "plan/saveSpecialdate/" + dateForSubmit;
 	$.ajax({
@@ -130,25 +134,27 @@ function activateAdminMode(activate) {
 				if (cellID.substr(0,3) == "dow") {
 					var oldContent = $("#"+cellID).next().html();
 					var newContent;
-					if ($(this).parent().attr('class') == 'activeDay') {
-						if ($(this).html() == "Sa" || $(this).html == "So") {
-							newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+					if (new Date($("#"+cellID).parent().attr('id')) >= today) {
+						if ($(this).parent().attr('class') == 'activeDay') {
+							if ($(this).html() == "Sa" || $(this).html == "So") {
+								newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+							} else {
+								newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
+							}
 						} else {
-							newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
+							if ($(this).html() == "Sa" || $(this).html == "So") {
+								newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
+							} else {
+								newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+							}
 						}
-					} else {
-						if ($(this).html() == "Sa" || $(this).html == "So") {
-							newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
-						} else {
-							newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
-						}
+						$(this).next().html(newContent);
+						$(this).next().on('click',function() {
+							if (confirm('Möchten sie den Status dieses Datums wirklich ändern?')) {
+								submitSpecialDate(oldContent);
+							}
+						});
 					}
-					$(this).next().html(newContent);
-					$(this).next().on('click',function() {
-						if (confirm('Möchten sie den Status dieses Datums wirklich ändern?')) {
-							submitSpecialDate(oldContent);
-						}
-					});
 				}
 			}
 			

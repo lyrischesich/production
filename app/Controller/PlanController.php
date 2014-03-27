@@ -362,15 +362,15 @@ class PlanController extends AppController {
 	 * @author aloeser
 	 * @return string|boolean
 	 */
-	private function check_date($date=-1, $mustBeInFuture) {
+	private function check_date($date=-1, $mustBeInFuture=true) {
 		$token = explode("-", $date);
 		if (count($token) != 3 || !checkdate($token[1], $token[2], $token[0]) || strlen($token[0]) != 4 || strlen($token[1]) != 2 || strlen($token	[2]) != 2) {
 			//Ungültiges Datum
 			//-> nur normal Anzeigen, ohne Einschränkungen
 			return "Ungültige Werte.";
-		} else if ($mustBeInFuture && strtotime($date)+DAY < time()) {
+		} 
+		if ($mustBeInFuture && strtotime($date)+DAY < time()) 
 			return "Datum bereits vorbei.";
-		}
 
 		return true;
 	}

@@ -14,15 +14,10 @@ public $paginate = array(
 			'order' => array('User.lname' => 'asc')
 	);
 
-/**
- * Components
- *
- * @var array
- */
 	public $components = array('Paginator', 'Session');
 
 /**
- * index method
+ * Stellt der View alle aktiven Benutzer zur Verfügung
  *
  * @return void
  */
@@ -55,7 +50,7 @@ public $paginate = array(
 				}
 			}
 		}
-
+		//Alle Benutzer werden angezeigt
 		$this->User->recursive = -1;
 		$entryCount = $this->User->find('count', array('recursive' => -1));
 		$this->paginate['maxLimit'] = $entryCount;
@@ -70,10 +65,11 @@ public $paginate = array(
 	}
 
 /**
- * add method
+ * fügt der Datenbank einen neuen Benutzer hinzu
  *
  * @return void
  */
+	//Benutzer der Datenbank hinzufügen
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -89,12 +85,13 @@ public $paginate = array(
 	}
 
 /**
- * edit method
+ * Ändert Benutzerdaten eines existierenden Benutzers
  *
  * @throws NotFoundException
  * @param string $id
  * @return void
  */
+	//Benutzerdaten verändern
 	public function edit($id=-1) {
 		if ($id == -1) $id = AuthComponent::user('id');
 		if (!$this->User->exists($id)) {
@@ -116,22 +113,24 @@ public $paginate = array(
 	}
 
 /**
- * delete method
+ * Löscht einen existierenden Benutzer
  *
  * @throws NotFoundException
  * @param string $id
  * @return void
  */
+	//Benutzer aus der Datenbank löschen
 	public function delete($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
+			//nur existierende Nutzer können gelöscht werden
 			throw new NotFoundException('Benutzer nicht gefunden');
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->User->delete()) {
 			$this->Session->setFlash('Der Benutzr wurde gelöscht', "alert-box", array("class" => 'alert-success'));
 		} else {
-			$this->Session->setFlash(__('Der Benutzer konnte nicht gelöscht werden. Bitte versuchen Sie es noch einmal.'));
+			$this->Session->setFlash('Der Benutzer konnte nicht gelöscht werden. Bitte versuchen Sie es noch einmal.');
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
