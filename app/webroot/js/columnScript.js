@@ -30,9 +30,13 @@ function switchColumns(c1,c2) {
 		content: "ajax=1",
 		success: function(response) {
 			if (response == "200") {
-				var temp = $("#order_"+cID1).html();
-				$("#order_"+cID1).html($("#order_"+cID2).html());
-				$("#order_"+cID2).html(temp);
+				var temp = $("#column_"+cID1).html();
+				$("#column_"+cID1).html($("#column_"+cID2).html());
+				$("#column_"+cID2).html(temp);
+				var newID1 = 'column_' + cID2;
+				var newID2 = 'column_' + cID1;
+				$("#column_"+cID1).attr('id',newID1);
+				$("#column_"+cID2).attr('id',newID2);
 			} else if (response == "500") {
 				alert("Ein unbekannter Fehler ist aufgetreten");
 			}

@@ -11,7 +11,6 @@
 			<th><?php echo $this->Paginator->sort('type', 'Typ'); ?></th>
 			<th><?php echo $this->Paginator->sort('obligated', 'Belegung notwendig'); ?></th>
 			<th><?php echo $this->Paginator->sort('req_admin', 'Eintragen erfordert Adminrechte'); ?></th>
-			<th><?php echo $this->Paginator->sort('order', 'Position im Plan'); ?></th>
 			<th class="actions"><?php echo 'Aktionen'; ?></th>
 	</tr>
 	
@@ -28,9 +27,7 @@
 		<td><?php echo h($column['Column']['name']); ?>&nbsp;</td>
 		<td><?php echo h($types[$column['Column']['type']]); ?>&nbsp;</td>
 		<td><?php echo h($yesno[$column['Column']['obligated']]); ?>&nbsp;</td>
-		<td><?php echo h($yesno[$column['Column']['req_admin']]); ?>&nbsp;</td>
-		<td id="order_<?php echo $column['Column']['id'];?>"><?php echo h($column['Column']['order']); ?>&nbsp;</td>
-
+		<td><?php echo h($yesno[$column['Column']['req_admin']]); ?>&nbsp;</td> 
 		<td class="actions">
 			<?php echo $this->Html->link('Bearbeiten', array('action' => 'edit', $column['Column']['id'])); ?>
 			&nbsp;|&nbsp;
