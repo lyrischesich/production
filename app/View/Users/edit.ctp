@@ -1,9 +1,29 @@
-<div class="users form">
-<?php echo $this->Form->create('User'); ?>
-	<legend><b>Benutzer editieren</b></legend>
+<?php echo $this->element('actions',array('actions' => array())); ?>
+<h2>Kontoverwaltung</h2>
+	<?php echo $this->Form->create('User',array(
+		'type' => 'post',
+		'url' => array('controller' => 'users','action' => 'edit'),
+		'inputDefaults' => array(
+			'div' => 'control-group',
+			'label' => array(
+				'class' => 'control-label'				
+				),
+			),
+		'class' => 'well'
+		)); ?>
 		<?php echo $this->Form->input('id'); ?>
-		<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> 
-		<?php echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));?> 
+		<?php echo $this->Form->input('username',array(
+				'placeholder' => 'Benutzernamen eingeben',
+				'div' => 'control-group',
+				'label' => array(
+						'text' => 'Benutzername:'
+			)));?> 
+		<?php echo $this->Form->input('fname', array(
+				'placeholder' => 'Vornamen eingeben',
+				'div' => 'control-group',
+				'label' => array(
+						'text' => 'Vorname:'
+			)));?> 
 		<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?>
 		<?php echo $this->Form->input('password', array('label' => array('text' =>'Passwort'), 'value'=>""));?> 
 		<?php echo $this->Form->input('password2', array('label' => array('text' =>'Passwort wiederholen'), 'type' => 'password'));?> 
@@ -20,5 +40,9 @@
 		echo $this->Form->select('fr',$enumValues);
 	?>
 	<?php echo $this->element('legend'); ?>
-<?php echo $this->Form->end('Änderungen speichern'); ?>
+	<?php echo $this->Form->submit('Änderungen speichern', array(
+			'div' => false,
+			'class' => 'btn btn-primary'
+		)); ?>
+<?php echo $this->Form->end(); ?>
 </div>
