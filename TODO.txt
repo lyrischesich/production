@@ -1,21 +1,15 @@
 //Muss-Kriterien
-/backup/index und /install/import: Abstände anpassen
 Legende verschönern
-Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 /statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
 /users: Registrierung schön machen (irgendwie)
 /plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
-/plan: Beim Austragen innerhalb der Zeitspanne eine Warnung anzeigen
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
-/backup/export: Layout anlegen?
+/plan: Fehlercodes umsetzen
 
 //Soll-Kriterien
-/statistic: Eventuell sortierbar machen?
 
 //Fragen an Frau Wagner
-Z?fle und Neu?
-Darf sich ein Nutzer austragen? Notfallmail bei T < ??? Tagen
 
 Bekannte Fehler und Bugs:
 	Auto-Verwaltung:
