@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("body").on('click',".icon-arrow-up",function() {
+	$("body").on('click',".icon-upload",function() {
 		var $selectedTr = $(this).parent().parent();
 		var $trAbove = $selectedTr.prev();
 		if (typeof $trAbove.attr('id') == 'undefined') {
@@ -9,7 +9,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$("body").on('click',".icon-arrow-down",function() {
+	$("body").on('click',".icon-download",function() {
 		var $selectedTr = $(this).parent().parent();
 		var $trAbove = $selectedTr.next();
 		if (typeof $trAbove.attr('id') == 'undefined') {
