@@ -134,7 +134,7 @@ function activateAdminMode(activate) {
 				if (cellID.substr(0,3) == "dow") {
 					var oldContent = $("#"+cellID).next().html();
 					var newContent;
-					if (new Date($("#"+cellID).parent().attr('id')) >= today) {
+					if (new Date($("#"+cellID).parent().attr('id')).getDate() >= today.getDate()) {
 						if ($(this).parent().attr('class') == 'activeDay') {
 							if ($(this).html() == "Sa" || $(this).html == "So") {
 								newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
@@ -245,6 +245,8 @@ function onTextField(tdID) {
 	}
 	var cellID = "textfield_" + $("#"+tdID).attr('id');
 	var newTextField = $("<input type='text' id='"+cellID+"'></input>");
+	var oldContent = $("#"+tdID).html();
+
 	$("#"+tdID).html(newTextField);
 //	$("body").off('click',".tdsuccesslink, .tderrorlink");
 	$("body").off('click');
@@ -323,6 +325,17 @@ function onTextField(tdID) {
 				} else {
 					$("#"+cellID).attr('disabled',true);
 					var content = $("#"+cellID).val();
+					if (content == "" && oldContent == "") {
+						$(newTextField).remove();
+						$("#"+cellID).off('keypress');
+						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+							onTextField($(this).attr('id'));
+						});
+						$("body").on('click','td[id^="txt_"]',function() {
+								onTextField($(this).attr('id'));
+						});
+						return false;
+					}
 					var requestUrl = document.URL.split('plan')[0] + "plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content;
 					$.ajax( {
 						type: 'POST',
