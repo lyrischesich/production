@@ -44,6 +44,15 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<script type="text/javascript">
+		$(window).resize(function() {
+			$("#ourNavbar").width($(document).width());
+		});
+
+		$(window).ready(function() {
+			$("#ourNavbar").width($(document).width());
+		});
+	</script>
 </head>
 <body>
 	<?php echo $this->element('navbar'); ?>

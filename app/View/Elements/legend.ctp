@@ -1,4 +1,4 @@
-<table border='1' align='center'>
+<table border="1" align='center'>
   	<tr>
 	    <td class='tdsuccess'>G</td>
     	<td>Ganze Schicht, auch Hälfte</td>
