@@ -7,6 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class ColumnsController extends AppController {
 
+	public $paginate = array(
+			'limit' => 25,
+			'order' => array('Column.order' => 'ASC'),
+	);
+	
 	public $components = array('Paginator', 'Session');
 	
 	/**
@@ -60,6 +65,7 @@ class ColumnsController extends AppController {
  */
 	public function index() {
 		$this->Column->recursive = 0;
+		$this->Paginator->settings = $this->paginate;
 		$this->set('columns', $this->Paginator->paginate());
 		
 		$actions = array(
