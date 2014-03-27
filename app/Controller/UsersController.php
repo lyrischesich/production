@@ -58,6 +58,13 @@ public $paginate = array(
 		$this->paginate['recursive'] = -1;
 		$this->Paginator->settings = $this->paginate;
 		$this->set('users', $this->Paginator->paginate());
+		
+		$actions = array(
+				'new user' => array('text' => 'Neuen Benutzer einfügen', 'params' => array('controller' => 'users', 'action' => 'add')),
+				'save changes' => array('text' => 'Änderungen speichern', 'htmlattributes' => array('onClick' =>"document.forms['UserIndexForm'].submit();")),
+				'reset changes' => array('text' => 'Änderungen zurücksetzen', 'params' => array('controller' => 'users', 'action' => 'index'))
+		);
+		$this->set('actions', $actions);
 	}
 
 	public function beforeRender() {
@@ -82,6 +89,8 @@ public $paginate = array(
 		}
 		$columns = $this->User->Column->find('list');
 		$this->set(compact('columns'));
+		
+		$this->set('actions', array('actions' => array('back' => array('text' => 'Zur Benutzerverwaltung', 'params' => array('controller' => 'users', 'action' => 'index')))));
 	}
 
 /**
@@ -110,6 +119,12 @@ public $paginate = array(
 		}
 		$columns = $this->User->Column->find('list');
 		$this->set(compact('columns'));
+		
+		$actionArray = array(
+			'reset' => array('text' => 'Änderungen zurücksetzen', 'params' => array('controller' => 'users', 'action' => 'edit', $id))
+		);
+		if ($this->isAdmin()) $actionArray['list'] = array('text' => 'Zur Benutzerverwaltung', 'params' => array('controller' => 'users', 'action' => 'index'));
+		$this->set('actions', $actionArray);
 	}
 
 /**

@@ -1,8 +1,4 @@
-<?php echo $this->element('actions', array( 'actions' => array(
-	'new user' => array('text' => 'Neuen Benutzer einfügen', 'params' => array('controller' => 'Users', 'action' => 'add')),
-	'save changes' => array('text' => 'Änderungen speichern', 'htmlattributes' => array('onClick' =>"document.forms['UserIndexForm'].submit();")),
-	'reset changes' => array('text' => 'Änderungen zurücksetzen', 'params' => array('controller' => 'Users', 'action' => 'index'))
-))); ?>
+<?php echo $this->element('actions', array( 'actions' => $actions)); ?>
 	<?php echo $this->Form->create('User'); ?>
 	<h2><?php echo 'Benutzerverwaltung'; ?></h2>
 	<table cellpadding="0" cellspacing="0" class="table table-striped table-bordered">

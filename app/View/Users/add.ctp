@@ -1,3 +1,4 @@
+<?php echo $this->element('actions', $actions); ?>
 <div class="users form">
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
@@ -48,4 +49,6 @@
 	</table>
 	</fieldset>
 <?php echo $this->Form->end('Benutzer erstellen'); ?>
+</div>
+
 </div>

@@ -173,7 +173,7 @@ class PlanController extends AppController {
 
 		
 		$actions = array();
-		if (AuthComponent::user('id') && AuthComponent::user('admin')) {
+		if ($this->isAdmin()) {
 			$actions['print'] = array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'plan','action' => 'printversion', $year, $month));
 			$actions['admin'] = array('text' => 'Adminmodus', 'htmlattributes' => array('id' => 'adminLinkAnchor'));
 		}	

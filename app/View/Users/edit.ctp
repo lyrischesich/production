@@ -1,4 +1,4 @@
-<?php echo $this->element('actions',array('actions' => array())); ?>
+<?php echo $this->element('actions',array('actions' => $actions)); ?>
 <h2>Kontoverwaltung</h2>
 	<?php echo $this->Form->create('User',array(
 		'type' => 'post',

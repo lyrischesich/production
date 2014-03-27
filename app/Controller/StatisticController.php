@@ -39,20 +39,20 @@ class StatisticController extends AppController {
 			//(Zur Zeit noch nicht verwendet)
 			$month = '__';
 			$this->set('pageTitle', "Statistik für ".$year);
-			$this->set('nextYear', $year);
-			$this->set('nextMonth', "01");
-			$this->set('previousYear', $year-1);
-			$this->set('previousMonth', "12");
+			$nextYear = $year;
+			$nextMonth = "01";
+			$previousYear = $year-1;
+			$previousMonth = "12";
 		} else 	if ($year != -1 && $month != -1) {
 			$this->set('pageTitle', "Statistik für ".$month."/".$year);
 			
 			$datetime = new DateTime($year."-".$month."-15");
 			$datetime->modify("+1 month");
-			$this->set('nextYear', $datetime->format('Y'));
-			$this->set('nextMonth', $datetime->format('m'));
+			$nextYear =  $datetime->format('Y');
+			$nextMonth  = $datetime->format('m');
 			$datetime->modify("-2 months");
-			$this->set('previousYear', $datetime->format('Y'));
-			$this->set('previousMonth', $datetime->format('m'));
+			$previousYear =  $datetime->format('Y');
+			$previousMonth  = $datetime->format('m');
 		}
 
 		$date = $year."-".$month."-__";
@@ -60,12 +60,10 @@ class StatisticController extends AppController {
 		$data = $this->ColumnsUser->find("all", array('recursive' => -1, 'conditions' => array('ColumnsUser.date LIKE ' => $date)));
 		
 		$this->analyseAndSetData($data);
-		$this->set('param1', $year);
-		$this->set('param2', $month);
 		
 		$actions = array(
 				'actions' => array(
-						'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'statistic','action' => 'printversion', $this->params['action'], $year, $month)),
+						'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'statistic','action' => 'printversion', $this->params['action'], $year, ($month == '__' ? -1 :$month))),
 						'previousMonth' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $previousYear, $previousMonth)),
 						'currentMonth' => array('text' => 'Aktueller Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y'), date('m'))),
 						'nextMonth' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $nextYear, $nextMonth)),
@@ -124,12 +122,12 @@ class StatisticController extends AppController {
 		}
 		
 		$datetime = new DateTime(date('Y-m-d'));
-		$datetime->modify("+1 month");
-		$this->set('nextYear', $datetime->format('Y'));
-		$this->set('nextMonth', $datetime->format('m'));
-		$datetime->modify("-2 months");
-		$this->set('previousYear', $datetime->format('Y'));
-		$this->set('previousMonth', $datetime->format('m'));
+			$datetime->modify("+1 month");
+			$nextYear =  $datetime->format('Y');
+			$nextMonth  = $datetime->format('m');
+			$datetime->modify("-2 months");
+			$previousYear =  $datetime->format('Y');
+			$previousMonth  = $datetime->format('m');
 
 		$data = $this->ColumnsUser->find('all', array('recursive' => -1, 'conditions' => array('ColumnsUser.date <= ' => $dateEnd, 'ColumnsUser.date >=' => $dateBegin)));
 
@@ -138,6 +136,17 @@ class StatisticController extends AppController {
 		
 		$this->set('param1', date('d.m.Y', strtotime($dateBegin)));
 		$this->set('param2', date('d.m.Y', strtotime($dateEnd)));
+		
+		$actions = array(
+				'actions' => array(
+						'print' => array('text' => 'Druckversion anzeigen', 'params' => array('controller' => 'statistic','action' => 'printversion', $this->params['action'], $this->request->data['Date']['dateFrom'], $this->request->data['Date']['dateTo'])),
+						'previousMonth' => array('text' => 'Vorheriger Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $previousYear, $previousMonth)),
+						'currentMonth' => array('text' => 'Aktueller Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y'), date('m'))),
+						'nextMonth' => array('text' => 'Nächster Monat', 'params' => array('controller' => 'statistic', 'action' => 'index', $nextYear, $nextMonth)),
+						'lastYear' => array('text' => 'Statistik für das letzte Jahr', 'params' => array('controller' => 'statistic', 'action' => 'index', date('Y')-1)),
+						'interval' => array('text' => 'Statistik für Zeitraum', 'htmlattributes' => array('onClick' => '$("#StatisticIntervalFormDiv").dialog({title: "Zeitraum festlegen",modal: true});'))
+				));
+		$this->set('actions', $actions);
 	}
 
 	/**

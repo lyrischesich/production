@@ -8,10 +8,10 @@ Spaltenverwaltung: Reihenfolge ändern möglich machen / Ideen sammeln
 /plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
 /plan: Beim Austragen innerhalb der Zeitspanne eine Warnung anzeigen
 /mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
+/backup/export: Layout anlegen?
 
 //Soll-Kriterien
 /statistic: Eventuell sortierbar machen?
-Ferienimport funktioniert nur teilweise
 
 //Fragen an Frau Wagner
 Z?fle und Neu?
