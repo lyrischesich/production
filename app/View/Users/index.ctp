@@ -33,12 +33,6 @@
 // 	echo $this->Form->input('Änderungen zurücksetzen', array('type' => 'button', 'onClick' => "window.location.href='.'", 'label' => false));
 	echo $this->Form->end('Änderungen speichern'); 
 	?>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Seite {:page} von {:pages}, zeigt {:current} Einträge von insgesamt {:count}, Anfang bei Eintrag {:start}, Ende bei Eintrag {:end}')
-	));
-	?>	</p>
 	<!-- <div class="p">  -->
 	<?php
 		//echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));

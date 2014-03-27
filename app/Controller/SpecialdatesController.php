@@ -59,27 +59,19 @@ class SpecialdatesController extends AppController {
 		}
 	}
 
+	function http_test_existance($url) {
+ 		return (($fp = @fopen($url, 'r')) === false) ? false : @fclose($fp);
+	}
+
 	public function importVacations() {
 	  try {
 		$importyear = date('Y')+1;
 		$sourceURL = 'http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics';
+			
 		$vacationHeaders = get_headers($sourceURL);
-		echo gettype($vacationHeaders);
-		if (count($vacationHeaders) == 0) {
-			echo "Das geht doch gar nicht!";
-		} else {
-			echo "Es gibt exakt ".count($vacationHeaders)." Elemente";
-			foreach ($vacationHeaders as $key => $value){
-				echo $key."<br />";
-			}
-		}
 
 		if (strpos($vacationHeaders[0], ' 200 OK') === false) {
 			//Die gesuchte Datei existiert nicht
-			echo "testest";
-			echo (isset($vacationHeaders) ? "true" : "false");
-			if ($vacationHeaders == false) echo "leer";
-			echo $sourceURL;
 			throw new Exception();
 		}
 			

@@ -129,9 +129,9 @@ public $paginate = array(
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->User->delete()) {
-			$this->Session->setFlash(__('The user has been deleted.'));
+			$this->Session->setFlash('Der Benutzr wurde gelöscht', "alert-box", array("class" => 'alert-success'));
 		} else {
-			$this->Session->setFlash(__('The user could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('Der Benutzer konnte nicht gelöscht werden. Bitte versuchen Sie es noch einmal.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
