@@ -22,7 +22,14 @@ Ferienimport funktioniert nur teilweise
 Z?fle und Neu?
 Darf sich ein Nutzer austragen? Notfallmail bei T < ??? Tagen
 
+Bekannte Fehler und Bugs:
+	Auto-Verwaltung:
+		Wird das Datum der letzten Ausführung auch nach manueller Ausführung nicht geändert, so besitzt der Webserver-Account keine Schreibrechte unter APP.DS.'lastruns' und den entsprechenden Dateien.
+		Endet der Ferienimport mit dem Fehlercode 3, kann es daran liegen, dass allow_url_fopen deaktiviert ist.
+		Endet die Plan-unvollständig-Mail mit dem Fehlercode 3, kann es daran liegen, dass die E-Mails nicht versendet werden konnten.
+
 //Wichtig für Hr. Wagner:
 	
 	- Zugriffsrechte für die /auto-Datein müssen für den Webserver schreibbar sein
 	- Das obligatorische chown www-data -R app/tmp :) ??? Widerspruch zu vorherigem?
+	- Einrichten der Cronjobs

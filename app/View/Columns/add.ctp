@@ -1,7 +1,5 @@
 <?php echo $this->element('actions',array(
-	'actions' => array(
-		'list' => array('text' => 'Spalten anzeigen', 'params' => array('action' => 'index'))
-	)));
+	'actions' => $actions));
 ?>
 
 <div class="columns form">

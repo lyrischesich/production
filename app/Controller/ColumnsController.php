@@ -17,6 +17,11 @@ class ColumnsController extends AppController {
 	public function index() {
 		$this->Column->recursive = 0;
 		$this->set('columns', $this->Paginator->paginate());
+		
+		$actions = array(
+		'new' => array('text' => 'Neue Spalte','params' => array('action' => 'add'))
+		);
+		$this->set('actions', $actions);
 	}
 
 /**
@@ -38,6 +43,11 @@ class ColumnsController extends AppController {
 				$this->Session->setFlash('Die Spalte konnte nicht gespeichert werden.', 'alert-box', array('class' => 'alert-error'));
 			}
 		}
+		
+		$actionArray = array(
+				'list' => array('text' => 'Spalten anzeigen', 'params' => array('action' => 'index'))
+		);
+		$this->set('actions', $actionArray);
 	}
 
 /**
@@ -64,6 +74,13 @@ class ColumnsController extends AppController {
 			$options = array('conditions' => array('Column.' . $this->Column->primaryKey => $id));
 			$this->request->data = $this->Column->find('first', $options);
 		}
+		
+		$actionArray = array(
+			'list' => array('text' => 'Spalten anzeigen','params' => array('controller' => 'columns','action' => 'index')),
+			'add' => array('text' => 'Neue Spalte','params' => array('controller' => 'columns','action' => 'add')),
+			'delete' => array('text' => 'Spalte löschen','htmlattributes' => array('onClick' => "if (confirm('Wollen Sie wirklich die Spalte \"".$this->request->data['Column']['name']."\" l\u00f6schen?')) window.location.href='../delete/".$this->request->data['Column']['id']."';event.returnValue = false; return false;"))
+		);
+		$this->set('actions', $actionArray);
 	}
 
 /**

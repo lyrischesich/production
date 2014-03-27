@@ -1,10 +1,4 @@
-<?php 
-
-$actions =  array();
-if ($displayLess)  {
-	$actions['less'] = array('text' => 'Weniger anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', count($changelogs) - 50));
-}
-$actions['more'] = array('text' => 'Mehr anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', count($changelogs) + 200));
+<?php
 
 echo $this->element('actions', array (
 		'actions' => $actions

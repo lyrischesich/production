@@ -1,8 +1,5 @@
 <?php echo $this->element('actions',array(
-	'actions' => array(
-		'import' => array('text' => 'Zustand wiederherstellen','htmlattributes' => array('onClick' => '$( "#ImportDumpForm" ).submit()')),
-		'export' => array('text' => 'Sicherung durchführen','params' => array('controller' => 'backup', 'action' => 'export'))
-	)));
+	'actions' => $actions));
 ?>
 <h2><?php echo 'Datenbank-Verwaltung'; ?></h2>
 

@@ -50,6 +50,12 @@ class BackupController extends AppController {
 				$this->Session->setFlash($result, 'alert-box', array('class' => 'alert-error'));
 			}
 		}
+		
+		$actionArray = array(
+				'import' => array('text' => 'Zustand wiederherstellen','htmlattributes' => array('onClick' => '$( "#ImportDumpForm" ).submit()')),
+				'export' => array('text' => 'Sicherung durchführen','params' => array('controller' => 'backup', 'action' => 'export'))
+		);
+		$this->set('actions', $actionArray);
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 <?php
-echo $this->element('actions', array('actions' => array())); 
+echo $this->element('actions', array('actions' => $actions)); 
 ?>
 
 <h2>Automatische Prozesse</h2>

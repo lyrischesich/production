@@ -1,7 +1,5 @@
 <?php echo $this->element('actions',array(
-	'actions' => array(
-		'new' => array('text' => 'Neue Spalte','params' => array('action' => 'add'))
-	)));
+	'actions' => $actions));
 ?>
 
 <div class="columns index">

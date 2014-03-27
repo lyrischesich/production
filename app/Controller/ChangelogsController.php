@@ -34,87 +34,15 @@ class ChangelogsController extends AppController {
 		$this->paginate['limit'] = $count;
 		$this->Paginator->settings = $this->paginate;				
 		$this->set('changelogs', $this->Paginator->paginate());
-		if ($count < 51){
-			$this->set('displayLess', false);
-		} else {
-			$this->set('displayLess', true);
+		
+		$actions =  array();
+		
+		if ($count >= 51){
+			$actions['less'] = array('text' => 'Weniger anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', $count - 50));
 		}
+		
+		$actions['more'] = array('text' => 'Mehr anzeigen','params' => array('controller'  => 'changelogs', 'action' => 'index', $count + 200));
+		
+		$this->set('actions', $actions);
 	}
-	
-	
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->Changelog->exists($id)) {
-			throw new NotFoundException(__('Invalid changelog'));
-		}
-		$options = array('conditions' => array('Changelog.' . $this->Changelog->primaryKey => $id));
-		$this->set('changelog', $this->Changelog->find('first', $options));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Changelog->create();
-			if ($this->Changelog->save($this->request->data)) {
-				$this->Session->setFlash(__('The changelog has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The changelog could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->Changelog->exists($id)) {
-			throw new NotFoundException(__('Invalid changelog'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Changelog->save($this->request->data)) {
-				$this->Session->setFlash(__('The changelog has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The changelog could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Changelog.' . $this->Changelog->primaryKey => $id));
-			$this->request->data = $this->Changelog->find('first', $options);
-		}
-	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->Changelog->id = $id;
-		if (!$this->Changelog->exists()) {
-			throw new NotFoundException(__('Invalid changelog'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Changelog->delete()) {
-			$this->Session->setFlash(__('The changelog has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The changelog could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}}
+}

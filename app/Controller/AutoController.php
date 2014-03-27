@@ -52,6 +52,7 @@ class AutoController extends AppController {
 		}
 
 		$this->set('performedActions', $viewData);
+		$this->set('actions', array());
 	}
 	
 	/**

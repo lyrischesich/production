@@ -30,7 +30,7 @@ class Plan extends AppModel {
 		
 		$comments = new Comment();
 		$comments = $comments->find('all', array('recursive' => -1, 'conditions' => array('Comment.date' => $date)));
-		foreach ($comments as $coment) {
+		foreach ($comments as $comment) {
 			if (in_array($comment['Comment']['column_id'], $obligatedColumns))
 				$count++;
 		}
