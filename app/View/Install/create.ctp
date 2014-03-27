@@ -31,6 +31,7 @@ function validatePassword(){
 	echo $this->Form->input('fname', array('label' => 'Vorname'));
 	echo $this->Form->input('password', array('label' => 'Passwort'));
 	echo $this->Form->input('password2', array('label' => 'Passwort wiederholen', 'type' => 'password'));
-	echo $this->Form->end('Installieren');
+	echo $this->Form->submit('Installieren',array('class' => 'btn btn-primary'));
+	echo $this->Form->end();
 	?>
 </div>
