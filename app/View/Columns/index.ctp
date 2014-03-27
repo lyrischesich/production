@@ -1,3 +1,4 @@
+<?php echo $this->Html->script('columnScript'); ?>
 <?php echo $this->element('actions',array(
 	'actions' => $actions));
 ?>
@@ -23,18 +24,21 @@
 
 		
 
-
-	<tr>
+	<tr id="column_<?php echo $column['Column']['id'];?>">
 		<td><?php echo h($column['Column']['name']); ?>&nbsp;</td>
 		<td><?php echo h($types[$column['Column']['type']]); ?>&nbsp;</td>
 		<td><?php echo h($yesno[$column['Column']['obligated']]); ?>&nbsp;</td>
 		<td><?php echo h($yesno[$column['Column']['req_admin']]); ?>&nbsp;</td>
-		<td><?php echo h($column['Column']['order']); ?>&nbsp;</td>
+		<td id="order_<?php echo $column['Column']['id'];?>"><?php echo h($column['Column']['order']); ?>&nbsp;</td>
 
 		<td class="actions">
 			<?php echo $this->Html->link('Bearbeiten', array('action' => 'edit', $column['Column']['id'])); ?>
 			&nbsp;|&nbsp;
 			<?php echo $this->Form->postLink('Löschen', array('action' => 'delete', $column['Column']['id']), null, 'Wollen Sie wirklich die Spalte "'.$column['Column']['name'].'" löschen?'); ?>
+			&nbsp;|&nbsp;
+			<i class="icon-arrow-up" id="up_<?php echo $column['Column']['id'];?>"></i>
+			&nbsp;
+			<i class="icon-arrow-down" id="down_<?php $column['Column']['id'];?>"></i>
 		</td>
 	</tr>
 
