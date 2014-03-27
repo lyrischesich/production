@@ -462,6 +462,7 @@ return false;
 
 	
 	function openDialog(cellID,eintragen) {
+			$("#sevenDayWarning").hide();
 			$("#btn-first").removeClass('active');
 			$("#btn-first").show();
 			$("#btn-second").removeClass('active');
@@ -473,10 +474,11 @@ return false;
 			$("#dateAnchor").html("");
 			$("#shiftAnchor").html("");
 			
+			var formatDate = new Date(cellID.substr(0,10));
+			$("#dateAnchor").html(formatDate.getDate() + "." + (formatDate.getMonth()+1) + "." + formatDate.getFullYear());
 			
 			if (cellID.substr(0, 3) == "txt") {
 				// Es handelt sich um eine Textspalte
-				// Das machen wir später! TODO
 			} else {
 				// Es handelt sich um eine Benutzerspalte
 				if (eintragen) {
@@ -504,14 +506,15 @@ return false;
 					$("#halfshift-btngroup").show();
 				} else {
 					//Hier geht es jetzt ums austragen
+					if (new Date(formatDate) <= new Date().setDate(new Date().getDate() +7)) {
+						$("#sevenDayWarning").show();
+					}
 					$("#methodAnchor").html("Austragen");
 					$("#modalMenuLabel").html("Austragen");
 					$("#btnDialogConfirm").html("Austragen");
 					method = "out";
 					$("#halfshift-btngroup").hide();
 				}
-				var formatDate = new Date(cellID.substr(0,10));
-				$("#dateAnchor").html(formatDate.getDate() + "." + (formatDate.getMonth()+1) + "." + formatDate.getFullYear());
 				
 				//Finde den TableHeader zu der entsprechenden Schicht:
 				var $td = $("#"+cellID);

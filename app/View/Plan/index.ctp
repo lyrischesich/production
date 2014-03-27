@@ -141,6 +141,13 @@
     <h3 id="modalMenuLabel"></h3>
   </div>
   <div class="modal-body">
+    <div class="alert alert-block" id="sevenDayWarning">
+  		<button type="button" class="close" data-dismiss="alert">&times;</button>
+  		<h4>Achtung!</h4>
+  		Sie sind im Begriff sich aus einem Dienst auszutragen, welcher innerhalb der 7-Tages-Frist liegt. 
+  		Wenn sie sich aus diesem Dienst austragen, dann wird eine E-Mail an alle Mitarbeiter versendet, welche innerhalb
+  		dieser Frist Zeit haben.
+  	</div>
   	<p id="eintragenText">Sie sind im Begriff folgendes auszuführen:<br/>
   		Operation: <i id="methodAnchor"></i> <br />
   		Datum: <i id="dateAnchor"></i> <br />
