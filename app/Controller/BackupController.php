@@ -67,7 +67,8 @@ class BackupController extends AppController {
 	 * @return void
 	 */
 	public function export() {
-		$this->layout = null;
+		$this->set('filename', 'Sicherung_Cafeteria_'.date('d_m_Y', time()).'.sql');
+		$this->layout = 'download';
 		$dump = DatabaseManager::export();
 		$this->set('dump', $dump);
 	}

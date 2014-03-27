@@ -157,16 +157,16 @@ class ContactsController extends AppController {
 				$senderMail = $sender['User']['mail'];
 				
 				$EMail = new CakeEmail();
-				$EMail->from(array($senderMail => 'Humboldt Cafeteria ['.$senderName.']'));
+// 				$EMail->from(array('Humboldt Cafeteria ['.$senderName.']'));
 				$EMail->to($validReceivers);
 				$EMail->subject($this->request->data['Mail']['subject']);
 				$EMail->config('web');
 				$EMail->template('default');
-				$EMail->replyTo($senderMail);
+				$EMail->replyTo($senderMail == '' ? 'noreply@example.com' : $senderMail);
 				$EMail->emailFormat('html');
 				$EMail->viewVars(array(
 						'senderName' => $senderName,
-						'senderMail' => $senderMail,
+						'senderMail' => ($senderMail == '') ? 'keine E-Mail angegeben' : $senderMail,
 						'content' => $this->request->data['Mail']['content'],
 						'subject' => $this->request->data['Mail']['subject'],
 						'allowReply' => true
@@ -182,7 +182,7 @@ class ContactsController extends AppController {
 				//Gebe in einer Fehlermeldung aus, welche Adressen/Benutzernamen fehlerhaft sind
 				$invalidData = implode(',', $invalidData);
 				$string =  "Die Nachricht konnte nicht gesendet werden, da folgende Empfänger keine Mitarbeiter der Cafeteria sind: " . $invalidData;
-				$this->Session->setFlash($string, 'alert-box',array('class' => 'alert alert-block alert-error'));
+				$this->Session->setFlash($string, 'alert-box', array('class' => 'alert alert-block alert-error'));
 			}
 		}
 		
