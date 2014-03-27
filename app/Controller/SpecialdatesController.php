@@ -22,17 +22,14 @@ class SpecialdatesController extends AppController {
 		$importyear = date('Y')+1;
 		$sourceURL = 'http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics';
 			
-		$vacationHeaders = get_headers($sourceURL);
-
-		if (strpos($vacationHeaders[0], ' 200 OK') === false) {
-			//Die gesuchte Datei existiert nicht
-			throw new Exception();
-		}
-			
 		$icalreader = new ICal($sourceURL);
 
 		
 		$events = $icalreader->events();
+		if ($events == array()) {
+			//Die angegebene Datei existiert nicht
+			throw new Exception();
+		}
 
 		$tmpSpecialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('Specialdate.date LIKE ' => $importyear.'-__-__')));
 		$specialdates = array();
