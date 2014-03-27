@@ -8,14 +8,8 @@ App::uses('DatabaseManager', 'Model');
  */
 class BackupController extends AppController {
 	
-	/**
-	 * Dieser Controller benutzt kein Model
-	 */
 	public $uses = false;
 
-	/**
-	 * Benutzte Komponenten
-	 */
 	public $components = array('Session');
 	
 	/**
@@ -83,7 +77,7 @@ class BackupController extends AppController {
 		return parent::isAuthorized($user);
 	}
 	
-	/*
+	/**
 	 * Ermittelt die absolute Byteanzahl, die eine hochgeladene Datei haben darf, und gibt diese zurück
 	 * 
 	 * Folgender Code stammt direkt von http://www.php.net/manual/en/function.ini-get.php
@@ -108,7 +102,7 @@ class BackupController extends AppController {
 		return $val;
 	}
 	
-	/*
+	/**
 	 * Ermittelt einen String, der die absolute Byteanzahl, die eine hochgeladene Datei haben darf,
 	 * repräsentiert und gibt diesen zurück
 	 * 

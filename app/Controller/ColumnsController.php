@@ -1,23 +1,17 @@
 <?php
 App::uses('AppController', 'Controller');
 /**
- * Columns Controller
- *
- * @property Column $Column
- * @property PaginatorComponent $Paginator
+ * Der ColumnsController stellt sämtliche Aktionen bereit, die etwas mit Spalten zu tun haben.
+ * Dies beinhaltet das Anlegen neuer Spalten, das Editieren bestehender und das Anzeigen und Löschen existierender Spalten.
+ * @author aloeser
  */
 class ColumnsController extends AppController {
 
-/**
- * Components
- *
- * @var array
- */
 	public $components = array('Paginator', 'Session');
 
 /**
- * index method
- *
+ * 
+ * @author aloeser
  * @return void
  */
 	public function index() {
@@ -26,13 +20,13 @@ class ColumnsController extends AppController {
 	}
 
 /**
- * add method
+ * add() ist für das Speichern neuer Spalten zuständig.
  *
  * @return void
+ * @author aloeser
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			
 			$options = array('fields' => 'MAX(`order`) AS max');
 			$maxOrder = $this->Column->find('first', $options);
 			$this->request->data['Column']['order'] = $maxOrder[0]['max']+1;
@@ -44,14 +38,15 @@ class ColumnsController extends AppController {
 				$this->Session->setFlash('Die Spalte konnte nicht gespeichert werden.', 'alert-box', array('class' => 'alert-error'));
 			}
 		}
-		
 	}
 
 /**
- * edit method
- *
+ * Lädt die benötigten Spaltendaten (identifiziert durch die ID) und stellt sie edit.ctp zur Verfügung.
+ * Handelt es sich um einen POST-Request, so wird versucht, die Spaltendaten zu aktualisieren.
+ * 
  * @throws NotFoundException
- * @param string $id
+ * @param id
+ * @author aloeser
  * @return void
  */
 	public function edit($id = null) {
@@ -72,10 +67,11 @@ class ColumnsController extends AppController {
 	}
 
 /**
- * delete method
+ * Löscht eine Spalte (identifiziert durch die ID)
  *
  * @throws NotFoundException
- * @param string $id
+ * @param id
+ * @author aloeser
  * @return void
  */
 	public function delete($id = null) {
@@ -90,4 +86,5 @@ class ColumnsController extends AppController {
 			$this->Session->setFlash('Die Spalte konnte nicht gelöscht werden.', 'alert-box', array('class' => 'alert-error'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+}

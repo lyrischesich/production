@@ -66,6 +66,51 @@ $(document).ready(function() {
 	$("#btnDialogConfirm").on('click',ajaxHandler);
 });
 
+function submitSpecialDate(date) {
+	var splittedDate  = date.split(".");
+	var dateForSubmit = splittedDate[2].substr(0,4) + "-" + splittedDate[1] + "-" + splittedDate[0];
+	
+	var submitUrl = document.URL.split("plan")[0] + "plan/saveSpecialdate/" + dateForSubmit;
+	$.ajax({
+		type: 'POST',
+		content: 'ajax=1',
+		url: submitUrl,
+		success: function(response) {
+			if (response == "200" || response == "210") {
+				$.ajax({
+					type: 'POST',
+					content: 'ajax=0',
+					async: false,
+					url: document.URL,
+					success: function(response) {
+						var $responseAsDomElement = $(response);
+						var $trContent = $responseAsDomElement.find("#"+dateForSubmit).html();
+						$("#insertDiv").remove();
+						$("#"+dateForSubmit).html($trContent);
+					},
+					error: function(response) {
+						alert("Leider ist ein Fehler aufgetreten, der die Stabilität der Applikation beeinträchtigt. Bitte laden sie die Seite erneut, da es sonst zu Einschränkungen in der Funktionsfähigkeit kommen kann.");
+					}
+				});
+				var oldContent = $("#dow_"+dateForSubmit).next().html();
+				if (response == "200") {
+					var newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
+				} else if (response == "210") {
+					var newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+				}
+				$("#dow_"+dateForSubmit).next().html(newContent);
+				$("#dow_"+dateForSubmit).next().on('click',function() {
+					if (confirm('Möchten sie den Status dieses Datums wirklich ändern?')) {
+						submitSpecialDate(date);
+					}
+				});
+			}
+		},
+		error: function(response) {
+			alert("Fehler");
+		}
+	});
+}
 
 function activateAdminMode(activate) {
 	var today = new Date();
@@ -82,8 +127,34 @@ function activateAdminMode(activate) {
 					$("#"+cellID).removeClass();
 					$("#"+cellID).addClass("tdsuccesschangeable");
 				}
+				if (cellID.substr(0,3) == "dow") {
+					var oldContent = $("#"+cellID).next().html();
+					var newContent;
+					if ($(this).parent().attr('class') == 'activeDay') {
+						if ($(this).html() == "Sa" || $(this).html == "So") {
+							newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+						} else {
+							newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
+						}
+					} else {
+						if ($(this).html() == "Sa" || $(this).html == "So") {
+							newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
+						} else {
+							newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+						}
+					}
+					$(this).next().html(newContent);
+					$(this).next().on('click',function() {
+						if (confirm('Möchten sie den Status dieses Datums wirklich ändern?')) {
+							submitSpecialDate(oldContent);
+						}
+					});
+				}
 			}
+			
+
 		});
+		
 		$("body").off('click');
 		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 			onTextField($(this).attr('id'));
@@ -93,6 +164,7 @@ function activateAdminMode(activate) {
 		});
 	} else {
 		alert("Adminmodus deaktiviert");
+		$(".icon-ban-circle, .icon-ok-circle").remove();
 		adminModeActive = false;
 		$("input:not([type=hidden])").remove();
 		$("body").off('click','td[id^="txt_"]');
@@ -104,6 +176,7 @@ function activateAdminMode(activate) {
 		$("body").on('click','td[id^="txt_"]',function() {
 			onTextField($(this).attr('id'));
 		});
+		$("td").each(function() { $(this).off(); });
 		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
 			var cellID = $(this).attr('id');
 			var isNoWeekday = cellID.substr(0,3) != "dow";

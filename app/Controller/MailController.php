@@ -1,12 +1,21 @@
 <?php
-
+/**
+ * Der MailController bietet die Funktion, eine Rundmail zu verschicken.
+ * @author aloeser
+ */
 class MailController extends AppController {
 	public $uses = array('User');
 	public $components = array('Paginator','Session');
 	
+	/**
+	 * Wenn es sich um einen POST-Request handelt, wird eine Rundmail mit den übergebenen Daten versendet.
+	 * 
+	 * @author aloeser
+	 * @return void
+	 */
 	public function index(){
 		if ($this->request->is('POST')) {
-			$conditions = array('User.mail !=' => '');
+			$conditions = array('User.mail !=' => '', 'User.admin != ' => 2);
 			if (!$this->request->data['Mail']['sendToAll']) $conditions['User.leave_date'] = null;
 			$activeUsersWithEmail = $this->User->find('all', array(
 					'conditions' => $conditions

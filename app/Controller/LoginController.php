@@ -3,14 +3,20 @@
 App::uses('Controller', 'Controller');
 
 /**
- * Login Controller
+ * Der LoginController regelt das an- und abmelden vom System.
  */
 class LoginController extends AppController {
 	
 	public $components = array('Session');
 	
-	public function index() {		
-		
+	/**
+	 * Ist der Benutzer bereits eingeloggt, erfolgt eine Umleitung auf /plan
+	 * Handelt es sich um einen POST-Request, wird versucht, den Benutzer anzumelden.
+	 * 
+	 * @author aloeser
+	 * @return void
+	 */
+	public function index() {				
 		//Wenn bereits eingeloggt, dann Umleitung
 		if ($this->Auth->loggedIn()) return $this->redirect(array('controller' => 'plan', 'action' => 'index'));
 		
@@ -28,6 +34,13 @@ class LoginController extends AppController {
 		}
 	}
 	
+	/**
+	 * Meldet den aktuell angemeldeten Benutzer ab und löscht gegebenenfalls existierende Warnungen.
+	 * 
+	 * @param removeWarnings - gibt an, ob mögliche existierende Warnungen gelöscht werden sollen.
+	 * @author aloeser
+	 * @return void
+	 */
 	public function logout($removeWarnings=true) {
 		if ($removeWarnings) $this->Session->delete('Message');
 		return $this->redirect($this->Auth->logout());

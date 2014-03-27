@@ -31,6 +31,7 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+	
 	public $components = array('DebugKit.Toolbar',
 		'Auth' => array(
         'authenticate' => array(
@@ -68,12 +69,23 @@ class AppController extends Controller {
 			'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
 			);
 	
-	//TODO Security::setHash() irgendwo anders machen
+	/**
+	 * beforeFilter() legt fest, welche Aktionen (=URLs) aufgerufen werden dürfen,
+	 * ohne dass der Benutzer angemeldet sein muss
+	 * 
+	 * Zusätzlich findet hier eine Überprüfung statt:
+	 * 	Wurde mindestens ein Nutzer in die users-Tabelle eingetragen?
+	 * 		Nein: Umleitung zur Installation (/install)
+	 * 		Ja: weiter im Programm
+	 * 
+	 * @see Controller::beforeFilter()
+	 * @author aloeser
+	 * @return void
+	 */
    	public function beforeFilter() {
 		parent::beforeFilter();
 		
 		//Wenn keine Benutzer eingetragen sind, alles umleiten auf /install
-		//TODO Nicht hier machen?
 		$this->loadModel("User");
 		if ($this->User->find('count') == 0) {
 			//Falls die DB irgendwann durch Zufall einmal verschwindet, aktive Nutzer ausloggen
@@ -82,14 +94,34 @@ class AppController extends Controller {
 		}
 	}
 	
+	/**
+	 * isAuthorized($user) prüft, ob der $user berechtigt ist, eine bestimmte Methode
+	 * aufzurufen. Diese Funktion ist für das gesamte Autorisierungssystem zuständig.
+	 * 
+	 * @author aloeser
+	 * @param user
+	 * @return boolean
+	 */
 	public function isAuthorized($user) {
-		
-		
 		//Administrator darf alles
-		if (isset($user['admin']) && $user['admin'] == 1) {
+		if ($this->isAdmin()) {
 			return true;
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Prüft, ob ein Benutzer über Administratorrechte verfügt.
+	 * Gibt im Erfolgsfall true zurück, sonst false
+	 * <p>
+	 * Administratorrechte besitzen alle Benutzer, deren Attribut 'admin' > 0 ist.
+	 * Dies beinhaltet 1 => Administrator und 2 => Programmierer
+	 * </p>
+	 * @author aloeser
+	 * @return boolean
+	 */
+	public function isAdmin() {
+		return AuthComponent::user('id') && AuthComponent::user('admin') > 0;
 	}
 }

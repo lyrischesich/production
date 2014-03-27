@@ -3,82 +3,33 @@ App::uses('AppController', 'Controller');
 App::uses('AutoController', 'Controller');
 App::uses('ICal', 'Model');
 /**
- * Specialdates Controller
- *
- * @property Specialdate $Specialdate
- * @property PaginatorComponent $Paginator
+ * Der SpecialdatesController stellt die Möglichkeit bereit, die Ferien für das nächste Jahr automatisch zu importieren
  */
 class SpecialdatesController extends AppController {
 
-/**
- * Components
- *
- * @var array
- */
 	public $components = array('Paginator');
 
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->Specialdate->recursive = 0;
-		$this->set('specialdates', $this->Paginator->paginate());
-	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->Specialdate->exists($id)) {
-			throw new NotFoundException(__('Invalid specialdate'));
-		}
-		$options = array('conditions' => array('Specialdate.' . $this->Specialdate->primaryKey => $id));
-		$this->set('specialdate', $this->Specialdate->find('first', $options));
-	}
-
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Specialdate->create();
-			if ($this->Specialdate->save($this->request->data)) {
-				$this->Session->setFlash(__('The specialdate has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The specialdate could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-	function http_test_existance($url) {
- 		return (($fp = @fopen($url, 'r')) === false) ? false : @fclose($fp);
-	}
-
+	/**
+	 * Hierbei handelt es sich um eine Funktion, die über die URL nicht aufgerufen werden kann.
+	 * Stattdessen wird sie vom AutoController aufgerufen, wenn die Ferien automatisch importiert werden sollen
+	 * Dabei werden Daten, die bereits als Specialdate markiert sind, übersprungen.
+	 *
+	 * @author aloeser
+	 * @return void
+	 */
 	public function importVacations() {
 	  try {
 		$importyear = date('Y')+1;
 		$sourceURL = 'http://www.schulferien.org/iCal/Ferien/icals/Ferien_Berlin_'.$importyear.'.ics';
 			
-		$vacationHeaders = get_headers($sourceURL);
-
-		if (strpos($vacationHeaders[0], ' 200 OK') === false) {
-			//Die gesuchte Datei existiert nicht
-			throw new Exception();
-		}
-			
 		$icalreader = new ICal($sourceURL);
 
 		
 		$events = $icalreader->events();
+		if ($events == array()) {
+			//Die angegebene Datei existiert nicht
+			throw new Exception();
+		}
 
 		$tmpSpecialdates = $this->Specialdate->find('all', array('recursive' => -1, 'conditions' => array('Specialdate.date LIKE ' => $importyear.'-__-__')));
 		$specialdates = array();
@@ -114,6 +65,13 @@ class SpecialdatesController extends AppController {
 	  }
 	}
 	
+	/**
+	 * Wandelt eine Datumsangabe im iCal-Format ins Unix-Format um
+	 * 
+	 * @param ical - eine Datumsangabe im Ical-Format
+	 * @author aloeser
+	 * @return number
+	 */
 	private function icalToUnixtime($ical) {
 		$year = substr($ical, 0, 4);
 		$month = substr($ical, 4, 2);
