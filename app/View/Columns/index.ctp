@@ -11,7 +11,6 @@
 			<th><?php echo $this->Paginator->sort('type', 'Typ'); ?></th>
 			<th><?php echo $this->Paginator->sort('obligated', 'Belegung notwendig'); ?></th>
 			<th><?php echo $this->Paginator->sort('req_admin', 'Eintragen erfordert Adminrechte'); ?></th>
-			<th><?php echo $this->Paginator->sort('order', 'Position im Plan'); ?></th>
 			<th class="actions"><?php echo 'Aktionen'; ?></th>
 	</tr>
 	
@@ -28,17 +27,15 @@
 		<td><?php echo h($column['Column']['name']); ?>&nbsp;</td>
 		<td><?php echo h($types[$column['Column']['type']]); ?>&nbsp;</td>
 		<td><?php echo h($yesno[$column['Column']['obligated']]); ?>&nbsp;</td>
-		<td><?php echo h($yesno[$column['Column']['req_admin']]); ?>&nbsp;</td>
-		<td id="order_<?php echo $column['Column']['id'];?>"><?php echo h($column['Column']['order']); ?>&nbsp;</td>
-
+		<td><?php echo h($yesno[$column['Column']['req_admin']]); ?>&nbsp;</td> 
 		<td class="actions">
 			<?php echo $this->Html->link('Bearbeiten', array('action' => 'edit', $column['Column']['id'])); ?>
 			&nbsp;|&nbsp;
 			<?php echo $this->Form->postLink('Löschen', array('action' => 'delete', $column['Column']['id']), null, 'Wollen Sie wirklich die Spalte "'.$column['Column']['name'].'" löschen?'); ?>
 			&nbsp;|&nbsp;
-			<i class="icon-arrow-up" id="up_<?php echo $column['Column']['id'];?>"></i>
+			<i class="icon-large icon-upload" id="up_<?php echo $column['Column']['id'];?>"></i>
 			&nbsp;
-			<i class="icon-arrow-down" id="down_<?php $column['Column']['id'];?>"></i>
+			<i class="icon-large icon-download" id="down_<?php $column['Column']['id'];?>"></i>
 		</td>
 	</tr>
 
