@@ -1,6 +1,6 @@
 <?php
 class ContactsController extends AppController {
-	public $uses = array('User', 'Plan');
+	public $uses = array('User', 'Plan', 'Column');
 	public $helpers = array('Js');
 	public $components = array('Paginator','Session');
 
@@ -52,12 +52,18 @@ class ContactsController extends AppController {
 			return $this->redirect(array('action' => 'index'));
 		} else {
 			$missingShifts = $this->Plan->getMissingShifts($date);
-			if ($missingShifts == array())
+			if ($missingShifts == array() || $missingShifts == null)
 				return $this->redirect(array('action' => 'index'));
 			
 			$shift1Needed = false;
 			$shift2Needed = false;
-			foreach ($missingShifts as $missingShift) {
+			foreach ($missingShifts as $key => $missingShift) {
+				$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $key)));
+				if ($column['Column']['type'] == 1) {
+					$shift1Needed = true;
+					$shift2Needed = true;
+				}
+				
 				if ($shift1Needed && $shift2Needed)  break;
 				
 				if (array_key_exists(1, $missingShift))

@@ -16,13 +16,15 @@ und das Array $default mit den gewünschten Werten füllen.
 5) Richten Sie die Verbindung zum gewünschten SMTP-Server ein, indem sie die Datei "app/Config/email.php" öffnen und
 das Array $web mit den entsprechenden Werten füllen.
 
-6) <Cronjobs>
+6) Um die automatischen Prozesse zum Laufen zu bringen, müssen folgende Crontab-Befehle ausgeführt werden:
+0 14 * * 3 cd <Rootverzeichnis des Planers> && <php-Interpreter> -f MissingShiftMailScript.php > <Logdatei>
+0 14 15 6 * cd <Rootverzeichnis des Planers> && <php-Interpreter> -f VacationInsertionScript.php > <Logdatei>
 
 7) Der Ordner "app/lastruns" muss sowohl für den Webserver, als auch für den Nutzer, welcher die Cronjobs ausführt, schreibbar sein.
-Stellen Sie dies entsprechend sicher.
+Dies beinhaltet auch sämtliche darin enthaltenen Dateien. Stellen Sie dies entsprechend sicher.
 
-8) Ggf. möchten sie eine Datenbank nach dem Schema, wie es der alte Cafeteriaplan verwendet hat, migrieren. Benutzen Sie dazu
+8) Ggf. möchten Sie eine Datenbank nach dem Schema, wie es der alte Cafeteriaplan verwendet hat, migrieren. Benutzen Sie dazu
 das beigefügte Java-Programm.
 
-Der Cafeteria-Planer ist nun einsatzbereits.
+Der Cafeteria-Planer ist nun einsatzbereit.
 Herzlichen Glückwunsch.
