@@ -98,9 +98,9 @@ function submitSpecialDate(date) {
 				});
 				var oldContent = $("#dow_"+dateForSubmit).next().html();
 				if (response == "200") {
-					var newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
-				} else if (response == "210") {
 					var newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+				} else if (response == "210") {
+					var newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
 				} else if (response == "500" || response == "510") {
 					alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten");
 				}

@@ -2,9 +2,12 @@
 <?php echo $this->element('actions',array(
 	'actions' => $actions));
 ?>
-
+<h2> Spaltenverwaltung </h2>
+<p> Hier können Sie die Spalten im Plan verwalten. Durch klicken auf die Pfeile können Sie die Position der Spalten im Plan verändern.
+	Bitte beachten sie, dass Textspalten, unabhägig von den hier getroffenen Einstellungen, den Schichtspalten vorrangestellt werden.
+</p>
 <div class="columns index">
-	<h2><?php echo 'Spalten im Plan'; ?></h2>
+	<h3><?php echo 'Spalten im Plan'; ?></h3>
 	<table cellpadding="0" cellspacing="0" class="table table-bordered">
 	<tr>
 			<th><?php echo $this->Paginator->sort('name', 'Name'); ?></th>
