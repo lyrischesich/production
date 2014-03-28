@@ -1,0 +1,28 @@
+Installationsanleitung Cafeteria-Planer:
+
+1) Stellen Sie zunächst sicher, dass das System, auf dem Sie den Planer installieren die Systemanforderungen 
+erfüllt. Außerdem muss der Webbrowser, mit dem Sie den Planer benutzen wollen, JavaScript aktiviert haben
+und mit jQuery2 kompatibel sein.
+
+2) Extrahieren Sie Dateien aus dem Zip-Archiv in das gewünschte Verzeichnis auf dem Webserver
+
+3) Der Ordner "app/tmp" muss für den Webserver beschreibbar sein. Stellen sie dies sicher. Da i.d.R. kein 
+anderer Benutzer Zugriff auf diesen Ordner benötigt, kann dem Benutzer "www-data" auch die Zugehörigkeit 
+des Ordners übertragen werden.
+
+4) Richten Sie die Datenbankkonfiguration ein, indem Sie die Datei "app/Config/database.php" öffnen
+und das Array $default mit den gewünschten Werten füllen.
+
+5) Richten Sie die Verbindung zum gewünschten SMTP-Server ein, indem sie die Datei "app/Config/email.php" öffnen und
+das Array $web mit den entsprechenden Werten füllen.
+
+6) <Cronjobs>
+
+7) Der Ordner "app/lastruns" muss sowohl für den Webserver, als auch für den Nutzer, welcher die Cronjobs ausführt, schreibbar sein.
+Stellen Sie dies entsprechend sicher.
+
+8) Ggf. möchten sie eine Datenbank nach dem Schema, wie es der alte Cafeteriaplan verwendet hat, migrieren. Benutzen Sie dazu
+das beigefügte Java-Programm.
+
+Der Cafeteria-Planer ist nun einsatzbereits.
+Herzlichen Glückwunsch.
