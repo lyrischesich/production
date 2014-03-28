@@ -97,9 +97,10 @@ function submitSpecialDate(date) {
 					}
 				});
 				var oldContent = $("#dow_"+dateForSubmit).next().html();
-				if (response == "200") {
+				var dow = new Date(dateForSubmit).getDay();
+				if ((response == "200" && (dow != 0 && dow != 6)) || (response == "210" && (dow == 0 || dow == 6))) {
 					var newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
-				} else if (response == "210") {
+				} else if ((response == "210" && (dow != 0 && dow != 6)) || (response == "200" && (dow == 0 || dow == 6))) {
 					var newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
 				} else if (response == "500" || response == "510") {
 					alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten");
@@ -319,14 +320,14 @@ function onTextField(tdID) {
 						} else if (response == "510") {
 							alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten.");
 						} else if (response == "404") {
-							alert("Das angeforderte Element existiert nicht (mehr). Laden sie die Seite erneut, um eine Instabilität der Applikation zu verhinder");			}
+							alert("Das angeforderte Element existiert nicht (mehr). Laden sie die Seite erneut, um eine Instabilität der Applikation zu verhindern");			}
 					},
 					error: function() {
 						alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
 						activateAdminMode(false);
 					},
 					complete: function() {
-						checkIfDateIsComplete(str[0]);
+						checkIfDateIsComplete(str[1]);
 					}
 					});
 				} else {
