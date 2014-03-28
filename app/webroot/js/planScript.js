@@ -101,6 +101,8 @@ function submitSpecialDate(date) {
 					var newContent = oldContent + "&nbsp;<i class='icon-ban-circle'></i>";
 				} else if (response == "210") {
 					var newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
+				} else if (response == "500" || response == "510") {
+					alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten");
 				}
 				$("#dow_"+dateForSubmit).next().html(newContent);
 				$("#dow_"+dateForSubmit).next().on('click',function() {
@@ -123,18 +125,19 @@ function activateAdminMode(activate) {
 		adminModeActive = true;
 		alert("Adminmodus aktiviert");
 		var today = new Date();
+		today.setDate(today.getDate()-1);
 		$("td").each(function() {
 			var cellID = $(this).attr("id");
 			if (typeof cellID != "undefined") {
 				var cellDate = new Date(cellID.split('_')[0]);
-				if (cellDate.getDate() >= today.getDate() && $("#"+cellID).hasClass("tdsuccess")) {
+				if (cellDate.getTime() >= today.getTime() && $("#"+cellID).hasClass("tdsuccess")) {
 					$("#"+cellID).removeClass();
 					$("#"+cellID).addClass("tdsuccesschangeable");
 				}
 				if (cellID.substr(0,3) == "dow") {
 					var oldContent = $("#"+cellID).next().html();
 					var newContent;
-					if (new Date($("#"+cellID).parent().attr('id')).getDate() >= today.getDate()) {
+					if (new Date($("#"+cellID).parent().attr('id')).getTime() >= today.getTime()) {
 						if ($(this).parent().attr('class') == 'activeDay') {
 							if ($(this).html() == "Sa" || $(this).html == "So") {
 								newContent = oldContent + "&nbsp;<i class='icon-ok-circle'></i>";
@@ -231,11 +234,12 @@ function onTextField(tdID) {
 	
 	//Daten die bereits Vergangen sind sollen nicht mehr editiert werden dürfen
 	var today = new Date();
+	today.setDate(today.getDate()-1);
 	var oldValue = $("#"+tdID).html();
 	if(tdID.match("txt_*")) {
-		if (today.getDate() > new Date(tdID.split("_")[1]).getDate()) return false;
+		if (today.getTime() > new Date(tdID.split("_")[1]).getTime()) return false;
 	} else {
-		if (today.getDate() > new Date(tdID.split("_")[0]).getDate()) return false;
+		if (today.getTime() > new Date(tdID.split("_")[0]).getTime()) return false;
 	}
 	
 	var $th = $("#"+tdID).closest('table').find('th').eq($("#"+tdID).index());
@@ -309,9 +313,13 @@ function onTextField(tdID) {
 							$("body").on('click','td[id^="txt_"]',function() {
 								onTextField($(this).attr('id'));
 							});
-						} else {
-							alert("Eror: Unknown ResponseCode [" + response +"]");						
-						}
+						} else if (reponse == "403") {
+							alert("Sie haben keine Berechtigung für diese Aktion! Der Adminmodus wird deaktiviert.");
+							activateAdminMode(false);						
+						} else if (response == "510") {
+							alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten.");
+						} else if (response == "404") {
+							alert("Das angeforderte Element existiert nicht (mehr). Laden sie die Seite erneut, um eine Instabilität der Applikation zu verhinder");			}
 					},
 					error: function() {
 						alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
@@ -506,7 +514,9 @@ return false;
 					$("#halfshift-btngroup").show();
 				} else {
 					//Hier geht es jetzt ums austragen
-					if (new Date(formatDate) <= new Date().setDate(new Date().getDate() +7)) {
+					var dateObj = new Date();
+					dateObj.setDate(dateObj.getDate()+7);
+					if (new Date(formatDate).getTime() <= dateObj.getTime()) {
 						$("#sevenDayWarning").show();
 					}
 					$("#methodAnchor").html("Austragen");

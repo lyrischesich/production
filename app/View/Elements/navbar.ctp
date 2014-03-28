@@ -1,7 +1,7 @@
 <div class="navbar navbar-inverse" id="ourNavbar">
 	<div class="navbar-inner">
 		<div class="container-fluid">
-		<a class="brand" href="/Cafeteria">Cafeteria-Planer</a>
+		<?php echo $this->Html->link('Cafeteria-Planer', '/', array('class' => 'brand')); ?>
 		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>

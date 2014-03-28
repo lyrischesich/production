@@ -15,4 +15,8 @@
 		<td class='tdwarning'>2</td>
 		<td>Nur 2. Hälfte</td>
 	</tr>
+	<tr>
+		<td class='tderror'>N</td>
+		<td>Gar nicht</td>
+	</tr>
 </table>

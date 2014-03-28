@@ -24,7 +24,7 @@ class ChangelogsController extends AppController {
 	);
 
 /**
- * index method
+ * Der View werden die letzten $count Einträge aus der Datenbank zur Verfügung gestellt  
  *
  * @return void
  */

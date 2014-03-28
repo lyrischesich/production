@@ -1,11 +1,9 @@
 //Muss-Kriterien
-Legende verschönern
-/statistic: Auto-Fokus des Textfeldes bei Öffnen des Dialogs verhindern
-/users: Registrierung schön machen (irgendwie)
-/plan: Trennung zwischen Früh und Spätschicht durch einen dicken Balken in Früh- und Spät.
 /plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
-/mail: Rundmails sollen Mittwoch 14:00 verschickt werden (Für Plan).
 /plan: Fehlercodes umsetzen
+
+
+Installationsanleitung schreiben
 
 //Soll-Kriterien
 

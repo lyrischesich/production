@@ -1,54 +1,69 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#legendDiv").children().attr('align','');
+	});
+</script>
 <?php echo $this->element('actions', $actions); ?>
+<h2> Benutzerverwaltung </h2>
 <div class="users form">
-<?php echo $this->Form->create('User'); ?>
-	<fieldset>
+<?php echo $this->Form->create('User', array(
+		'class' => 'well'
+	)); ?>
 		<legend><?php echo 'Benutzer anlegen'; ?></legend>
-	<table>
-	<tr>
-		<td>	<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> </td>
-		<td>	<?php echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));?> </td>
-		<td>	<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?> </td>
-	</tr>
-<!--	<td>	<?php	echo $this->Form->input('password', array('label' => array('text' =>'Passwort')));?> </td>-->
-	<tr>
-		<td>	<?php echo $this->Form->input('tel1', array('label' => array('text' =>'Telefonnummer 1')));?> </td>
-		<td>	<?php echo $this->Form->input('tel2', array('label' => array('text' =>'Telefonnummer 2')));?> </td>
-		<td>	<?php echo $this->Form->input('mail', array('label' => array('text' =>'E-Mail Adresse'))); ?> </td>
-	</tr>
-	</table>
 	
+	<div class="span12">
+	<div class="span5">
+	<?php echo $this->Form->input('username', array('label' => array('text' =>'Benutzername')));?> 
+	<?php echo $this->Form->input('fname', array('label' => array('text' =>'Vorname')));?>
+	<?php echo $this->Form->input('lname', array('label' => array('text' =>'Nachname')));?>
+
+<!--	<td>	<?php	echo $this->Form->input('password', array('label' => array('text' =>'Passwort')));?> </td>-->
+
+	<?php echo $this->Form->input('tel1', array('label' => array('text' =>'Telefonnummer 1')));?>
+	<?php echo $this->Form->input('tel2', array('label' => array('text' =>'Telefonnummer 2')));?>
+	<?php echo $this->Form->input('mail', array('label' => array('text' =>'E-Mail Adresse'))); ?> 
+	</div>
+	<div class="span5 offset1">
 
 	<?php
-		echo $this->Form->select('mo',$enumValues);
-		echo $this->Form->select('di',$enumValues);
-		echo $this->Form->select('mi',$enumValues);
-		echo $this->Form->select('do',$enumValues);
-		echo $this->Form->select('fr',$enumValues);
+		echo $this->Form->input('mo',array(
+			'options' => $enumValues,
+			'type' => 'select',
+			'label' => 'Montag',
+			'empty' => '-- Bitte auswählen --'
+		));
+		echo $this->Form->input('di',array(
+			'options' => $enumValues,
+			'type' => 'select',
+			'label' => 'Dienstag',
+			'empty' => '-- Bitte auswählen --'
+		));
+		echo $this->Form->input('mi',array(
+			'options' => $enumValues,
+			'type' => 'select',
+			'label' => 'Mittwoch',
+			'empty' => '-- Bitte auswählen --'
+		));
+		echo $this->Form->input('do',array(
+			'options' => $enumValues,
+			'type' => 'select',
+			'label' => 'Donnerstag',
+			'empty' => '-- Bitte auswählen --'
+		));
+		echo $this->Form->input('fr',array(
+			'options' => $enumValues,
+			'type' => 'select',
+			'label' => 'Freitag',
+			'empty' => '-- Bitte auswählen --'
+		));
 	?>
-<table border="2" align="center">
-	<tr>
-		<td><?php echo "G"; ?></td>
-		<td><?php echo "Ganze Schicht"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "H"; ?></td>
-		<td><?php echo "Halbe Schicht"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "1"; ?></td>
-		<td><?php echo "Nur 1. Hälfte"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "2"; ?></td>
-		<td><?php echo "Nur 2. Hälfte"; ?></td>
-	</tr>
-	<tr>
-		<td><?php echo "N"; ?></td>
-		<td><?php echo "Kein Dienst"; ?></td>
-	</tr>
-	</table>
-	</fieldset>
-<?php echo $this->Form->end('Benutzer erstellen'); ?>
+	<div id="legendDiv" style="margin-top: 15px">
+	<?php echo $this->element('legend'); ?>	
+	</div>
+	</div>
+	</div>
+<?php echo $this->Form->submit('Benutzer erstellen',array('class' => 'btn btn-primary')); ?>
+<?php echo $this->Form->end(); ?>
 </div>
 
 </div>

@@ -142,7 +142,6 @@
   </div>
   <div class="modal-body">
     <div class="alert alert-block" id="sevenDayWarning">
-  		<button type="button" class="close" data-dismiss="alert">&times;</button>
   		<h4>Achtung!</h4>
   		Sie sind im Begriff, Sich aus einem Dienst auszutragen, welcher innerhalb der 7-Tage-Frist liegt. 
   		Wenn Sie Sich aus diesem Dienst austragen, dann wird eine E-Mail an alle anderen Mitarbeiter versendet, 
