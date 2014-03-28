@@ -90,6 +90,9 @@ function submitSpecialDate(date) {
 						var $responseAsDomElement = $(response);
 						var $trContent = $responseAsDomElement.find("#"+dateForSubmit).html();
 						$("#insertDiv").remove();
+							
+						
+						
 						$("#"+dateForSubmit).html($trContent);
 					},
 					error: function(response) {

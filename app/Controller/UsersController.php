@@ -141,7 +141,7 @@ public $paginate = array(
 			//nur existierende Nutzer können gelöscht werden
 			throw new NotFoundException('Benutzer nicht gefunden');
 		}
-		$this->request->onlyAllow('post', 'delete');
+		$this->request->onlyAllow('post', 'delete', 'get');
 		if ($this->User->delete()) {
 			$this->Session->setFlash('Der Benutzr wurde gelöscht', "alert-box", array("class" => 'alert-success'));
 		} else {

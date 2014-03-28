@@ -6,7 +6,7 @@ und mit jQuery2 kompatibel sein.
 
 2) Extrahieren Sie Dateien aus dem Zip-Archiv in das gewünschte Verzeichnis auf dem Webserver
 
-3) Der Ordner "app/tmp" muss für den Webserver beschreibbar sein. Stellen sie dies sicher. Da i.d.R. kein 
+3) Der Ordner "app/tmp" muss für den Webserver beschreibbar sein. Stellen Sie dies sicher. Da i.d.R. kein 
 anderer Benutzer Zugriff auf diesen Ordner benötigt, kann dem Benutzer "www-data" auch die Zugehörigkeit 
 des Ordners übertragen werden.
 
@@ -24,7 +24,10 @@ das Array $web mit den entsprechenden Werten füllen.
 Dies beinhaltet auch sämtliche darin enthaltenen Dateien. Stellen Sie dies entsprechend sicher.
 
 8) Ggf. möchten Sie eine Datenbank nach dem Schema, wie es der alte Cafeteriaplan verwendet hat, migrieren. Benutzen Sie dazu
-das beigefügte Java-Programm.
+das beigefügte Java-Programm. Dafür erstellen Sie bitte zuerst das Datenbankgerüst (durch Import von cafeteria_dev_structure.sql)
+Damit die Migration möglich ist, tragen Sie bitte entsprechende Konfigurationsdaten in "in" und "out" ein.
+Es gilt das Schema: Host <Enter> Benutzer <Enter> Passwort <Enter> Datenbankname.
+Anschließend führen Sie den Befehl "java -jar dbtransfer.jar in out" aus.
 
 Der Cafeteria-Planer ist nun einsatzbereit.
 Herzlichen Glückwunsch.
