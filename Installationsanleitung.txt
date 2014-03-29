@@ -6,9 +6,7 @@ und mit jQuery2 kompatibel sein.
 
 2) Extrahieren Sie Dateien aus dem Zip-Archiv in das gewünschte Verzeichnis auf dem Webserver
 
-3) Der Ordner "app/tmp" muss für den Webserver beschreibbar sein. Stellen Sie dies sicher. Da i.d.R. kein 
-anderer Benutzer Zugriff auf diesen Ordner benötigt, kann dem Benutzer "www-data" auch die Zugehörigkeit 
-des Ordners übertragen werden.
+3) Der Ordner "app/tmp" muss für den Webserver beschreibbar sein. Stellen Sie dies sicher.
 
 4) Richten Sie die Datenbankkonfiguration ein, indem Sie die Datei "app/Config/database.php" öffnen
 und das Array $default mit den gewünschten Werten füllen.

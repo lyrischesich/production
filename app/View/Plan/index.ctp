@@ -9,6 +9,18 @@
 <h2>Cafeteriaplan <?php echo $headingDate; ?></h2>
 <br />	
 <table class="table table-condensed table-bordered table-centered" id="planTable">
+<colgroup>
+<col width='50' />
+<col width='100' />
+<?php
+for ($i = 0;$i < (count($columns)-$userColumnCount);$i++){
+	echo "<col width='100' />";
+}
+for ($i = 0;$i < 2*$userColumnCount;$i++) {
+ 	echo "<col width='100' />";
+}
+?>
+</colgroup>
 <tr>
 	<th rowspan="2">Tag</th>
 	<th rowspan="2">Datum</th>

@@ -1,9 +1,8 @@
 //Muss-Kriterien
-/plan: Zusätzlich zum Schichtnamen Früh- und Spät einblenden im Dialog
-/plan: Fehlercodes umsetzen
-
-
-Installationsanleitung schreiben
+Spaltenbreite
+SSL-Emails
+Benutzer löschen
+Specialdate-Bug
 
 //Soll-Kriterien
 
