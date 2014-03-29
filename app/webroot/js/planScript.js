@@ -41,6 +41,7 @@ $(document).ready(function() {
 		}
 	});
 */
+	
 	$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
@@ -90,15 +91,21 @@ function submitSpecialDate(date) {
 						var $responseAsDomElement = $(response);
 						var $trContent = $responseAsDomElement.find("#"+dateForSubmit).html();
 						$("#insertDiv").remove();
-							
-						
-						
+
 						$("#"+dateForSubmit).html($trContent);
 					},
 					error: function(response) {
 						alert("Leider ist ein Fehler aufgetreten, der die Stabilität der Applikation beeinträchtigt. Bitte laden sie die Seite erneut, da es sonst zu Einschränkungen in der Funktionsfähigkeit kommen kann.");
 					}
 				});
+				if (response == "200") {
+					$("#"+dateForSubmit+" td").each(function() {
+						if ($(this).hasClass("tdsuccess")) {
+							$(this).removeClass();
+							$(this).addClass("tdsuccesschangeable");
+						}
+					});
+				}
 				var oldContent = $("#dow_"+dateForSubmit).next().html();
 				var dow = new Date(dateForSubmit).getDay();
 				if ((response == "200" && (dow != 0 && dow != 6)) || (response == "210" && (dow == 0 || dow == 6))) {
