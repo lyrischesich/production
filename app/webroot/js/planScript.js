@@ -99,9 +99,10 @@ function submitSpecialDate(date) {
 					}
 				});
 				$("#"+dateForSubmit+" td").each(function() {
-					if ($(this).hasClass("tdsuccess")) {
-						$(this).removeClass();
-						$(this).addClass("tdsuccesschangeable");
+					if (response == "210") {
+							if ($(this).hasClass("tdsuccess")  && $(this).attr('id').substr(0,3) != "dow") {
+								$(this).removeClass();
+								$(this).addClass("tdsuccesschangeable");
 					}
 				});
 				var oldContent = $("#dow_"+dateForSubmit).next().html();
@@ -328,7 +329,8 @@ function onTextField(tdID) {
 						} else if (response == "510") {
 							alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten.");
 						} else if (response == "404") {
-							alert("Das angeforderte Element existiert nicht (mehr). Laden sie die Seite erneut, um eine Instabilität der Applikation zu verhindern");			}
+							alert("Der Benutzer wurde nicht gefunden");			
+						}
 					},
 					error: function() {
 						alert("Ein unbekannter Fehler ist aufgetreten. Der AdminModus wurde deaktiviert!");
@@ -373,6 +375,8 @@ function onTextField(tdID) {
 							} else if (response == "403") {
 								alert("Sie verfügen nicht über ausreichende Berechtigung für Operation! Der Adminmodus wurde deaktiviert.")
 								activateAdminMode(false);
+							} else if (response == "404") {
+								alert("Der Benutzer wurde nicht gefunden");			
 							} else {
 								alert ("Unknown Response Code: ["+response+"]");
 							}
