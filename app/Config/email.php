@@ -67,7 +67,8 @@ class EmailConfig {
 		'port' => 587,
 		'username' => 'cafeteriaprojekt@web.de',
 		'password' => 'apfelkuchen0',
-		'replyTo' => 'cafeteria-automail@versanet.de'
+		'replyTo' => 'cafeteria-automail@versanet.de',
+		'tls' => true
 	);
 
 	public $fast = array(
