@@ -150,6 +150,7 @@ public $paginate = array(
 		return $this->redirect(array('action' => 'index'));
 	}
 
+
 	public function isAuthorized($user) {
 		if ($this->action == "edit") { 
 			if (AuthComponent::user('id') && AuthComponent::user('admin')) {

@@ -19,7 +19,7 @@
 			<!--<?php echo $this->Html->link('Anzeigen', array('action' => 'view', $user['User']['id'])); ?>-->
 			<?php echo $this->Html->link(' Editieren', array('action' => 'edit', $user['User']['id'])); ?>
 			&nbsp;|&nbsp;
-			<?php echo $this->Form->postLink(' Löschen', array('action' => 'delete', $user['User']['id']), null, 'Wollen Sie wirklich den Benutzer "%s" löschen?', $user['User']['username']); ?>
+			<?php echo $this->Html->link(' Löschen', array('action' => 'delete', $user['User']['id']), null, 'Wollen Sie wirklich den Benutzer "'.$user['User']['username'].'" löschen?'); ?>
 		</td>
 	</tr>
 <?php	 endforeach; ?>
