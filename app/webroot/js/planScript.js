@@ -100,9 +100,10 @@ function submitSpecialDate(date) {
 				});
 				$("#"+dateForSubmit+" td").each(function() {
 					if (response == "210") {
-							if ($(this).hasClass("tdsuccess")  && $(this).attr('id').substr(0,3) != "dow") {
-								$(this).removeClass();
-								$(this).addClass("tdsuccesschangeable");
+						if ($(this).hasClass("tdsuccess")  && $(this).attr('id').substr(0,3) != "dow") {
+							$(this).removeClass();
+							$(this).addClass("tdsuccesschangeable");
+						}
 					}
 				});
 				var oldContent = $("#dow_"+dateForSubmit).next().html();
