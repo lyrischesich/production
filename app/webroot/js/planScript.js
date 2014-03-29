@@ -324,13 +324,13 @@ function onTextField(tdID) {
 							$("body").on('click','td[id^="txt_"]',function() {
 								onTextField($(this).attr('id'));
 							});
-						} else if (reponse == "403") {
+						} else if (response == "403") {
 							alert("Sie haben keine Berechtigung für diese Aktion! Der Adminmodus wird deaktiviert.");
 							activateAdminMode(false);						
 						} else if (response == "510") {
 							alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten.");
 						} else if (response == "404") {
-							alert("Der Benutzer wurde nicht gefunden");			
+							alert("Fehler: Der Benutzer wurde nicht gefunden");			
 						}
 					},
 					error: function() {
