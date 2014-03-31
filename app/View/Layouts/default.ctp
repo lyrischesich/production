@@ -64,10 +64,30 @@ $cakeDescription = __d('cake_dev', 'Humboldtgymnasium Berlin Tegel - Cafeteriapl
 		</div>
 		<hr>
 		<footer>
-			<p><i><a href="http://www.humboldtschule-berlin.de">Humboldt-Gymnasium Berlin-Tegel</a></i><br />
-			<b>Kontakt:</b><br />
-			<i>Tel:</i> 0157 85 67 87 57 <br />
-			<i>E-Mail-Adresse:</i> cafeteria-humboldtschule@web.de </p>
+			<div class="modal hide fade" id="modal-impressum">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    			<h3>Impressum und Kontakt</h3>
+    			</div>
+   			 <div class="modal-body">
+   				<p>Cafeteriadienstplan des Humboldt Gymnasium Berlin-Tegel <br/>
+   				<a href="http://www.humboldtschule-berlin.de"><i>Zur Schulwebsite...</i></a>
+   				</p>
+   				<p><b>Kontakt:</b><br />
+   					<i>Telefon:</i> 0157 84678757 <br />
+   					<i>E-Mail-Adresse:</i> cafeteria-humboldtschule@web.de
+   				</p>
+   				<p><b>Realisiert von:</b> <br/>
+   					<i>Alexander Löser</i> <br />
+   					<i>Johannes Gräger</i> <br />
+   					<i>Julius Brose</i>
+   				</p>
+    		</div>
+   			  <div class="modal-footer">
+   				<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Schließen</a>
+   			</div>
+   	 	</div>
+   	 	<a href="#modal-impressum" role="button" data-toggle="modal">Impressum anzeigen</a>
 		</footer>
 	</div>
 </body>
