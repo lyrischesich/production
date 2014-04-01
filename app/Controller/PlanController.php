@@ -408,7 +408,7 @@ class PlanController extends AppController {
 		
 		$column = $this->Column->find('first', array('recursive' => -1, 'conditions' => array('Column.id' => $columnid)));
 		if ($column['Column']['type'] != 2) {
-			echo "Keine Benutzerspalte.";
+			echo "500";
 			exit;
 		}
 		
@@ -426,7 +426,7 @@ class PlanController extends AppController {
 		
 		if ($username != "") {
 			if ($username != AuthComponent::user('username') && !(AuthComponent::user('id') && AuthComponent::user('admin'))) {
-				echo "404";
+				echo "403";
 				exit;
 			}
 			//Existiert der angegebene Benutzer?

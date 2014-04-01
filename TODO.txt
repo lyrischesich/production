@@ -1,8 +1,4 @@
 //Muss-Kriterien
-Spaltenbreite
-SSL-Emails
-Benutzer löschen
-Specialdate-Bug
 
 //Soll-Kriterien
 
@@ -16,6 +12,6 @@ Bekannte Fehler und Bugs:
 
 //Wichtig für Hr. Wagner:
 	
-	- Zugriffsrechte für die /auto-Datein müssen für den Webserver schreibbar sein
-	- Das obligatorische chown www-data -R app/tmp :) ??? Widerspruch zu vorherigem?
+	- Zugriffsrechte für die /auto-Datein müssen für den Webserver und <user> schreibbar sein
+	- Das obligatorische chown <user>:www-data -R app/tmp :)
 	- Einrichten der Cronjobs

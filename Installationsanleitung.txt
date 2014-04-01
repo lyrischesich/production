@@ -19,7 +19,8 @@ das Array $web mit den entsprechenden Werten füllen.
 0 14 15 6 * cd <Rootverzeichnis des Planers> && <php-Interpreter> -f VacationInsertionScript.php > <Logdatei>
 
 7) Der Ordner "app/lastruns" muss sowohl für den Webserver, als auch für den Nutzer, welcher die Cronjobs ausführt, schreibbar sein.
-Dies beinhaltet auch sämtliche darin enthaltenen Dateien. Stellen Sie dies entsprechend sicher.
+Dies beinhaltet auch sämtliche darin enthaltenen Dateien. Ebenfalls ist es notwendig, dass der Nutzer, der die Crontab-Befehle ausführt,
+ebenfalls Schreibrechte in app/tmp (rekursiv) hat. Stellen Sie dies entsprechend sicher.
 
 8) Ggf. möchten Sie eine Datenbank nach dem Schema, wie es der alte Cafeteriaplan verwendet hat, migrieren. Benutzen Sie dazu
 das beigefügte Java-Programm. Dafür erstellen Sie bitte zuerst das Datenbankgerüst (durch Import von cafeteria_dev_structure.sql)
