@@ -75,7 +75,7 @@ function submitSpecialDate(date) {
 		return false;
 	}
 	
-	var submitUrl = document.URL.split("plan")[0] + "plan/saveSpecialdate/" + dateForSubmit;
+	var submitUrl = document.URL.split("/plan")[0] + "/plan/saveSpecialdate/" + dateForSubmit;
 	$.ajax({
 		type: 'POST',
 		content: 'ajax=1',
@@ -215,8 +215,8 @@ function activateAdminMode(activate) {
 }
 
 function checkIfDateIsComplete(date) {
-	var str = document.URL.split("plan");
-	var validationUrl = str[0] + "plan/datecomplete/" + date;
+	var str = document.URL.split("/plan");
+	var validationUrl = str[0] + "/plan/datecomplete/" + date;
 
 	$.ajax( {
 		type: 'POST',
@@ -272,7 +272,7 @@ function onTextField(tdID) {
 			var str = cellID.split("_");
 			if (str[1] != "txt") {
 				var username = $("#"+cellID).val();
-				var requestUrl = document.URL.split('plan')[0] + "plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
+				var requestUrl = document.URL.split('/plan')[0] + "/plan/saveUserEntry/" + str[1] + "/" + str[2] + "/" + str[3] + "/" + username;
 				$.ajax({
 					type: 'POST',
 					url: requestUrl,
@@ -355,7 +355,7 @@ function onTextField(tdID) {
 						});
 						return false;
 					}
-					var requestUrl = document.URL.split('plan')[0] + "plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content;
+					var requestUrl = document.URL.split('/plan')[0] + "/plan/saveTextEntry/" + str[2] + "/" + str[3] + "/" + content;
 					$.ajax( {
 						type: 'POST',
 						url: requestUrl,
@@ -434,8 +434,8 @@ function ajaxHandler(cellID) {
 				halfshift = "3";
 			}
 		}
-		var str = document.URL.split('plan');
-			var requestUrl = str[0] + "plan/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
+		var str = document.URL.split('/plan');
+			var requestUrl = str[0] + "/plan/saveUserEntry/" + date + "/" + columnID + "/" + halfshift + "/";
 			
 		if (username != "") requestUrl += username;
 		$.ajax( {
