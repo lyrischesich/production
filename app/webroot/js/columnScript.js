@@ -23,7 +23,7 @@ $(document).ready(function() {
 function switchColumns(c1,c2) {
 	var cID1 = c1.split("_")[1];
 	var cID2 = c2.split("_")[1];
-	var requestUrl = document.URL.split("columns")[0] + "columns/switchOrder/" + cID1 + "/" + cID2;
+	var requestUrl = document.URL.split("/columns")[0] + "/columns/switchOrder/" + cID1 + "/" + cID2;
 	$.ajax( {
 		type: 'POST',
 		url: requestUrl,

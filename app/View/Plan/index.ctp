@@ -79,7 +79,7 @@ for ($i = 0;$i < 2*$userColumnCount;$i++) {
 			$onclick = "";
 	 	} else if (!$result['complete'] && $type=="active" && $dateIsInFuture) {
 			$class = $errorlink;
-			$onclick = "onClick=\"window.open(document.URL.split('plan')[0]+'contacts/only/$key',  'toolbar=no,location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=800,height=550,left=10,top=10')\"";
+			$onclick = "onClick=\"window.open(document.URL.split('/plan')[0]+'/contacts/only/$key',  'toolbar=no,location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=800,height=550,left=10,top=10')\"";
 		} else {
 			//Alles andere
 			$onclick = "";
