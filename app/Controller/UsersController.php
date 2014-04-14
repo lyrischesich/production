@@ -81,6 +81,30 @@ public $paginate = array(
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
+				if (isset($this->request->data['User']['mail']) && $this->request->data['User']['mail'] != '') {
+					$mailContent = "Hallo ".$this->request->data['User']['fname']." ".$this->request->data['User']['lname'].",";
+					$mailContent .= "<p>Sie wurden erfolgreich für den Cafeteria-Planer der Humboldt-Oberschule registriert. ";
+					$mailContent .= "Sie können sich nun <a href='www.humboldtschule-berlin.de/cafeplaner/'>hier</a> anmelden.</p>";
+					$mailContent .= "<p>Ihre Anmeldedaten:<br />";
+					$mailContent .= "Benutzername: ".$this->request->data['User']['username']."<br />";
+					$mailContent .= "Passwort: ".$this->request->data['User']['fname']."</p>";
+					
+					$EMail = new CakeEmail();
+					$EMail->to($this->request->data['User']['mail']);
+					$EMail->subject("Registrierung für den Cafeplaner der Humboldt-Oberschule");
+					$EMail->config('web');
+					$EMail->template('default');
+					$EMail->emailFormat('html');
+					$EMail->viewVars(array(
+							'senderName' => 'Humboldt Cafeteria',
+							'senderMail' => 'cafeteriaprojekt@web.de',
+							'content' => $mailContent,
+							'subject' => "Registrierung für den Cafeplaner der Humboldt-Oberschule",
+							'allowReply' => false
+					));
+					$EMail->send();
+				}
+				
 				$this->Session->setFlash('Der Benutzer wurde angelegt.', "alert-box", array("class" => 'alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
