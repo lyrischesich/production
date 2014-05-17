@@ -56,7 +56,8 @@ class AppModel extends Model {
 		//Convert the array from explode into an assoc array
 		$assoc_values = array();
 		foreach ($values as $value) {
-			$assoc_values[$value] = Inflector::humanize($value);
+			//if (is_numeric($value)) $assoc_values[$value.' '] = Inflector::humanize($value);
+			/*else*/ $assoc_values[$value] = Inflector::humanize($value);
 		}
 		return $assoc_values;
 	}

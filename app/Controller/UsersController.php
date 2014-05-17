@@ -131,6 +131,12 @@ public $paginate = array(
 			throw new NotFoundException('Unbekannter Benutzer');
 		}
 		if ($this->request->is(array('post', 'put'))) {
+			if (is_numeric($this->request->data['User']['mo'])) $this->request->data['User']['mo'] .= ' ';
+			if (is_numeric($this->request->data['User']['di'])) $this->request->data['User']['di'] .= ' ';
+			if (is_numeric($this->request->data['User']['mi'])) $this->request->data['User']['mi'] .= ' ';
+			if (is_numeric($this->request->data['User']['do'])) $this->request->data['User']['do'] .= ' ';
+			if (is_numeric($this->request->data['User']['fr'])) $this->request->data['User']['fr'] .= ' ';
+			
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash('Die Änderungen wurden gespeichert.', "alert-box", array("class" => 'alert-success'));
 				return $this->redirect(array('action' => 'index'));

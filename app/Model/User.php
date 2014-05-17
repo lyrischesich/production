@@ -86,6 +86,7 @@ class User extends AppModel {
 			),
 		),
 		'mail' => array(
+			/*
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -93,10 +94,11 @@ class User extends AppModel {
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			),//*/
 			'email' => array(
 				'rule' => 'email',
-				'message' => 'Bitte geben sie eine gültige E-Mailadresse an.'
+				'message' => 'Bitte geben sie eine gültige E-Mailadresse an.',
+				'allowEmpty' => true						
 			)
 		),
 		'mo' => array(

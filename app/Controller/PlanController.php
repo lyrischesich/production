@@ -319,7 +319,7 @@ class PlanController extends AppController {
 			if ($halfshift == 3) {
 				$conditionsArray['User.'.$dow] = array('1 ', '2 ', 'H', 'G');				
 			} else {
-				$conditionsArray['User.'.$dow] = array($hilfshift.' ', 'H', 'G');	
+				$conditionsArray['User.'.$dow] = array($halfshift.' ', 'H', 'G');	
 			}
 		}		
 		
@@ -328,7 +328,7 @@ class PlanController extends AppController {
 		$senderMail = 'humboldt-cafeteria@versanet.de';
 		$senderName = 'Humboldt Cafeteria';
 		$mailContent = "Hallo,<br />
-				leider ist  ".$shiftname." für ".strftime('%A', strtotime($date)).", den ".date('d. m. Y', strtotime($date)).", kurzfristig frei geworden.
+				leider ist die ".$shiftname." für ".strftime('%A', strtotime($date)).", den ".date('d.m.Y', strtotime($date)).", kurzfristig frei geworden.
 				Falls Ihr Zeit habt, springt bitte ein.
 				
 				Mit freundlichen Grüßen
@@ -483,9 +483,15 @@ class PlanController extends AppController {
 				$this->Changelog->save($changelogArray);
 				
 				//Bei zu kurzer Differenz zum aktuellen Datum Notfallmail verschicken
-				if (strtotime($date)-time()-7*DAY < 0) {
-					$this->sendEmergencyMail($date, $halfshift, $aColumnsUser['ColumnsUser']['user_id'], ($halfshift == 3) ? " der ganze Dienst ".$column['Column']['name'] : "die ".$halfshift.". Schicht ".$column['Column']['name']);
-				}
+				if (strtotime($date)-time()-7*DAY < 0  && strtotime($date)-strtotime(date("Y-m-d")) > 0){
+					$tmpCols = $this->Column->find('all', array('recursive' => -1, 'conditions' => array('obligated' => 1, 'type' => 2), 'order' => array('order' => 'ASC')));
+					$i = 1;
+					foreach ($tmpCols as $tmpCol) {
+						if ($tmpCol['Column']['id'] == $columnid) break;
+						$i++;
+					}
+					$this->sendEmergencyMail($date, $halfshift, $aColumnsUser['ColumnsUser']['user_id'], ($halfshift == 1) ? " Frühschicht ".$column['Column']['name'] : " Spätschicht ".$i);
+				}//&& date("Y-m-d", strtotime($date)) != date("Y-m-d", strotime(date("Y-m-d")))
 				
 				//Abbruch, da Aufgabe erledigt ist
 				echo "210";
@@ -829,12 +835,16 @@ class PlanController extends AppController {
 		
 		$halfshifts = array (
 			-1 => '',
-			1 => '1. Schicht ',
-			2 => '2. Schicht ',
-			3 => 'Ganzer Dienst '
+			1 => 'Frühschicht ',
+			2 => 'Spätschicht ',
 		);
 		foreach ($tmpColumns as $tmpColumn) {
-			$columnsArray[$tmpColumn['Column']['id']] = $tmpColumn['Column']['name'];
+			$columnsArray[$tmpColumn['Column']['id']]["name"] = $tmpColumn['Column']['name'];
+		}
+		$tmpCols = $this->Column->find('all', array('recursive' => -1, 'conditions' => array('obligated' => 1, 'type' => 2), 'order' => array('order' => 'ASC')));
+		$i = 1;
+		foreach ($tmpCols as $tmpCol) {
+			$columnsArray[$tmpCol['Column']['id']]['pos'] = $i++;
 		}
 		
 
@@ -849,10 +859,9 @@ class PlanController extends AppController {
 				$mailContent .= $data[$date]["dow"].", ".date('d. m. Y', strtotime($date));
 				$mailContent .= "<ul>";
 				foreach ($columns as $columnid => $halfshift) {
-					$mailContent .= "<li>";
-					$mailContent .= $halfshifts[$halfshift].$columnsArray[$columnid];
-					$mailContent .= "</li>";
-					
+					if ($halfshift == 1 || $halfshift == 3) $mailContent .= "<li>Frühschicht ".$columnsArray[$columnid]["name"]."</li>";
+					if ($halfshift == 2 || $halfshift == 3) $mailContent .= "<li>Spätschicht ".$columnsArray[$columnid]["pos"]."</li>";
+					if ($halfshift == -1) $mailContent .= "<li>".$columnsArray[$columnid]["name"]."</li>";					
 				}
 				$mailContent .= "</ul>";
 			}

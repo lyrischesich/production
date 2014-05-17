@@ -12,7 +12,7 @@ $(document).ready(function() {
 	
 	loggedInAs = $("#loggedInUserAnchor").html();
 
-	$("#adminLinkAnchor").on('click',function(event) {
+	$("#adminLinkAnchor").on('tap',function(event) {
 		event.preventDefault();
 		activateAdminMode(!adminModeActive);
 	});
@@ -42,7 +42,7 @@ $(document).ready(function() {
 	});
 */
 	
-	$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
+	$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdnonobligatedbyuser, .tdnonobligatedlink",function() {
 		var cellID = $(this).attr('id');
 		var isNoWeekday = cellID.substr(0,3) != "dow";
 
@@ -58,13 +58,13 @@ $(document).ready(function() {
 
 
 	//Alles für Textspalten
-	$("body").on('click','td[id^="txt_"]',function() {
+	$("body").on('tap','td[id^="txt_"]',function() {
 		onTextField($(this).attr('id'));
 	});
 
 
 	//Eventhandler für den Bestätigenknopf im regulären austragen Dialog
-	$("#btnDialogConfirm").on('click',ajaxHandler);
+	$("#btnDialogConfirm").on('tap',ajaxHandler);
 });
 
 function submitSpecialDate(date) {
@@ -116,7 +116,7 @@ function submitSpecialDate(date) {
 					alert("Während des Vorgangs ist ein unbekannter Fehler aufgetreten");
 				}
 				$("#dow_"+dateForSubmit).next().html(newContent);
-				$("#dow_"+dateForSubmit).next().on('click',function() {
+				$("#dow_"+dateForSubmit).next().on('tap',function() {
 					if (confirm('Möchten sie den Status dieses Datums wirklich ändern?')) {
 						submitSpecialDate(date);
 					}
@@ -163,7 +163,7 @@ function activateAdminMode(activate) {
 							}
 						}
 						$(this).next().html(newContent);
-						$(this).next().on('click',function() {
+						$(this).next().on('tap',function() {
 							if (confirm('Möchten sie den Status dieses Datums wirklich ändern?')) {
 								submitSpecialDate(oldContent);
 							}
@@ -175,11 +175,11 @@ function activateAdminMode(activate) {
 
 		});
 		
-		$("body").off('click');
-		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+		$("body").off('tap');
+		$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 			onTextField($(this).attr('id'));
 		});
-		$("body").on('click','td[id^="txt_"]',function() {
+		$("body").on('tap','td[id^="txt_"]',function() {
 			onTextField($(this).attr('id'));
 		});
 	} else {
@@ -187,17 +187,17 @@ function activateAdminMode(activate) {
 		$(".icon-ban-circle, .icon-ok-circle").remove();
 		adminModeActive = false;
 		$("input:not([type=hidden])").remove();
-		$("body").off('click','td[id^="txt_"]');
-		$("body").off('click');
+		$("body").off('tap','td[id^="txt_"]');
+		$("body").off('tap');
 		$(".tdsuccesschangeable").each(function() {
 			$(this).removeClass();
 			$(this).addClass("tdsuccess");
 		});
-		$("body").on('click','td[id^="txt_"]',function() {
+		$("body").on('tap','td[id^="txt_"]',function() {
 			onTextField($(this).attr('id'));
 		});
 		$("td").each(function() { $(this).off(); });
-		$("body").on('click',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
+		$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdnonobligatedlink,.tdnonobligatedbyuser",function() {
 			var cellID = $(this).attr('id');
 			var isNoWeekday = cellID.substr(0,3) != "dow";
 
@@ -263,8 +263,8 @@ function onTextField(tdID) {
 	var oldContent = $("#"+tdID).html();
 
 	$("#"+tdID).html(newTextField);
-//	$("body").off('click',".tdsuccesslink, .tderrorlink");
-	$("body").off('click');
+//	$("body").off('tap',".tdsuccesslink, .tderrorlink");
+	$("body").off('tap');
 	$("#"+cellID).focus();
 	$("#"+cellID).on('keypress',function(event) {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -297,12 +297,12 @@ function onTextField(tdID) {
 								}
 							}
 							$td.html(username);
-							$("body").off('click');
+							$("body").off('tap');
 							$("#"+cellID).off('keypress');
-							$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+							$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 								onTextField($(this).attr('id'));
 							});
-							$("body").on('click','td[id^="txt_"]',function() {
+							$("body").on('tap','td[id^="txt_"]',function() {
 								onTextField($(this).attr('id'));
 							});
 						} else if (response == "210") {
@@ -316,12 +316,12 @@ function onTextField(tdID) {
 								$td.addClass("tderrorlink");
 							}
 							$td.html("");
-							$("body").off('click');
+							$("body").off('tap');
 							$("#"+cellID).off('keypress');
-							$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+							$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 								onTextField($(this).attr('id'));
 							});
-							$("body").on('click','td[id^="txt_"]',function() {
+							$("body").on('tap','td[id^="txt_"]',function() {
 								onTextField($(this).attr('id'));
 							});
 						} else if (response == "403") {
@@ -347,10 +347,10 @@ function onTextField(tdID) {
 					if (content == "" && oldContent == "") {
 						$(newTextField).remove();
 						$("#"+cellID).off('keypress');
-						$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+						$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 							onTextField($(this).attr('id'));
 						});
-						$("body").on('click','td[id^="txt_"]',function() {
+						$("body").on('tap','td[id^="txt_"]',function() {
 								onTextField($(this).attr('id'));
 						});
 						return false;
@@ -381,12 +381,12 @@ function onTextField(tdID) {
 							} else {
 								alert ("Unknown Response Code: ["+response+"]");
 							}
-							$("body").off('click');
+							$("body").off('tap');
 							$("#"+cellID).off('keypress');
-							$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+							$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 								onTextField($(this).attr('id'));
 							});
-							$("body").on('click','td[id^="txt_"]',function() {
+							$("body").on('tap','td[id^="txt_"]',function() {
 									onTextField($(this).attr('id'));
 							});
 							checkIfDateIsComplete(str[2]);	
@@ -400,10 +400,10 @@ function onTextField(tdID) {
 		} else if (keycode == 27) {
 			newTextField.remove();
 			$("#"+tdID).html(oldValue);	
-			$("body").on('click',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
+			$("body").on('tap',".tdsuccesslink, .tderrorlink, .tdsuccesschangeable, .tdnonobligated, .tdnonobligatedlink, .tdnonobligatedbyuser",function() {
 				onTextField($(this).attr('id'));
 			});
-			$("body").on('click','td[id^="txt_"]',function() {
+			$("body").on('tap','td[id^="txt_"]',function() {
 				onTextField($(this).attr('id'));
 			});
 		}
