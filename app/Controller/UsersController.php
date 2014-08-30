@@ -79,6 +79,12 @@ public $paginate = array(
 	//Benutzer der Datenbank hinzufügen
 	public function add() {
 		if ($this->request->is('post')) {
+			if (is_numeric($this->request->data['User']['mo'])) $this->request->data['User']['mo'] .= ' ';
+                        if (is_numeric($this->request->data['User']['di'])) $this->request->data['User']['di'] .= ' ';
+                        if (is_numeric($this->request->data['User']['mi'])) $this->request->data['User']['mi'] .= ' ';
+                        if (is_numeric($this->request->data['User']['do'])) $this->request->data['User']['do'] .= ' ';
+                        if (is_numeric($this->request->data['User']['fr'])) $this->request->data['User']['fr'] .= ' ';
+
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				if (isset($this->request->data['User']['mail']) && $this->request->data['User']['mail'] != '') {
@@ -113,7 +119,7 @@ public $paginate = array(
 		}
 		$columns = $this->User->Column->find('list');
 		$this->set(compact('columns'));
-		
+
 		$this->set('actions', array('actions' => array('back' => array('text' => 'Zur Benutzerverwaltung', 'params' => array('controller' => 'users', 'action' => 'index')))));
 	}
 

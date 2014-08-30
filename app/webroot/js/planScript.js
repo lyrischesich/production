@@ -530,7 +530,9 @@ return false;
 					//Hier geht es jetzt ums austragen
 					var dateObj = new Date();
 					dateObj.setDate(dateObj.getDate()+7);
-					if (new Date(formatDate).getTime() <= dateObj.getTime()) {
+					var tmpDate = new Date(formatDate);
+					
+					if (tmpDate.toDateString() != (new Date()).toDateString() && tmpDate.getTime() <= dateObj.getTime()) {
 						$("#sevenDayWarning").show();
 					}
 					$("#methodAnchor").html("Austragen");
