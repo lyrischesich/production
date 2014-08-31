@@ -119,7 +119,6 @@ public $paginate = array(
 		}
 		$columns = $this->User->Column->find('list');
 		$this->set(compact('columns'));
-
 		$this->set('actions', array('actions' => array('back' => array('text' => 'Zur Benutzerverwaltung', 'params' => array('controller' => 'users', 'action' => 'index')))));
 	}
 

@@ -83,9 +83,6 @@ class AppController extends Controller {
 	 * @return void
 	 */
    	public function beforeFilter() {
-		CakePlugin::unload('DebugKit');
-		Configure::write('debug', 2);
-		CakePlugin::load('DebugKit');
 		parent::beforeFilter();
 		//Wenn keine Benutzer eingetragen sind, alles umleiten auf /install
 		$this->loadModel("User");
@@ -94,7 +91,6 @@ class AppController extends Controller {
 			$this->Auth->logout();
 			return $this->redirect(array("controller" => "install", "action" => "index"));	
 		}
-
 	}
 	
 	/**
